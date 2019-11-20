@@ -1,4 +1,4 @@
-namespace ChatServer
+namespace Chat
 {
     public enum ChannelId
     {
