@@ -52,12 +52,12 @@ namespace InputConfiguration
             remapPopup.SetActive(true);
             _remapText.text = $"Press new key for\n{inputRemapItem.ActionName}\n(or ESC to cancel)";
 
-            KeyCode? newKey;
+            KeyCode? newKey = null;
             while(true)
             {
                 if (Input.GetKey(KeyCode.Escape))
                 {
-                    yield break;
+                    break;
                 }
             
                 newKey = GetPressedKey();
@@ -69,10 +69,13 @@ namespace InputConfiguration
                 yield return new WaitForEndOfFrame();
             }
 
-            action.Invoke((KeyCode) newKey);
-            inputRemapItem.SetButtonText();
+            if (newKey != null)
+            {
+                action.Invoke((KeyCode) newKey);
+                inputRemapItem.SetButtonText();
+            }
+            
             remapPopup.SetActive(false);
-
             SetButtonInteractivity(true);
             eventSystem.SetActive(true);
             IsRemapping = false;
