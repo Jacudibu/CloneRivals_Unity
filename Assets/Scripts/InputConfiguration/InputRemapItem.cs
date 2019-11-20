@@ -20,13 +20,11 @@ namespace InputConfiguration
             Button = item.GetComponentInChildren<Button>();
             _buttonText = Button.GetComponentInChildren<Text>();
             
-            KeyCodeProperty = InputConfigurator.instance
-                .GetType()
-                .GetProperty(ActionName);
+            KeyCodeProperty = typeof(InputSettings).GetProperty(ActionName);
             
             if (KeyCodeProperty == null)
             {
-                throw new Exception($"Unable to find KeyCode named {ActionName} in inputManager. Check if the Child Names match up!");
+                throw new Exception($"Unable to find KeyCode named {ActionName} in inputManager. Check if the Child Names all match up!");
             }
             
             var remapItemProxy = this;
