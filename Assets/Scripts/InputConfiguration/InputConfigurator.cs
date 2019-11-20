@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace InputConfiguration
@@ -10,29 +11,22 @@ namespace InputConfiguration
     public class InputConfigurator : SingletonBehaviour<InputConfigurator>
     {
         [SerializeField] private GameObject remapPopup;
-        [SerializeField] private Text debugHelper;
 
         public static bool IsRemapping { get; private set; }
         
         private TextMeshProUGUI _remapText;
         private InputRemapItem[] _remapItems;
 
-        public void InitiateKeyRemap(InputRemapItem inputRemapItem)
-        {
-            StartCoroutine( RemappingCoroutine(inputRemapItem,
-                x => inputRemapItem.KeyCodeProperty.SetValue(instance, x)));
-        }
-    
         private static readonly KeyCode[] IgnoredKeys =
         {
             KeyCode.Escape,
         };
-    
+
         private static readonly KeyCode[] ValidKeys = Enum.GetValues(typeof(KeyCode))
             .Cast<KeyCode>()
             .Except(IgnoredKeys.AsEnumerable())
             .ToArray();
-    
+
         private void Start()
         {
             _remapText = remapPopup.GetComponentInChildren<TextMeshProUGUI>();
@@ -42,17 +36,17 @@ namespace InputConfiguration
             _remapItems = childButtons.Select(x => new InputRemapItem(x.transform.parent.gameObject)).ToArray();
         }
 
-        private void Update()
+        public void InitiateKeyRemap(InputRemapItem inputRemapItem)
         {
-            debugHelper.text =
-                $"Action 1: Strafe Left - {InputSettings.StrafeLeft.ToString()} - {Input.GetKey(InputSettings.StrafeLeft)}\n" +
-                $"Action 2: Strafe Right - {InputSettings.StrafeRight.ToString()} - {Input.GetKey(InputSettings.StrafeRight)}\n" +
-                $"Action 3: Boost - {InputSettings.Boost.ToString()} - {Input.GetKey(InputSettings.Boost)}";
+            StartCoroutine( RemappingCoroutine(inputRemapItem,
+                x => inputRemapItem.KeyCodeProperty.SetValue(instance, x)));
         }
-    
+
         private IEnumerator RemappingCoroutine(InputRemapItem inputRemapItem, Action<KeyCode> action)
         {
             IsRemapping = true;
+            var eventSystem = EventSystem.current.gameObject;
+            eventSystem.SetActive(false);
             SetButtonInteractivity(false);
 
             remapPopup.SetActive(true);
@@ -80,6 +74,7 @@ namespace InputConfiguration
             remapPopup.SetActive(false);
 
             SetButtonInteractivity(true);
+            eventSystem.SetActive(true);
             IsRemapping = false;
         }
 
