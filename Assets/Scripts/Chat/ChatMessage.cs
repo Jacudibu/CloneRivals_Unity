@@ -29,7 +29,7 @@ namespace Chat
                    $"\"Sender\":{Sender ?? "null"}," +
                    $"\"Recipient\":{Recipient ?? "null"}" +
                    "}";
-            return JsonUtility.ToJson(this);
+            //return JsonUtility.ToJson(this);
         }
 
         public static ChatMessage FromJson(string json)
