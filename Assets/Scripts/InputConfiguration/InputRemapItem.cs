@@ -20,7 +20,7 @@ namespace InputConfiguration
             Button = item.GetComponentInChildren<Button>();
             _buttonText = Button.GetComponentInChildren<Text>();
             
-            KeyCodeProperty = typeof(InputSettings).GetProperty(ActionName);
+            KeyCodeProperty = typeof(KeyBindings).GetProperty(ActionName);
             
             if (KeyCodeProperty == null)
             {

@@ -2,7 +2,7 @@
 
 namespace InputConfiguration
 {
-    public static class InputSettings
+    public static class KeyBindings
     {
         public static KeyCode StrafeLeft { get; private set; } = KeyCode.A;
         public static KeyCode StrafeLeft2 { get; private set; } = StrafeLeft;
