@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform shipTransform;
     
     private Vector3 _screenSize;
-    public float rotationSpeed;
+    public float rotationSpeed = 0.4f;
+    public float shipAlignSpeed = 4;
 
     public bool invertX = false;
     public bool invertY = true;
@@ -48,8 +49,11 @@ public class PlayerController : MonoBehaviour
         
         transform.Rotate(Time.deltaTime * rotationSpeed * rotation);
         
-        var targetShipRotation = Quaternion.Euler(clampedPercentage.y * -30, 0, clampedPercentage.x * -30);
-        shipTransform.localRotation = Quaternion.Lerp(shipTransform.localRotation, targetShipRotation, Time.deltaTime); 
+        var targetShipRotation = Quaternion.Euler(
+            clampedPercentage.y * 30 * (invertX ? 1 : -1),
+            0, 
+            clampedPercentage.x * 30 * (invertY ? -1 : 1) * (clampedPercentage.y > 0 ? -1 : 0));
+        shipTransform.localRotation = Quaternion.Lerp(shipTransform.localRotation, targetShipRotation, Time.deltaTime * shipAlignSpeed); 
     }
 
     private void CalculateSpeed()
