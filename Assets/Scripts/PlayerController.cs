@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float strafeAnimationSpeed = 5;
     public float strafeValue;
     public float strafeTravelSpeed = 10;
+    public float strafeVisualTravel = 2;
     
     private bool _strafeLeft;
     private bool _strafeRight;
@@ -52,6 +53,9 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCameraAnchor()
     {
+        shipTransform.localPosition = new Vector3(-strafeValue * strafeVisualTravel, 0, 0);
+        
+        return;
         cameraAnchor.transform.localPosition = _defaultLocalCameraAnchorPosition + new Vector3(
                                                    strafeValue * 2,
                                                    0, 0);
@@ -74,9 +78,13 @@ public class PlayerController : MonoBehaviour
         var strafeRotation = new Vector3(
             0,
             0,
-            Mathf.Lerp(-70, 70, (strafeValue + 1) * 0.5f)
+            Mathf.Lerp(-60, 60, (strafeValue + 1) * 0.5f)
         );
 
+        shipTransform.localRotation = Quaternion.Euler(strafeRotation);
+        
+        return;
+        
         var targetShipRotation = new Vector3(
             clampedPercentage.y * 20 * (invertX ? 1 : -1),
             0,
@@ -93,17 +101,21 @@ public class PlayerController : MonoBehaviour
     {
         if ((!_strafeLeft && !_strafeRight) || (_strafeLeft && _strafeRight))
         {
-            if (strafeValue > 0.01f)
+            if (strafeValue > 0)
             {
                 strafeValue -= strafeAnimationSpeed * Time.deltaTime;
+                if (strafeValue < 0)
+                {
+                    strafeValue = 0;
+                }
             } 
-            else if (strafeValue < -0.01f)
-            {
-                strafeValue += strafeAnimationSpeed * Time.deltaTime;
-            }
             else
             {
-                strafeValue = 0f;
+                strafeValue += strafeAnimationSpeed * Time.deltaTime;
+                if (strafeValue > 0)
+                {
+                    strafeValue = 0;
+                }
             }
         }
         else
@@ -135,7 +147,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (currentSpeed > minSpeed && Input.GetKey(InputConfiguration.KeyBindings.Brake))
+        if (currentSpeed > minSpeed && Input.GetKey(KeyBindings.Brake))
         {
             currentSpeed -= acceleration * Time.deltaTime;
             return;
@@ -147,15 +159,7 @@ public class PlayerController : MonoBehaviour
     private void MoveShip()
     {
         var movement = currentSpeed * Vector3.forward;
-
-        if (_strafeLeft)
-        {
-            movement.x -= strafeTravelSpeed;
-        }
-        if (_strafeRight)
-        {
-            movement.x += strafeTravelSpeed;
-        }
+        movement.x -= strafeValue * strafeTravelSpeed;
         
         transform.Translate(Time.deltaTime * movement);
     }
