@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using InputConfiguration;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
@@ -20,6 +22,9 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 500;
     public float minSpeed = 300;
     public float currentSpeed;
+
+    public float strafeSpeed = 5;
+    public float strafeValue;
     
     void Start()
     {
@@ -28,19 +33,53 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Strafe();
         RotateShip();
         CalculateSpeed();
         MoveShip();
     }
 
+    private void Strafe()
+    {
+        var strafeLeft = Input.GetKey(KeyBindings.StrafeLeft);
+        var strafeRight = Input.GetKey(KeyBindings.StrafeRight);
+
+        if ((!strafeLeft && !strafeRight) || (strafeLeft && strafeRight))
+        {
+            if (strafeValue > 0.01f)
+            {
+                strafeValue -= strafeSpeed * Time.deltaTime;
+            } 
+            else if (strafeValue < -0.01f)
+            {
+                strafeValue += strafeSpeed * Time.deltaTime;
+            }
+            else
+            {
+                strafeValue = 0f;
+            }
+        }
+        else
+        {
+            if (strafeLeft)
+            {
+                strafeValue += strafeSpeed * Time.deltaTime;
+            } 
+            else ;
+            {
+                strafeValue -= strafeSpeed * Time.deltaTime;
+            }
+
+            strafeValue = Mathf.Clamp(strafeValue, -1f, 1f);
+        }
+    }
+    
     private void RotateShip()
     {
         var cursorPos = Input.mousePosition;
         var relativePos = cursorPos - _screenSize;
         var clampedPos = Vector2.ClampMagnitude(relativePos, controlCircleRadius);
         var clampedPercentage = Vector2.ClampMagnitude(clampedPos / controlCircleRadius, 1);
-        Debug.Log(clampedPercentage);
-        
         
         var rotation = new Vector3(
             clampedPos.y * (invertX ? 1 : -1),
@@ -48,12 +87,22 @@ public class PlayerController : MonoBehaviour
             0);
         
         transform.Rotate(Time.deltaTime * rotationSpeed * rotation);
-        
-        var targetShipRotation = Quaternion.Euler(
+
+        var strafeRotation = new Vector3(
+            0,
+            0,
+            Mathf.Lerp(-70, 70, (strafeValue + 1) * 0.5f)
+        );
+
+        var targetShipRotation = new Vector3(
             clampedPercentage.y * 30 * (invertX ? 1 : -1),
             0, 
             clampedPercentage.x * 30 * (invertY ? -1 : 1) * (clampedPercentage.y > 0 ? -1 : 0));
-        shipTransform.localRotation = Quaternion.Lerp(shipTransform.localRotation, targetShipRotation, Time.deltaTime * shipAlignSpeed); 
+
+        shipTransform.localRotation = Quaternion.Lerp(
+            shipTransform.localRotation, 
+            Quaternion.Euler(strafeRotation + targetShipRotation),
+            Time.deltaTime * shipAlignSpeed);
     }
 
     private void CalculateSpeed()
