@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using InputConfiguration;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private bool _strafeLeft;
     private bool _strafeRight;
 
-    public Text uiTextSpeed;
+    public TextMeshProUGUI uiTextSpeed;
     
     void Start()
     {
@@ -53,17 +54,11 @@ public class PlayerController : MonoBehaviour
         MoveShip();
         MoveCameraAnchor();
 
-        uiTextSpeed.text = currentSpeed.ToString("F1");
+        uiTextSpeed.text = (currentSpeed * 10).ToString("F0");
     }
 
     private void MoveCameraAnchor()
     {
-        shipTransform.localPosition = new Vector3(-strafeValue * strafeVisualTravel, 0, 0);
-        
-        return;
-        cameraAnchor.transform.localPosition = _defaultLocalCameraAnchorPosition + new Vector3(
-                                                   strafeValue * 2,
-                                                   0, 0);
     }
 
     private void RotateShip()
@@ -80,26 +75,17 @@ public class PlayerController : MonoBehaviour
         
         transform.Rotate(Time.deltaTime * rotationSpeed * rotation);
 
-        var strafeRotation = new Vector3(
-            0,
-            0,
-            Mathf.Lerp(-60, 60, (strafeValue + 1) * 0.5f)
-        );
+        var strafeRotation = Mathf.Lerp(-120, 120, (strafeValue + 1) * 0.5f);
 
-        shipTransform.localRotation = Quaternion.Euler(strafeRotation);
-        
-        return;
-        
         var targetShipRotation = new Vector3(
             clampedPercentage.y * 20 * (invertX ? 1 : -1),
             0,
-            strafeRotation.z);  //clampedPercentage.x * 30 * (invertY ? -1 : 1) * (clampedPercentage.y > 0 ? -1 : 0));
+            Mathf.Clamp(clampedPercentage.x * 60 * (invertY ? 1 : -1) + strafeRotation, -60, 60));
 
         shipTransform.localRotation = Quaternion.Lerp(
             shipTransform.localRotation, 
             Quaternion.Euler(targetShipRotation),
             Time.deltaTime * shipAlignSpeed);
-            
     }
 
     private void Strafe()
