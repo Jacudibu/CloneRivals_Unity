@@ -1,26 +1,43 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
+using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform targetTransform;
-    //[SerializeField] private float rotationLerpSpeed = 2f;
-    [SerializeField] private float positionLerpSpeed = 5f;
+    [SerializeField] private float rightLerpSpeed = 5f;
+    [SerializeField] private float upLerpSpeed = 2f;
+    [SerializeField] private float forwardLerpSpeed = 2f;
+    
+    private Transform _transform;
 
+    private void Start()
+    {
+        _transform = transform;
+    }
+    
     private void LateUpdate()
     {
-        transform.position = Vector3.Lerp(
-            transform.position,
-            targetTransform.position,
-            Time.deltaTime * positionLerpSpeed);
+        _transform.rotation = targetTransform.rotation;
 
-        transform.rotation = targetTransform.rotation;
+        var direction = targetTransform.position - _transform.position;
 
-        /*
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation, 
-            targetTransform.rotation, 
-            Time.deltaTime * rotationLerpSpeed);
-        */
+        var transformForward = _transform.forward;
+        var transformRight = _transform.right;
+        var transformUp = _transform.up;
+        
+        var forward = Vector3.Dot(direction, transformForward);
+        var right = Vector3.Dot(direction, transformRight);
+        var up = Vector3.Dot(direction, transformUp);
+
+        forward = Mathf.Lerp(0, forward, Time.deltaTime * forwardLerpSpeed);
+        right = Mathf.Lerp(0, right, Time.deltaTime * rightLerpSpeed);
+        up = Mathf.Lerp(0, up, Time.deltaTime * upLerpSpeed);
+        
+        _transform.position +=
+                     transformForward * forward
+                   + transformRight * right
+                   + transformUp * up;
     }
 }

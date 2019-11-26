@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public float shipAlignSpeed = 4;
 
     public bool invertX = false;
-    public bool invertY = true;
+    public bool invertY = false;
 
     public int controlCircleRadius = 200;
     
@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     
     private bool _strafeLeft;
     private bool _strafeRight;
+
+    public Text uiTextSpeed;
     
     void Start()
     {
@@ -50,6 +52,8 @@ public class PlayerController : MonoBehaviour
         CalculateSpeed();
         MoveShip();
         MoveCameraAnchor();
+
+        uiTextSpeed.text = currentSpeed.ToString("F1");
     }
 
     private void MoveCameraAnchor()
@@ -174,7 +178,7 @@ public class PlayerController : MonoBehaviour
     private void MoveShip()
     {
         var movement = currentSpeed * Vector3.forward;
-        movement.x -= strafeValue * strafeTravelSpeed;
+     //   movement.x -= strafeValue * strafeTravelSpeed;
         
         transform.Translate(Time.deltaTime * movement);
     }
