@@ -21,12 +21,13 @@ public class PlayerController : MonoBehaviour
     public int controlCircleRadius = 200;
     
     public float acceleration = 100;
-    public float maxSpeed = 500;
-    public float minSpeed = 300;
-    public float currentSpeed;
+    public float boostSpeed = 500;
+    public float maxSpeed = 300;
+    public float minSpeed = 0;
+    public float currentSpeed = 0;
 
     public float strafeAnimationSpeed = 5;
-    public float strafeValue;
+    public float strafeValue = 0;
     public float strafeTravelSpeed = 10;
     public float strafeVisualTravel = 2;
     
@@ -135,6 +136,20 @@ public class PlayerController : MonoBehaviour
 
     private void CalculateSpeed()
     {
+        if (Input.GetKey(KeyBindings.Boost))
+        {
+            if (currentSpeed < boostSpeed)
+            {
+                currentSpeed += acceleration * Time.deltaTime;
+            }
+            else
+            {
+                currentSpeed = boostSpeed;
+            }
+
+            return;
+        }
+    
         if (currentSpeed < minSpeed)
         {
             currentSpeed += acceleration * Time.deltaTime;

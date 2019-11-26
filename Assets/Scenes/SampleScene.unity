@@ -348,7 +348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 101761449}
   m_Layer: 0
-  m_Name: CameraTargetPosition
+  m_Name: CameraAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -362,7 +362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101761448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -13}
+  m_LocalPosition: {x: 0, y: 2, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1135748553}
@@ -3344,7 +3344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -13}
+  m_LocalPosition: {x: 0, y: 2, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3752,16 +3752,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipTransform: {fileID: 90734944}
-  rotationSpeed: 0
+  cameraAnchor: {fileID: 101761449}
+  rotationSpeed: 0.2
   shipAlignSpeed: 2
   invertX: 0
   invertY: 0
-  acceleration: 0
+  controlCircleRadius: 200
+  acceleration: 10
   maxSpeed: 50
-  minSpeed: 30
+  minSpeed: 0
   currentSpeed: 0
-  strafeSpeed: 5
+  strafeAnimationSpeed: 2
   strafeValue: 0
+  strafeTravelSpeed: 10
+  strafeVisualTravel: 2
 --- !u!1 &1156076943
 GameObject:
   m_ObjectHideFlags: 0
@@ -6466,6 +6470,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'It''s better than nothing!
+
+    <color="red">Lost Connection to chat server. :(
 
     <color="red">Lost Connection to chat server. :(
 
