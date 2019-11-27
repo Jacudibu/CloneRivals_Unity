@@ -13,8 +13,10 @@ public class PlayerController : MonoBehaviour
     
     private Vector3 _screenSize;
     private Vector3 _defaultLocalCameraAnchorPosition;
-    public float rotationSpeed = 0.4f;
-    public float shipAlignSpeed = 4;
+    public float rotationAtMinSpeed = 360;
+    public float rotationAtMaxSpeed = 100;
+    
+    public float shipAlignSpeed = 2;
 
     public bool invertX = false;
     public bool invertY = false;
@@ -27,10 +29,9 @@ public class PlayerController : MonoBehaviour
     public float minSpeed = 0;
     public float currentSpeed = 0;
 
-    public float strafeAnimationSpeed = 5;
+    public float strafeAnimationSpeed = 2;
     public float strafeValue = 0;
-    public float strafeTravelSpeed = 10;
-    public float strafeVisualTravel = 2;
+    public float lateralSpeed = 10;
     
     private bool _strafeLeft;
     private bool _strafeRight;
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
         _screenSize = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
         _defaultLocalCameraAnchorPosition = cameraAnchor.transform.localPosition;
     }
-
+    
     void Update()
     {
         _strafeLeft = Input.GetKey(KeyBindings.StrafeLeft);
@@ -69,9 +70,12 @@ public class PlayerController : MonoBehaviour
         var clampedPercentage = Vector2.ClampMagnitude(clampedPos / controlCircleRadius, 1);
         
         var rotation = new Vector3(
-            clampedPos.y * (invertX ? 1 : -1),
-            clampedPos.x * (invertY ? -1 : 1),
+            clampedPercentage.y * (invertX ? 1 : -1),
+            clampedPercentage.x * (invertY ? -1 : 1),
             0);
+        
+        // TODO: Actually we rotate from 0 to 100 - where 100 is 360°
+        var rotationSpeed = Mathf.Lerp(rotationAtMinSpeed, rotationAtMaxSpeed, currentSpeed / maxSpeed);
         
         transform.Rotate(Time.deltaTime * rotationSpeed * rotation);
 
@@ -164,7 +168,7 @@ public class PlayerController : MonoBehaviour
     private void MoveShip()
     {
         var movement = currentSpeed * Vector3.forward;
-     //   movement.x -= strafeValue * strafeTravelSpeed;
+        movement.x -= strafeValue * lateralSpeed;
         
         transform.Translate(Time.deltaTime * movement);
     }
