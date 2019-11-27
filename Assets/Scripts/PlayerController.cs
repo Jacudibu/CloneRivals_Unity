@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         AdjustStrafeValue();
         ProcessRollInput();
         RotateShip();
-        CalculateSpeed();
+        AdjustSpeed();
         MoveShip();
 
         uiTextSpeed.text = (currentSpeed * 10).ToString("F0");
@@ -192,8 +192,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CalculateSpeed()
+    private void AdjustSpeed()
     {
+        if (isRolling)
+        {
+            currentSpeed -= acceleration * Time.deltaTime;
+            if (currentSpeed < 0)
+            {
+                currentSpeed = 0;
+            }
+            
+            return;
+        }
+        
         if (_isBoostPressed)
         {
             if (currentSpeed < boostSpeed)
