@@ -34,7 +34,20 @@ public class PlayerController : MonoBehaviour
     public float lateralSpeed = 10;
     
     private bool _strafeLeft;
+    private bool _strafeLeftDown;
     private bool _strafeRight;
+    private bool _strafeRightDown;
+    private bool _isBoostPressed;
+
+    [Range(1, 3)]
+    public int rollRotationCount = 1;
+    public float rollTimeFrame = 1f;
+    public bool isRolling = false;
+    public int rollDirection = 0;
+    public float rollProgress = 0;
+    
+    private float _strafeLeftDownTime;
+    private float _strafeRightDownTime;
 
     public TextMeshProUGUI uiTextSpeed;
     
@@ -46,24 +59,75 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        _strafeLeft = Input.GetKey(KeyBindings.StrafeLeft);
-        _strafeRight = Input.GetKey(KeyBindings.StrafeRight);
-        
-        Strafe();
+        ProcessInput();
+        AdjustStrafeValue();
+        ProcessRollInput();
         RotateShip();
         CalculateSpeed();
         MoveShip();
-        MoveCameraAnchor();
 
         uiTextSpeed.text = (currentSpeed * 10).ToString("F0");
     }
 
-    private void MoveCameraAnchor()
+    private void ProcessInput()
     {
+        _strafeLeft = Input.GetKey(KeyBindings.StrafeLeft);
+        _strafeRight = Input.GetKey(KeyBindings.StrafeRight);
+
+        _strafeLeftDown = Input.GetKeyDown(KeyBindings.StrafeLeft);
+        _strafeRightDown = Input.GetKeyDown(KeyBindings.StrafeRight);
+        
+        _isBoostPressed = Input.GetKey(KeyBindings.Boost);
+    }
+
+    private void ProcessRollInput()
+    {
+        if (isRolling)
+        {
+            return;
+        }
+        
+        if (_strafeLeftDown)
+        {
+            if (Time.time - _strafeLeftDownTime < rollTimeFrame)
+            {
+                StartRolling(1);
+            }
+            
+            _strafeLeftDownTime = Time.time;
+        }
+
+        if (_strafeRightDown)
+        {
+            if (Time.time - _strafeRightDownTime < rollTimeFrame)
+            {
+                StartRolling(-1);
+            }
+            
+            _strafeRightDownTime = Time.time;
+        }
+    }
+
+    private void StartRolling(int direction)
+    {
+        rollDirection = direction;
+        rollProgress = 0;
+        isRolling = true;
     }
 
     private void RotateShip()
     {
+        if (isRolling)
+        {
+            shipTransform.Rotate(0, 0, Time.deltaTime * 360 * rollRotationCount * rollDirection);
+            rollProgress += Time.deltaTime;
+            if (rollProgress > 1)
+            {
+                isRolling = false;
+            }
+            return;
+        }
+        
         var cursorPos = Input.mousePosition;
         var relativePos = cursorPos - _screenSize;
         var clampedPos = Vector2.ClampMagnitude(relativePos, controlCircleRadius);
@@ -92,7 +156,7 @@ public class PlayerController : MonoBehaviour
             Time.deltaTime * shipAlignSpeed);
     }
 
-    private void Strafe()
+    private void AdjustStrafeValue()
     {
         if ((!_strafeLeft && !_strafeRight) || (_strafeLeft && _strafeRight))
         {
@@ -130,7 +194,7 @@ public class PlayerController : MonoBehaviour
 
     private void CalculateSpeed()
     {
-        if (Input.GetKey(KeyBindings.Boost))
+        if (_isBoostPressed)
         {
             if (currentSpeed < boostSpeed)
             {
