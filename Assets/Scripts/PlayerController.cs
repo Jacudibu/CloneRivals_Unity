@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private bool _strafeLeftDown;
     private bool _strafeRight;
     private bool _strafeRightDown;
-    private bool _isBoostPressed;
+    private bool _boost;
 
     [Range(1, 3)] public int rollRotationCount = 1;
     [Range(1, 5)] public float rollCooldown = 3;
@@ -72,13 +72,13 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessInput()
     {
-        _strafeLeft = Input.GetKey(KeyBindings.StrafeLeft);
-        _strafeRight = Input.GetKey(KeyBindings.StrafeRight);
+        _strafeLeft = KeyBindings.IsStrafeLeft();
+        _strafeRight = KeyBindings.IsStrafeRight();
 
-        _strafeLeftDown = Input.GetKeyDown(KeyBindings.StrafeLeft);
-        _strafeRightDown = Input.GetKeyDown(KeyBindings.StrafeRight);
-        
-        _isBoostPressed = Input.GetKey(KeyBindings.Boost);
+        _strafeLeftDown = KeyBindings.IsStrafeLeftDown();
+        _strafeRightDown = KeyBindings.IsStrafeRightDown();
+
+        _boost = KeyBindings.IsBoost();;
     }
 
     private void ProcessRollInput()
@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        if (_isBoostPressed)
+        if (_boost)
         {
             if (currentSpeed < boostSpeed)
             {
@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (currentSpeed > minSpeed && Input.GetKey(KeyBindings.Brake))
+        if (currentSpeed > minSpeed && KeyBindings.IsBrake())
         {
             currentSpeed -= acceleration * Time.deltaTime;
             return;

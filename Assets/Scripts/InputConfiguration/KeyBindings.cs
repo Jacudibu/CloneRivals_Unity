@@ -6,10 +6,10 @@ namespace InputConfiguration
     {
         public static KeyCode StrafeLeft { get; private set; } = KeyCode.A;
         public static KeyCode StrafeLeft2 { get; private set; } = StrafeLeft;
-    
+
         public static KeyCode StrafeRight { get; private set; } = KeyCode.D;
         public static KeyCode StrafeRight2 { get; private set; } = StrafeRight;
-    
+        
         public static KeyCode Boost { get; private set; } = KeyCode.Space;
         public static KeyCode Boost2 { get; private set; } = Boost;
     
@@ -27,5 +27,31 @@ namespace InputConfiguration
 
         public static KeyCode ViewBack { get; private set; } = KeyCode.R;
         public static KeyCode ViewBack2 { get; private set; } = ViewBack;
+        
+        
+        
+        public static bool IsStrafeLeft() => Input.GetKey(StrafeLeft) || Input.GetKey(StrafeLeft2);
+        public static bool IsStrafeLeftDown() => Input.GetKeyDown(StrafeLeft) || Input.GetKeyDown(StrafeLeft2);
+
+        public static bool IsStrafeRight() => Input.GetKey(StrafeRight) || Input.GetKey(StrafeRight2);
+        public static bool IsStrafeRightDown() => Input.GetKeyDown(StrafeRight) || Input.GetKeyDown(StrafeRight2);
+
+        public static bool IsBoost() => Input.GetKey(Boost) || Input.GetKey(Boost2);
+        public static bool IsBoostDown() => Input.GetKeyDown(Boost) || Input.GetKeyDown(Boost2);
+        
+        public static bool IsBrake() => Input.GetKey(Brake) || Input.GetKey(Brake2);
+        public static bool IsBrakeDown() => Input.GetKeyDown(Brake) || Input.GetKeyDown(Brake2);
+        
+        public static bool IsPrimary() => Input.GetKey(PrimaryWeapon) || Input.GetKey(PrimaryWeapon2);
+        public static bool IsPrimaryDown() => Input.GetKeyDown(PrimaryWeapon) || Input.GetKeyDown(PrimaryWeapon2);
+        
+        public static bool IsSecondary() => Input.GetKey(SecondaryWeapon) || Input.GetKey(SecondaryWeapon2);
+        public static bool IsSecondaryDown() => Input.GetKeyDown(SecondaryWeapon) || Input.GetKeyDown(SecondaryWeapon2);
+        
+        public static bool IsNextTarget() => Input.GetKey(NextTarget) || Input.GetKey(NextTarget2);
+        public static bool IsNextTargetDown() => Input.GetKeyDown(NextTarget) || Input.GetKeyDown(NextTarget2);
+
+        public static bool IsViewBack() => Input.GetKey(ViewBack) || Input.GetKey(ViewBack2);
+        public static bool IsViewBackDown() => Input.GetKeyDown(ViewBack) || Input.GetKeyDown(ViewBack2);
     }
 }

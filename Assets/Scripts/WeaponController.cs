@@ -16,7 +16,7 @@ public class WeaponController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyBindings.SecondaryWeapon))
+        if (KeyBindings.IsSecondary())
         {
             if (Time.time - _lastSecondaryAttackTime < SecondaryReattackTime)
             {
