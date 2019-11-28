@@ -16,12 +16,15 @@ public class EngineFlameMaster : MonoBehaviour
         
         private readonly ParticleSystem.MinMaxCurve _defaultLifeTime;
         private readonly ParticleSystem.MinMaxCurve _defaultSize;
+        private readonly ParticleSystem.MinMaxCurve _defaultSpeed;
 
         private readonly ParticleSystem.MinMaxCurve _boostLifeTime;
         private readonly ParticleSystem.MinMaxCurve _boostSize;
-        
+        private readonly ParticleSystem.MinMaxCurve _boostSpeed;
+
         private readonly ParticleSystem.MinMaxCurve _slowLifeTime;
         private readonly ParticleSystem.MinMaxCurve _slowSize;
+        private readonly ParticleSystem.MinMaxCurve _slowSpeed;
 
         public EngineFlameParticleSystem(ParticleSystem particleSystem, float boostFactor, float slowFactor)
         {
@@ -33,24 +36,31 @@ public class EngineFlameMaster : MonoBehaviour
             _defaultSize = _particleSystemMainModule.startSize;
             _boostSize = new ParticleSystem.MinMaxCurve(_defaultSize.constantMin * boostFactor, _defaultSize.constantMax * boostFactor);
             _slowSize = new ParticleSystem.MinMaxCurve(_defaultSize.constantMin * slowFactor, _defaultSize.constantMax * slowFactor);
+
+            _defaultSpeed = _particleSystemMainModule.startSpeed;
+            _boostSpeed = new ParticleSystem.MinMaxCurve(_defaultSpeed.constantMin * boostFactor, _defaultSpeed.constantMax * boostFactor);
+            _slowSpeed = new ParticleSystem.MinMaxCurve(_defaultSpeed.constantMin * slowFactor, _defaultSpeed.constantMax * slowFactor);
         }
 
         public void SetDefault()
         {
             _particleSystemMainModule.startLifetime = _defaultLifeTime;
             _particleSystemMainModule.startSize = _defaultSize;
+            _particleSystemMainModule.startSpeed = _defaultSpeed;
         }
 
         public void SetBoost()
         {
             _particleSystemMainModule.startLifetime = _boostLifeTime;
             _particleSystemMainModule.startSize = _boostSize;
+            _particleSystemMainModule.startSpeed = _boostSpeed;
         }
         
         public void SetSlow()
         {
             _particleSystemMainModule.startLifetime = _slowLifeTime;
             _particleSystemMainModule.startSize = _slowSize;
+            _particleSystemMainModule.startSpeed = _defaultSpeed; //slowspeed just doesn't look great.
         }
     }
 

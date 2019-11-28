@@ -3769,7 +3769,7 @@ MonoBehaviour:
   strafeAnimationSpeed: 2
   strafeValue: 0
   lateralSpeed: 10
-  rollRotationCount: 2
+  rollRotationCount: 1
   rollTimeFrame: 1
   isRolling: 0
   rollDirection: 0
@@ -6651,6 +6651,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: '
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
 
     <color="red">Lost Connection to chat server. :(
 
