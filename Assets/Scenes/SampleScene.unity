@@ -325,10 +325,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1674607939, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
-      propertyPath: boostFactor
-      value: 1.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
 --- !u!4 &90734944 stripped
@@ -1259,6 +1255,98 @@ Transform:
   m_Father: {fileID: 572870725}
   m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &383157884 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 383157884, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 90734943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &409246609
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1819210613620524, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_Name
+      value: StarSparrow4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 35.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 74
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1674607939, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
+--- !u!1 &409246610 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1819210613620524, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 409246609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &409246611
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409246610}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!4 &409246612 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 409246609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &428559274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,6 +1725,7 @@ GameObject:
   - component: {fileID: 624520691}
   - component: {fileID: 624520690}
   - component: {fileID: 624520689}
+  - component: {fileID: 624520693}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1711,12 +1800,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 624520688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.7, y: 2.6, z: 27}
+  m_LocalPosition: {x: 18.7, y: 2.6, z: 79.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &624520693
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624520688}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 100000000
+  m_AngularDrag: 101000000
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &624579602
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,6 +3822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1135748553}
   - component: {fileID: 1135748554}
+  - component: {fileID: 1135748556}
   - component: {fileID: 1135748555}
   m_Layer: 0
   m_Name: Player
@@ -3770,6 +3876,7 @@ MonoBehaviour:
   strafeValue: 0
   lateralSpeed: 10
   rollRotationCount: 1
+  rollCooldown: 3
   rollTimeFrame: 1
   isRolling: 0
   rollDirection: 0
@@ -3791,6 +3898,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1135748556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135748552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c7ed547cb7654f7b127d6f7ec41866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecondaryReattackTime: 1
+  missilePrefab: {fileID: 8281691259311392500, guid: 252454629b35e5c8598e40c15bec0f64,
+    type: 3}
+  missileSpawnPoints:
+  - {fileID: 1763082164}
+  - {fileID: 383157884}
+  target: {fileID: 409246612}
 --- !u!1 &1156076943
 GameObject:
   m_ObjectHideFlags: 0
@@ -5761,6 +5887,12 @@ Transform:
   m_Father: {fileID: 572870725}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1763082164 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1763082164, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 90734943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1770783517
 GameObject:
   m_ObjectHideFlags: 0
@@ -6651,6 +6783,82 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: '
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
 
     <color="red">Lost Connection to chat server. :(
 
