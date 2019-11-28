@@ -25,8 +25,8 @@ namespace InputConfiguration
         public static KeyCode NextTarget { get; private set; } = KeyCode.LeftShift;
         public static KeyCode NextTarget2 { get; private set; } = NextTarget;
 
-        public static KeyCode ViewBack { get; private set; } = KeyCode.R;
-        public static KeyCode ViewBack2 { get; private set; } = ViewBack;
+        public static KeyCode RearCamera { get; private set; } = KeyCode.R;
+        public static KeyCode RearCamera2 { get; private set; } = RearCamera;
         
         
         
@@ -51,7 +51,7 @@ namespace InputConfiguration
         public static bool IsNextTarget() => Input.GetKey(NextTarget) || Input.GetKey(NextTarget2);
         public static bool IsNextTargetDown() => Input.GetKeyDown(NextTarget) || Input.GetKeyDown(NextTarget2);
 
-        public static bool IsViewBack() => Input.GetKey(ViewBack) || Input.GetKey(ViewBack2);
-        public static bool IsViewBackDown() => Input.GetKeyDown(ViewBack) || Input.GetKeyDown(ViewBack2);
+        public static bool IsRearCamera() => Input.GetKey(RearCamera) || Input.GetKey(RearCamera2);
+        public static bool IsRearCameraDown() => Input.GetKeyDown(RearCamera) || Input.GetKeyDown(RearCamera2);
     }
 }

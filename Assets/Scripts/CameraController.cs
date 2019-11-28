@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using InputConfiguration;
+using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
@@ -7,23 +8,30 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float rightLerpSpeed = 5f;
     [SerializeField] private float upLerpSpeed = 2f;
     [SerializeField] private float forwardLerpSpeed = 2f;
+
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera rearCamera;
     
-    private Transform _transform;
+    private Transform _mainCameraTransform;
 
     private void Start()
     {
-        _transform = transform;
+        mainCamera = gameObject.GetComponent<Camera>();
+        _mainCameraTransform = mainCamera.transform;
     }
     
     private void LateUpdate()
     {
-        _transform.rotation = targetTransform.rotation;
+        mainCamera.enabled = !KeyBindings.IsRearCamera();
+        rearCamera.enabled = !mainCamera.enabled;
+        
+        _mainCameraTransform.rotation = targetTransform.rotation;
 
-        var direction = targetTransform.position - _transform.position;
+        var direction = targetTransform.position - _mainCameraTransform.position;
 
-        var transformForward = _transform.forward;
-        var transformRight = _transform.right;
-        var transformUp = _transform.up;
+        var transformForward = _mainCameraTransform.forward;
+        var transformRight = _mainCameraTransform.right;
+        var transformUp = _mainCameraTransform.up;
         
         var forward = Vector3.Dot(direction, transformForward);
         var right = Vector3.Dot(direction, transformRight);
@@ -33,7 +41,7 @@ public class CameraController : MonoBehaviour
         right = Mathf.Lerp(0, right, Time.deltaTime * rightLerpSpeed);
         up = Mathf.Lerp(0, up, Time.deltaTime * upLerpSpeed);
         
-        _transform.position +=
+        _mainCameraTransform.position +=
                      transformForward * forward
                    + transformRight * right
                    + transformUp * up;
