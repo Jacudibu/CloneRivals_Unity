@@ -39,13 +39,14 @@ public class PlayerController : MonoBehaviour
     private bool _strafeRightDown;
     private bool _isBoostPressed;
 
-    [Range(1, 3)]
-    public int rollRotationCount = 1;
+    [Range(1, 3)] public int rollRotationCount = 1;
+    [Range(1, 5)] public float rollCooldown = 3;
     public float rollTimeFrame = 1f;
     public bool isRolling = false;
     public int rollDirection = 0;
     public float rollProgress = 0;
-    
+
+    private float _lastRollTime;
     private float _strafeLeftDownTime;
     private float _strafeRightDownTime;
 
@@ -91,7 +92,10 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.time - _strafeLeftDownTime < rollTimeFrame)
             {
-                StartRolling(1);
+                if (Time.time - _lastRollTime > rollCooldown)
+                {
+                    StartRolling(1);
+                }
             }
             
             _strafeLeftDownTime = Time.time;
@@ -101,7 +105,10 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.time - _strafeRightDownTime < rollTimeFrame)
             {
-                StartRolling(-1);
+                if (Time.time - _lastRollTime > rollCooldown)
+                {
+                    StartRolling(-1);
+                }
             }
             
             _strafeRightDownTime = Time.time;
@@ -113,6 +120,7 @@ public class PlayerController : MonoBehaviour
         rollDirection = direction;
         rollProgress = 0;
         isRolling = true;
+        _lastRollTime = Time.time;
     }
 
     private void RotateShip()
