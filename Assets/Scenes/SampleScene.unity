@@ -3864,6 +3864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipTransform: {fileID: 90734944}
   cameraAnchor: {fileID: 101761449}
+  blockRotationInRearView: 0
   rotationAtMinSpeed: 100
   rotationAtMaxSpeed: 50
   shipAlignSpeed: 2
@@ -6975,6 +6976,20 @@ MonoBehaviour:
 
     <color="red">Lost Connection to chat server. :(
 
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
     <color="red">Lost Connection to chat server. :('
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7455,7 +7470,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072254857}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: 12.51}
+  m_LocalPosition: {x: 0, y: 0, z: 12.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1135748553}

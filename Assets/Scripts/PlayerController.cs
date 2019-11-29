@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     
     private Vector3 _screenSize;
     private Vector3 _defaultLocalCameraAnchorPosition;
+    public bool blockRotationInRearView = false;
     public float rotationAtMinSpeed = 360;
     public float rotationAtMaxSpeed = 100;
     
@@ -135,15 +136,25 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
+
+
+        Vector2 clampedMovementPercentage;
+        if (blockRotationInRearView && KeyBindings.IsRearCamera())
+        {
+            clampedMovementPercentage = Vector2.zero;
+        }
+        else
+        {
+            var cursorPos = Input.mousePosition;
+            var relativePos = cursorPos - _screenSize;
+            var clampedPos = Vector2.ClampMagnitude(relativePos, controlCircleRadius);
+            clampedMovementPercentage = Vector2.ClampMagnitude(clampedPos / controlCircleRadius, 1);
+        }
         
-        var cursorPos = Input.mousePosition;
-        var relativePos = cursorPos - _screenSize;
-        var clampedPos = Vector2.ClampMagnitude(relativePos, controlCircleRadius);
-        var clampedPercentage = Vector2.ClampMagnitude(clampedPos / controlCircleRadius, 1);
         
         var rotation = new Vector3(
-            clampedPercentage.y * (invertX ? 1 : -1),
-            clampedPercentage.x * (invertY ? -1 : 1),
+            clampedMovementPercentage.y * (invertX ? 1 : -1),
+            clampedMovementPercentage.x * (invertY ? -1 : 1),
             0);
         
         // TODO: Actually we rotate from 0 to 100 - where 100 is 360°
@@ -154,9 +165,9 @@ public class PlayerController : MonoBehaviour
         var strafeRotation = Mathf.Lerp(-120, 120, (strafeValue + 1) * 0.5f);
 
         var targetShipRotation = new Vector3(
-            clampedPercentage.y * 20 * (invertX ? 1 : -1),
+            clampedMovementPercentage.y * 20 * (invertX ? 1 : -1),
             0,
-            Mathf.Clamp(clampedPercentage.x * 60 * (invertY ? 1 : -1) + strafeRotation, -60, 60));
+            Mathf.Clamp(clampedMovementPercentage.x * 60 * (invertY ? 1 : -1) + strafeRotation, -60, 60));
 
         shipTransform.localRotation = Quaternion.Lerp(
             shipTransform.localRotation, 
