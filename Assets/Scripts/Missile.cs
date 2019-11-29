@@ -40,6 +40,15 @@ public class Missile : MonoBehaviour
         Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject, 1f);
 
+        foreach (var meshRenderer in GetComponentsInChildren<MeshRenderer>())
+        {
+            meshRenderer.enabled = false;
+        }
+        foreach (var particles in GetComponentsInChildren<ParticleSystem>())
+        {
+            particles.Stop();
+        }
+        
         transform.GetChild(0).gameObject.SetActive(false);
         enabled = false;
     }
