@@ -13,22 +13,56 @@ public class TargetManager : MonoBehaviour
     
     public float radius = 100;
     public float arrowRotationOffset = -90;
-
+    private Camera _camera;
+    private Plane[] _cameraFrustumPlanes;
+    
     private void Start()
     {
-        _thingsTargetingMeArrows = new List<GameObject>()
+        _camera = Camera.main;
+        _thingsTargetingMeArrows = new List<GameObject>
         {
             targetMeArrow
         };
+        
+        InitializeOrDisableArrows();
     }
 
     private void Update()
     {
+        _cameraFrustumPlanes = GeometryUtility.CalculateFrustumPlanes(_camera);
+
         if (target != null)
         {
-            AdjustArrowTransform(targetArrow.transform, target.transform.position);
+            if (IsObjectInScreenArea(target.transform.position))
+            {
+                targetArrow.SetActive(true);
+                AdjustArrowTransform(targetArrow.transform, target.transform.position);
+            }
+            else
+            {
+                targetArrow.SetActive(false);
+            }
         }
 
+        for (var i = 0; i < thingsTargetingMe.Count; i++)
+        {
+            var thing = thingsTargetingMe[i];
+            var arrow = _thingsTargetingMeArrows[i];
+            
+            if (IsObjectInScreenArea(thing.transform.position))
+            {
+                arrow.SetActive(true);
+                AdjustArrowTransform(arrow.transform, thing.transform.position);
+            }
+            else
+            {
+                arrow.SetActive(false);
+            }
+        }
+    }
+
+    private void InitializeOrDisableArrows()
+    {
         if (_thingsTargetingMeArrows.Count < thingsTargetingMe.Count)
         {
             var original = _thingsTargetingMeArrows[0];
@@ -39,13 +73,14 @@ public class TargetManager : MonoBehaviour
                 _thingsTargetingMeArrows.Add(arrow);
             }
         }
-
-        for (var i = 0; i < thingsTargetingMe.Count; i++)
-        {
-            AdjustArrowTransform(_thingsTargetingMeArrows[i].transform, thingsTargetingMe[i].transform.position);
-        }
     }
-
+    
+    private bool IsObjectInScreenArea(Vector3 position)
+    {
+        var bounds = new Bounds(position, Vector3.one);
+        return !GeometryUtility.TestPlanesAABB(_cameraFrustumPlanes, bounds);
+    }
+    
     private void AdjustArrowTransform(Transform arrowTransform, Vector3 position)
     {
         var relativePos = transform.InverseTransformPoint(position);
