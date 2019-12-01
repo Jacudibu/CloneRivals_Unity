@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public float strafeAnimationSpeed = 2;
     public float strafeValue = 0;
     public float lateralSpeed = 10;
+
+    public float boostShakeStrength = 1.5f;
     
     private bool _strafeLeft;
     private bool _strafeLeftDown;
@@ -66,9 +68,26 @@ public class PlayerController : MonoBehaviour
         ProcessRollInput();
         RotateShip();
         AdjustSpeed();
+        ShakeShip();
         MoveShip();
 
         uiTextSpeed.text = (currentSpeed * 10).ToString("F0");
+    }
+
+    private void ShakeShip()
+    {
+        if (_boost)
+        {
+            var x = (Random.value * 2.0f - 1.0f) * boostShakeStrength;
+            var y = (Random.value * 2.0f - 1.0f) * boostShakeStrength;
+            var z = (Random.value * 2.0f - 1.0f) * boostShakeStrength;
+
+            shipTransform.localPosition = Vector3.Lerp(shipTransform.localPosition, new Vector3(x, y, z), Time.deltaTime);
+        }
+        else
+        {
+            shipTransform.localPosition = Vector3.Lerp(shipTransform.localPosition, Vector3.zero, Time.deltaTime);
+        }
     }
 
     private void ProcessInput()
