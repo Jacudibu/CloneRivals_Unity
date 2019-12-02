@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,6 +10,7 @@ public class NameplateCanvas : MonoBehaviour
     
     [Range(0, 50)] public float extraHeight;
     public float drawDistance = 500;
+    private float _scaleDistance;
     
     private Plane[] _cameraFrustumPlanes;
     private Transform _playerTransform;
@@ -27,9 +29,14 @@ public class NameplateCanvas : MonoBehaviour
         }
     }
 
-    
+    private void OnValidate()
+    {
+        _scaleDistance = drawDistance * 0.01f;
+    }
+
     private void Start()
     {
+        OnValidate();
         _camera = Camera.main;
         _playerTransform = FindObjectOfType<PlayerController>().transform;
         namePlatePrefab.SetActive(false);
@@ -57,13 +64,22 @@ public class NameplateCanvas : MonoBehaviour
                 continue;
             }
 
-            if ((drawable.Object.transform.position - _playerTransform.position).magnitude > drawDistance)
+            var distance = (drawable.Object.transform.position - _playerTransform.position).magnitude;
+            if (distance > drawDistance)
             {
                 drawable.NamePlate.SetActive(false);
                 continue;
             }
+
+            var scaleFactor = 1f;
+            
+            if (drawDistance - distance < drawDistance * 0.01f)
+            {
+                scaleFactor = (drawDistance - distance) / (drawDistance * 0.01f);
+            }
             
             drawable.NamePlate.SetActive(true);
+            drawable.NamePlate.transform.localScale = Vector3.one * scaleFactor;
             drawable.NamePlate.transform.position = _camera.WorldToScreenPoint(drawable.Object.transform.position) + Vector3.up * extraHeight;
         }
     }
