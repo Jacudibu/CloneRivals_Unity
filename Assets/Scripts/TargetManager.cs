@@ -27,13 +27,13 @@ public class TargetManager : MonoBehaviour
         InitializeOrDisableArrows();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         _cameraFrustumPlanes = GeometryUtility.CalculateFrustumPlanes(_camera);
 
         if (target != null)
         {
-            if (IsObjectInScreenArea(target.transform.position))
+            if (!IsObjectInScreenArea(target.transform.position))
             {
                 targetArrow.SetActive(true);
                 AdjustArrowTransform(targetArrow.transform, target.transform.position);
@@ -49,7 +49,7 @@ public class TargetManager : MonoBehaviour
             var thing = thingsTargetingMe[i];
             var arrow = _thingsTargetingMeArrows[i];
             
-            if (IsObjectInScreenArea(thing.transform.position))
+            if (!IsObjectInScreenArea(thing.transform.position))
             {
                 arrow.SetActive(true);
                 AdjustArrowTransform(arrow.transform, thing.transform.position);
@@ -78,7 +78,7 @@ public class TargetManager : MonoBehaviour
     private bool IsObjectInScreenArea(Vector3 position)
     {
         var bounds = new Bounds(position, Vector3.one);
-        return !GeometryUtility.TestPlanesAABB(_cameraFrustumPlanes, bounds);
+        return GeometryUtility.TestPlanesAABB(_cameraFrustumPlanes, bounds);
     }
     
     private void AdjustArrowTransform(Transform arrowTransform, Vector3 position)
