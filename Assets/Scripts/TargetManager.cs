@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using InputConfiguration;
 using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
     public List<GameObject> thingsTargetingMe;
-    public GameObject target;
+    public GameObject Target { get; private set; }
     public GameObject currentTargetIndicator;
     public GameObject lockOnReticle;
 
@@ -18,11 +20,16 @@ public class TargetManager : MonoBehaviour
     private Plane[] _cameraFrustumPlanes;
     private WeaponController _weaponController;
 
-
+    private Transform _shipTransform;
+    [SerializeField] private float targetLockRange = 200f;
+    [SerializeField] private float targetLockAngle = 25f;
+    [SerializeField] private Collider coneCollider;
+    
     private void Start()
     {
         _camera = Camera.main;
         _weaponController = GetComponent<WeaponController>();
+        _shipTransform = GetComponentInChildren<MeshRenderer>().transform;
         _thingsTargetingMeArrows = new List<GameObject>
         {
             targetMeArrow
@@ -31,25 +38,40 @@ public class TargetManager : MonoBehaviour
         InitializeOrDisableArrows();
     }
 
+    private void Update()
+    {
+        if (!KeyBindings.IsNextTargetDown() && Target != null)
+        {
+            return;
+        }
+
+        var viableTargets = Physics.OverlapSphere(_shipTransform.position, targetLockRange)
+            .Where(x => x.GetComponent<Health>() != null)
+            .Where(x => Mathf.Abs(Vector3.Angle(_shipTransform.forward, x.transform.position - _shipTransform.position)) < targetLockAngle)
+            .Select(x => x.gameObject);
+
+        Target = viableTargets.FirstOrDefault();
+    }
+
     private void LateUpdate()
     {
         _cameraFrustumPlanes = GeometryUtility.CalculateFrustumPlanes(_camera);
 
-        if (target != null)
+        if (Target != null)
         {
-            if (!IsObjectInScreenArea(target.transform.position))
+            if (!IsObjectInScreenArea(Target.transform.position))
             {
                 targetArrow.SetActive(true);
                 lockOnReticle.SetActive(false);
                 currentTargetIndicator.SetActive(false);
-                AdjustArrowTransform(targetArrow.transform, target.transform.position);
+                AdjustArrowTransform(targetArrow.transform, Target.transform.position);
             }
             else
             {
                 targetArrow.SetActive(false);
                 currentTargetIndicator.SetActive(true);
 
-                var targetScreenPosition = _camera.WorldToScreenPoint(target.transform.position);
+                var targetScreenPosition = _camera.WorldToScreenPoint(Target.transform.position);
                 currentTargetIndicator.transform.position = targetScreenPosition;
                 
                 if (_weaponController.SecondaryLockable)
@@ -62,6 +84,11 @@ public class TargetManager : MonoBehaviour
                     lockOnReticle.SetActive(false);
                 }
             }
+        }
+        else
+        {
+            lockOnReticle.SetActive(false);
+            currentTargetIndicator.SetActive(false);
         }
 
         for (var i = 0; i < thingsTargetingMe.Count; i++)

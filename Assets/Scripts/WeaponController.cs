@@ -10,25 +10,26 @@ public class WeaponController : MonoBehaviour
     
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private Transform[] missileSpawnPoints;
-    [SerializeField] private Transform target;
     
     [SerializeField] public float lockOnAngle = 12;
     [SerializeField] public float lockOnRange = 165;
     
     private Transform _shipTransform;
+    private TargetManager _targetManager;
 
     
     void Start()
     {
         _shipTransform = GetComponentInChildren<MeshRenderer>().transform;
+        _targetManager = GetComponent<TargetManager>();
     }
     
     void Update()
     {
-        if (target != null)
+        if (_targetManager.Target != null)
         {
-            var angle = Vector3.Angle(_shipTransform.forward, target.transform.position - _shipTransform.position);
-            var distance = Vector3.Distance(_shipTransform.position, target.position);
+            var angle = Vector3.Angle(_shipTransform.forward, _targetManager.Target.transform.position - _shipTransform.position);
+            var distance = Vector3.Distance(_shipTransform.position, _targetManager.Target.transform.position);
             SecondaryLockable = angle > -lockOnAngle &&
                                 angle < lockOnAngle && 
                                 distance <= lockOnRange;
@@ -51,7 +52,7 @@ public class WeaponController : MonoBehaviour
                 {
                     var obj = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
                     var missile = obj.GetComponent<Missile>();
-                    missile.SetTarget(SecondaryLockable ? target : null);
+                    missile.SetTarget(SecondaryLockable ? _targetManager.Target.transform : null);
                 }
 
                 _lastSecondaryAttackTime = Time.time;
