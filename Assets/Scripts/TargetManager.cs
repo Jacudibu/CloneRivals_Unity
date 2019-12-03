@@ -6,7 +6,6 @@ public class TargetManager : MonoBehaviour
     public List<GameObject> thingsTargetingMe;
     public GameObject target;
     public GameObject lockOnReticle;
-    public float lockOnAngle = 6;
     
     public GameObject targetArrow;
     public GameObject targetMeArrow;
@@ -16,12 +15,12 @@ public class TargetManager : MonoBehaviour
     public float arrowRotationOffset = -90;
     private Camera _camera;
     private Plane[] _cameraFrustumPlanes;
-    private Transform _shipTransform;
+    private WeaponController _weaponController;
     
     private void Start()
     {
         _camera = Camera.main;
-        _shipTransform = GetComponentInChildren<MeshRenderer>().transform;
+        _weaponController = GetComponent<WeaponController>();
         _thingsTargetingMeArrows = new List<GameObject>
         {
             targetMeArrow
@@ -46,12 +45,8 @@ public class TargetManager : MonoBehaviour
             {
                 targetArrow.SetActive(false);
 
-                var angle = Vector3.Angle(_shipTransform.forward, target.transform.position - _shipTransform.position);
-                var lockable = angle > -lockOnAngle && angle < lockOnAngle;
-                
-                lockOnReticle.SetActive(lockable);
-
-                if (lockable)
+                lockOnReticle.SetActive(_weaponController.SecondaryLockable);
+                if (_weaponController.SecondaryLockable)
                 {
                     lockOnReticle.transform.position = _camera.WorldToScreenPoint(target.transform.position);
                 }
