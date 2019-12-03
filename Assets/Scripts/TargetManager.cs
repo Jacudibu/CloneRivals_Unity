@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
     public List<GameObject> thingsTargetingMe;
     public GameObject target;
-
+    public GameObject lockOnReticle;
+    
     public GameObject targetArrow;
     public GameObject targetMeArrow;
     private List<GameObject> _thingsTargetingMeArrows;
@@ -36,11 +36,14 @@ public class TargetManager : MonoBehaviour
             if (!IsObjectInScreenArea(target.transform.position))
             {
                 targetArrow.SetActive(true);
+                lockOnReticle.SetActive(false);
                 AdjustArrowTransform(targetArrow.transform, target.transform.position);
             }
             else
             {
                 targetArrow.SetActive(false);
+                lockOnReticle.SetActive(true);
+                lockOnReticle.transform.position = _camera.WorldToScreenPoint(target.transform.position);
             }
         }
 
