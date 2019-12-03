@@ -45,10 +45,14 @@ public class TargetManager : MonoBehaviour
             {
                 targetArrow.SetActive(false);
 
-                lockOnReticle.SetActive(_weaponController.SecondaryLockable);
                 if (_weaponController.SecondaryLockable)
                 {
+                    lockOnReticle.SetActive(true);
                     lockOnReticle.transform.position = _camera.WorldToScreenPoint(target.transform.position);
+                }
+                else
+                {
+                    lockOnReticle.SetActive(false);
                 }
             }
         }
