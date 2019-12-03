@@ -5,18 +5,20 @@ public class TargetManager : MonoBehaviour
 {
     public List<GameObject> thingsTargetingMe;
     public GameObject target;
+    public GameObject currentTargetIndicator;
     public GameObject lockOnReticle;
-    
+
     public GameObject targetArrow;
     public GameObject targetMeArrow;
     private List<GameObject> _thingsTargetingMeArrows;
-    
+
     public float radius = 100;
     public float arrowRotationOffset = -90;
     private Camera _camera;
     private Plane[] _cameraFrustumPlanes;
     private WeaponController _weaponController;
-    
+
+
     private void Start()
     {
         _camera = Camera.main;
@@ -39,16 +41,21 @@ public class TargetManager : MonoBehaviour
             {
                 targetArrow.SetActive(true);
                 lockOnReticle.SetActive(false);
+                currentTargetIndicator.SetActive(false);
                 AdjustArrowTransform(targetArrow.transform, target.transform.position);
             }
             else
             {
                 targetArrow.SetActive(false);
+                currentTargetIndicator.SetActive(true);
 
+                var targetScreenPosition = _camera.WorldToScreenPoint(target.transform.position);
+                currentTargetIndicator.transform.position = targetScreenPosition;
+                
                 if (_weaponController.SecondaryLockable)
                 {
                     lockOnReticle.SetActive(true);
-                    lockOnReticle.transform.position = _camera.WorldToScreenPoint(target.transform.position);
+                    lockOnReticle.transform.position = targetScreenPosition;
                 }
                 else
                 {
