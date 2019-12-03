@@ -48,6 +48,7 @@ public class TargetManager : MonoBehaviour
         var viableTargets = Physics.OverlapSphere(_shipTransform.position, targetLockRange)
             .Where(x => x.GetComponent<Health>() != null)
             .Where(x => Mathf.Abs(Vector3.Angle(_shipTransform.forward, x.transform.position - _shipTransform.position)) < targetLockAngle)
+            .Where(x => x.gameObject != Target)
             .Select(x => x.gameObject);
 
         Target = viableTargets.FirstOrDefault();
