@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Health : MonoBehaviour
+public class TargetableObject : MonoBehaviour
 {
     [SerializeField] private int currentHealth;
     [SerializeField] private int maxHealth;
@@ -17,7 +15,7 @@ public class Health : MonoBehaviour
         return currentHealth;
     }
 
-    public int AddHealth(int amount)
+    public int RestoreHealth(int amount)
     {
         currentHealth += amount;
         if (currentHealth > maxHealth)
@@ -28,9 +26,20 @@ public class Health : MonoBehaviour
         return currentHealth;
     }
 
-    public int SubtractHealth(int amount)
+    public int TakeDamage(int amount)
     {
         currentHealth -= amount;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+        
         return currentHealth;
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject, 0.1f);
     }
 }

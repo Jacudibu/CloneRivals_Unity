@@ -46,7 +46,7 @@ public class TargetManager : MonoBehaviour
         }
 
         var viableTargets = Physics.OverlapSphere(_shipTransform.position, targetLockRange)
-            .Where(x => x.GetComponent<Health>() != null)
+            .Where(x => x.GetComponent<TargetableObject>() != null)
             .Where(x => Mathf.Abs(Vector3.Angle(_shipTransform.forward, x.transform.position - _shipTransform.position)) < targetLockAngle)
             .Where(x => x.gameObject != Target)
             .Select(x => x.gameObject);
@@ -96,6 +96,13 @@ public class TargetManager : MonoBehaviour
         {
             var thing = thingsTargetingMe[i];
             var arrow = _thingsTargetingMeArrows[i];
+
+            if (thing == null)
+            {
+                //TODO: Listen to OnTargetableDestroyed and remove it or something
+                arrow.SetActive(false);
+                continue;
+            }
             
             if (!IsObjectInScreenArea(thing.transform.position))
             {

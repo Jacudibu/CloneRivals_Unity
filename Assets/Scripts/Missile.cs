@@ -4,21 +4,22 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
     [SerializeField] private GameObject explosionEffect;
-    
-    [SerializeField] private Transform target;
 
-    [SerializeField] private float speed = 50;
     [SerializeField] private float rotationDegrees = 110;
-    
+
+    private Transform _target;
+    private int _damage;
+    private int _speed;
+
     void Update()
     {
-        if (target != null)
+        if (_target != null)
         {
-            var targetRotation = Quaternion.LookRotation(target.position - transform.position);
+            var targetRotation = Quaternion.LookRotation(_target.position - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationDegrees);
         }
         
-        transform.Translate(Time.deltaTime * speed * Vector3.forward);
+        transform.Translate(Time.deltaTime * _speed * Vector3.forward);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -37,6 +38,12 @@ public class Missile : MonoBehaviour
             }
         }
 
+        var targetable = other.GetComponent<TargetableObject>();
+        if (targetable != null)
+        {
+            targetable.TakeDamage(_damage);
+        }
+        
         Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject, 1f);
 
@@ -55,6 +62,16 @@ public class Missile : MonoBehaviour
 
     public void SetTarget(Transform newTarget)
     {
-        target = newTarget;
+        _target = newTarget;
+    }
+
+    public void SetDamage(int amount)
+    {
+        _damage = amount;
+    }
+
+    public void SetSpeed(int amount)
+    {
+        _speed = amount;
     }
 }

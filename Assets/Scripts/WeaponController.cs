@@ -1,6 +1,7 @@
 ﻿using InputConfiguration;
 using UnityEngine;
 
+[RequireComponent(typeof(TargetManager))]
 public class WeaponController : MonoBehaviour
 {
     public float secondaryReattackTime = 1f;
@@ -17,6 +18,8 @@ public class WeaponController : MonoBehaviour
     private Transform _shipTransform;
     private TargetManager _targetManager;
 
+    [SerializeField] private int missileDamage = 10;
+    [SerializeField] private int missileSpeed = 55;
     
     void Start()
     {
@@ -53,6 +56,8 @@ public class WeaponController : MonoBehaviour
                     var obj = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
                     var missile = obj.GetComponent<Missile>();
                     missile.SetTarget(SecondaryLockable ? _targetManager.Target.transform : null);
+                    missile.SetDamage(missileDamage);
+                    missile.SetSpeed(missileSpeed);
                 }
 
                 _lastSecondaryAttackTime = Time.time;

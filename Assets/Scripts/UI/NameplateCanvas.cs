@@ -44,7 +44,7 @@ public class NameplateCanvas : MonoBehaviour
         _playerTransform = FindObjectOfType<PlayerController>().transform;
         namePlatePrefab.SetActive(false);
 
-        _drawables = FindObjectsOfType<Health>()
+        _drawables = FindObjectsOfType<TargetableObject>()
             .Where(x => x.GetComponent<PlayerController>() == null)
             .Select(x => new DrawableObjectData(x.gameObject, Instantiate(namePlatePrefab, this.transform, true)))
             .ToList();
@@ -61,6 +61,13 @@ public class NameplateCanvas : MonoBehaviour
 
         foreach (var drawable in _drawables)
         {
+            if (drawable.Object == null)
+            {
+                //TODO: Listen to OnTargetableDestroyed and remove it or something
+                drawable.NamePlate.SetActive(false);
+                continue;
+            }
+            
             if (!IsObjectInScreenArea(drawable.Object.transform.position))
             {
                 drawable.NamePlate.SetActive(false);
