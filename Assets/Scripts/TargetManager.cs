@@ -36,6 +36,14 @@ public class TargetManager : MonoBehaviour
         };
         
         InitializeOrDisableArrows();
+
+        EventHub.OnTargetableDestroyed.AddListener(OnTargetableDestroyed);
+    }
+
+    private void OnTargetableDestroyed(GameObject targetableObject)
+    {
+        thingsTargetingMe.Remove(targetableObject);
+        InitializeOrDisableArrows();
     }
 
     private void Update()
@@ -88,6 +96,7 @@ public class TargetManager : MonoBehaviour
         }
         else
         {
+            targetArrow.SetActive(false);
             lockOnReticle.SetActive(false);
             currentTargetIndicator.SetActive(false);
         }
@@ -97,13 +106,6 @@ public class TargetManager : MonoBehaviour
             var thing = thingsTargetingMe[i];
             var arrow = _thingsTargetingMeArrows[i];
 
-            if (thing == null)
-            {
-                //TODO: Listen to OnTargetableDestroyed and remove it or something
-                arrow.SetActive(false);
-                continue;
-            }
-            
             if (!IsObjectInScreenArea(thing.transform.position))
             {
                 arrow.SetActive(true);
@@ -126,6 +128,13 @@ public class TargetManager : MonoBehaviour
             {
                 var arrow = Instantiate(original, original.transform.parent, true);
                 _thingsTargetingMeArrows.Add(arrow);
+            }
+        } 
+        else if (_thingsTargetingMeArrows.Count > thingsTargetingMe.Count)
+        {
+            for (var i = thingsTargetingMe.Count; i < _thingsTargetingMeArrows.Count; i++)
+            {
+                _thingsTargetingMeArrows[i].SetActive(false);
             }
         }
     }

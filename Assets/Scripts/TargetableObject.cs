@@ -40,6 +40,7 @@ public class TargetableObject : MonoBehaviour
 
     private void Die()
     {
+        EventHub.OnTargetableDestroyed.Invoke(gameObject);
         Destroy(gameObject, 0.1f);
     }
 }

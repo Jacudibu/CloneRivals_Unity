@@ -17,7 +17,7 @@ public class NameplateCanvas : MonoBehaviour
     private Camera _camera;
     private List<DrawableObjectData> _drawables;
 
-    private struct DrawableObjectData
+    private class DrawableObjectData
     {
         public readonly GameObject Object;
         public readonly GameObject NamePlate;
@@ -48,10 +48,22 @@ public class NameplateCanvas : MonoBehaviour
             .Where(x => x.GetComponent<PlayerController>() == null)
             .Select(x => new DrawableObjectData(x.gameObject, Instantiate(namePlatePrefab, this.transform, true)))
             .ToList();
-        
+
         foreach (var drawable in _drawables)
         {
             drawable.NamePlate.GetComponent<TextMeshProUGUI>().text = drawable.Object.name;
+        }
+
+        EventHub.OnTargetableDestroyed.AddListener(OnTargetableDestroyed);
+    }
+
+    private void OnTargetableDestroyed(GameObject targetableObject)
+    {
+        var drawable = _drawables.SingleOrDefault(x => x.Object == targetableObject);
+        if (drawable != null)
+        {
+            Destroy(drawable.NamePlate);
+            _drawables.Remove(drawable);
         }
     }
     
@@ -61,13 +73,6 @@ public class NameplateCanvas : MonoBehaviour
 
         foreach (var drawable in _drawables)
         {
-            if (drawable.Object == null)
-            {
-                //TODO: Listen to OnTargetableDestroyed and remove it or something
-                drawable.NamePlate.SetActive(false);
-                continue;
-            }
-            
             if (!IsObjectInScreenArea(drawable.Object.transform.position))
             {
                 drawable.NamePlate.SetActive(false);
