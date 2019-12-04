@@ -21,11 +21,14 @@ public class NameplateCanvas : MonoBehaviour
     {
         public readonly GameObject Object;
         public readonly GameObject NamePlate;
+        public readonly TextMeshProUGUI TextMesh;
 
         public DrawableObjectData(GameObject obj, GameObject namePlate)
         {
             NamePlate = namePlate;
             Object = obj;
+            
+            TextMesh = NamePlate.GetComponent<TextMeshProUGUI>();
         }
     }
 
@@ -80,6 +83,7 @@ public class NameplateCanvas : MonoBehaviour
             
             drawable.NamePlate.SetActive(true);
             drawable.NamePlate.transform.localScale = Vector3.one * scaleFactor;
+            drawable.TextMesh.alpha = scaleFactor;
             drawable.NamePlate.transform.position = _camera.WorldToScreenPoint(drawable.Object.transform.position) + Vector3.up * extraHeight;
         }
     }
