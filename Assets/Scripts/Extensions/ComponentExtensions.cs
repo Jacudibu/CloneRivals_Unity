@@ -4,7 +4,7 @@ namespace Extensions
 {
     public static class ComponentExtensions
     {
-        public static T FindInAllParents<T>(this Component component) where T : MonoBehaviour
+        public static T FindInAllParents<T>(this Component component) where T : Component
         {
             if (component.transform.parent == null)
             {

@@ -48,7 +48,16 @@ public class Missile : MonoBehaviour
             return;
         }
         
-        var targetable = other.GetComponent<TargetableObject>();
+        TargetableObject targetable;
+        if (playerController == null)
+        {
+            targetable = other.GetComponent<TargetableObject>() ?? other.FindInAllParents<TargetableObject>();
+        }
+        else
+        {
+            targetable = playerController.GetComponent<TargetableObject>();
+        }
+        
         if (targetable != null)
         {
             targetable.TakeDamage(_data.damage);
