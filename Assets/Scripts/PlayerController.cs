@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using InputConfiguration;
+﻿using InputConfiguration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,6 +26,10 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 300;
     public float minSpeed = 0;
     public float currentSpeed = 0;
+    public float boostDuration = 9;
+    private float _remainingBoost;
+    private bool _isOverheated;
+    public float GetOverheatRatio() => _remainingBoost / boostDuration;
 
     public float strafeAnimationSpeed = 2;
     public float strafeValue = 0;
@@ -53,12 +54,15 @@ public class PlayerController : MonoBehaviour
     private float _strafeLeftDownTime;
     private float _strafeRightDownTime;
 
-    public TextMeshProUGUI uiTextSpeed;
+    [SerializeField] private TextMeshProUGUI uiTextSpeed;
+    [SerializeField] private Image uiOverheatGauge;
     
     void Start()
     {
         _screenSize = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
         _defaultLocalCameraAnchorPosition = cameraAnchor.transform.localPosition;
+
+        _remainingBoost = boostDuration;
     }
     
     void Update()
@@ -68,15 +72,40 @@ public class PlayerController : MonoBehaviour
         ProcessRollInput();
         RotateShip();
         AdjustSpeed();
+        AdjustOverheat();
         ShakeShip();
         MoveShip();
 
         uiTextSpeed.text = (currentSpeed * 10).ToString("F0");
+        uiOverheatGauge.fillAmount = GetOverheatRatio();
+    }
+
+    private void AdjustOverheat()
+    {
+        if (_boost && !isRolling && !_isOverheated)
+        {
+            _remainingBoost -= Time.deltaTime;
+        }
+        else
+        {
+            _remainingBoost += Time.deltaTime * 2;
+        }
+
+        if (_remainingBoost < 0)
+        {
+            _isOverheated = true;
+        }
+
+        if (_remainingBoost >= boostDuration)
+        {
+            _remainingBoost = boostDuration;
+            _isOverheated = false;
+        }
     }
 
     private void ShakeShip()
     {
-        if (_boost)
+        if (_boost && !_isOverheated)
         {
             var x = (Random.value * 2.0f - 1.0f) * boostShakeStrength;
             var y = (Random.value * 2.0f - 1.0f) * boostShakeStrength;
@@ -243,7 +272,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        if (_boost)
+        if (_boost && !_isOverheated)
         {
             if (currentSpeed < boostSpeed)
             {
