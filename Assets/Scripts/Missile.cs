@@ -1,8 +1,5 @@
-﻿using System;
-using Extensions;
-using JetBrains.Annotations;
+﻿using Extensions;
 using UnityEngine;
-using Object = System.Object;
 
 public class Missile : MonoBehaviour
 {
@@ -13,6 +10,7 @@ public class Missile : MonoBehaviour
     private Transform _target;
     private int _damage;
     private int _speed;
+    private int _ownerId;
 
     void Update()
     {
@@ -28,7 +26,7 @@ public class Missile : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         var playerController = other.GetComponent<PlayerController>() ?? other.FindInAllParents<PlayerController>();
-        if (playerController != null)
+        if (playerController != null && _ownerId == playerController.gameObject.GetInstanceID())
         {
             return;
         }
@@ -68,5 +66,10 @@ public class Missile : MonoBehaviour
     public void SetSpeed(int amount)
     {
         _speed = amount;
+    }
+
+    public void SetOwnerId(int id)
+    {
+        _ownerId = id;
     }
 }

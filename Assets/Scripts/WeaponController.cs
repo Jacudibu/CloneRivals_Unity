@@ -58,6 +58,7 @@ public class WeaponController : MonoBehaviour
                     missile.SetTarget(SecondaryLockable ? _targetManager.Target.transform : null);
                     missile.SetDamage(missileDamage);
                     missile.SetSpeed(missileSpeed);
+                    missile.SetOwnerId(gameObject.GetInstanceID());
                 }
 
                 _lastSecondaryAttackTime = Time.time;
