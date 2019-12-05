@@ -4581,6 +4581,7 @@ MonoBehaviour:
     damage: 10
     speed: 50
     rotationDegrees: 110
+    maximumLifetime: 10
 --- !u!114 &1135748557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7878,6 +7879,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: '
+
+    <color="red">Lost Connection to chat server. :(
 
     <color="red">Lost Connection to chat server. :(
 

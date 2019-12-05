@@ -11,6 +11,7 @@ public struct MissileData
     public int damage;
     public int speed;
     public int rotationDegrees;
+    public float maximumLifetime;
 }
 
 public class Missile : MonoBehaviour
@@ -20,6 +21,7 @@ public class Missile : MonoBehaviour
     
     private Transform _target;
     private int _ownerId;
+    private float _totalLifetime;
     
     void Update()
     {
@@ -30,6 +32,12 @@ public class Missile : MonoBehaviour
         }
         
         transform.Translate(Time.deltaTime * _data.speed * Vector3.forward);
+        _totalLifetime += Time.deltaTime;
+
+        if (_totalLifetime > _data.maximumLifetime)
+        {
+            DestroyMissile();
+        }
     }
     
     public void OnTriggerEnter(Collider other)
@@ -46,6 +54,11 @@ public class Missile : MonoBehaviour
             targetable.TakeDamage(_data.damage);
         }
         
+        DestroyMissile();
+    }
+
+    private void DestroyMissile()
+    {
         Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject, 1f);
 
