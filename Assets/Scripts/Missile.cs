@@ -1,5 +1,8 @@
 ﻿using System;
+using Extensions;
+using JetBrains.Annotations;
 using UnityEngine;
+using Object = System.Object;
 
 public class Missile : MonoBehaviour
 {
@@ -21,23 +24,15 @@ public class Missile : MonoBehaviour
         
         transform.Translate(Time.deltaTime * _speed * Vector3.forward);
     }
-
+    
     public void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent != null)
+        var playerController = other.GetComponent<PlayerController>() ?? other.FindInAllParents<PlayerController>();
+        if (playerController != null)
         {
-            if (other.transform.parent.parent != null)
-            {
-                if (other.transform.parent.parent.parent != null)
-                {
-                    if (other.transform.parent.parent.parent.GetComponent<PlayerController>())
-                    {
-                        return;
-                    }
-                }
-            }
+            return;
         }
-
+        
         var targetable = other.GetComponent<TargetableObject>();
         if (targetable != null)
         {
