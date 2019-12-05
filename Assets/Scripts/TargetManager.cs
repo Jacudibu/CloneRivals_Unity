@@ -23,7 +23,9 @@ public class TargetManager : MonoBehaviour
     private Transform _shipTransform;
     [SerializeField] private float targetLockRange = 200f;
     [SerializeField] private float targetLockAngle = 25f;
-    [SerializeField] private Collider coneCollider;
+
+    public readonly EventHub.TargetableObjectEvent OnTargetUnLock = new EventHub.TargetableObjectEvent();
+    public readonly EventHub.TargetableObjectEvent OnTargetLock = new EventHub.TargetableObjectEvent();
     
     private void Start()
     {
@@ -40,9 +42,15 @@ public class TargetManager : MonoBehaviour
         EventHub.OnTargetableDestroyed.AddListener(OnTargetableDestroyed);
     }
 
-    private void OnTargetableDestroyed(GameObject targetableObject)
+    private void OnTargetableDestroyed(TargetableObject targetable)
     {
-        thingsTargetingMe.Remove(targetableObject);
+        if (targetable.gameObject == Target)
+        {
+            OnTargetUnLock.Invoke(targetable);
+            Target = null;
+        }
+        
+        thingsTargetingMe.Remove(targetable.gameObject);
         InitializeOrDisableArrows();
     }
 
@@ -54,12 +62,25 @@ public class TargetManager : MonoBehaviour
         }
 
         var viableTargets = Physics.OverlapSphere(_shipTransform.position, targetLockRange)
-            .Where(x => x.GetComponent<TargetableObject>() != null)
+            .Select(x => x.GetComponent<TargetableObject>())
+            .Where(x => x != null)
+            .Where(x => x.IsTargetable)
             .Where(x => Mathf.Abs(Vector3.Angle(_shipTransform.forward, x.transform.position - _shipTransform.position)) < targetLockAngle)
             .Where(x => x.gameObject != Target)
             .Select(x => x.gameObject);
 
+
+        if (Target != null)
+        {
+            OnTargetUnLock.Invoke(Target.GetComponent<TargetableObject>());
+        }
+
         Target = viableTargets.FirstOrDefault();
+        
+        if (Target != null)
+        {
+            OnTargetLock.Invoke(Target.GetComponent<TargetableObject>());
+        }
     }
 
     private void LateUpdate()

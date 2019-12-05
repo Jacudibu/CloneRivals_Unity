@@ -2,45 +2,72 @@
 
 public class TargetableObject : MonoBehaviour
 {
-    [SerializeField] private int currentHealth;
-    [SerializeField] private int maxHealth;
+    [SerializeField] private int maxStructure;
+    [SerializeField] private int maxShield;
 
-    private void Start()
+    public float Structure { get; private set; }
+    public float Shield { get; private set; }
+    public bool IsTargetable { get; private set; } = true;
+
+    public readonly EventHub.TargetableObjectEvent OnHealthChanged = new EventHub.TargetableObjectEvent();
+
+    public float GetStructurePercentage() => Structure / maxStructure;
+    public float GetShieldPercentage() => Shield / maxShield;
+    
+    void Start()
     {
-        currentHealth = maxHealth;
+        Structure = maxStructure;
+        Shield = maxShield;
     }
     
-    public int GetHealth()
+    public void RestoreStructure(int amount)
     {
-        return currentHealth;
-    }
-
-    public int RestoreHealth(int amount)
-    {
-        currentHealth += amount;
-        if (currentHealth > maxHealth)
+        Structure += amount;
+        if (Structure > maxStructure)
         {
-            currentHealth = maxHealth;
+            Structure = maxStructure;
         }
 
-        return currentHealth;
+        OnHealthChanged.Invoke(this);
+    }
+    
+    public void RestoreShield(int amount)
+    {
+        Shield += amount;
+        if (Shield > maxShield)
+        {
+            Shield = maxShield;
+        }
+
+        OnHealthChanged.Invoke(this);
     }
 
-    public int TakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
+        Shield -= amount;
 
-        if (currentHealth <= 0)
+        if (Shield < 0)
         {
-            Die();
+            var remaining = -Shield;
+            Shield = 0;
+
+            Structure -= remaining;
         }
         
-        return currentHealth;
+        if (Structure <= 0)
+        {
+            Die();
+            Structure = 0;
+        }
+
+        OnHealthChanged.Invoke(this);
     }
 
     private void Die()
     {
-        EventHub.OnTargetableDestroyed.Invoke(gameObject);
+        IsTargetable = false;
+        
+        EventHub.OnTargetableDestroyed.Invoke(this);
 
         // TODO: Explosion particles & Sound
         

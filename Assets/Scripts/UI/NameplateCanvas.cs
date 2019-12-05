@@ -57,9 +57,9 @@ public class NameplateCanvas : MonoBehaviour
         EventHub.OnTargetableDestroyed.AddListener(OnTargetableDestroyed);
     }
 
-    private void OnTargetableDestroyed(GameObject targetableObject)
+    private void OnTargetableDestroyed(TargetableObject targetable)
     {
-        var drawable = _drawables.SingleOrDefault(x => x.Object == targetableObject);
+        var drawable = _drawables.SingleOrDefault(x => x.Object == targetable.gameObject);
         if (drawable != null)
         {
             Destroy(drawable.NamePlate);
