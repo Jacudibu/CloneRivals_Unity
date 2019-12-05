@@ -43,7 +43,7 @@ public class Missile : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         var playerController = other.GetComponent<PlayerController>() ?? other.FindInAllParents<PlayerController>();
-        if (playerController != null && _ownerId == playerController.gameObject.GetInstanceID())
+        if (playerController != null && _ownerId == playerController.gameObject.GetInstanceID() || playerController.isRolling)
         {
             return;
         }
