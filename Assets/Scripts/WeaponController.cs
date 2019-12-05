@@ -15,6 +15,7 @@ public class WeaponController : MonoBehaviour
     
     private Transform _shipTransform;
     private TargetManager _targetManager;
+    private PlayerController _playerController;
 
     [SerializeField] private MissileData missileData;
     
@@ -22,6 +23,7 @@ public class WeaponController : MonoBehaviour
     {
         _shipTransform = GetComponentInChildren<MeshRenderer>().transform;
         _targetManager = GetComponent<TargetManager>();
+        _playerController = GetComponent<PlayerController>();
     }
     
     void Update()
@@ -39,6 +41,12 @@ public class WeaponController : MonoBehaviour
             IsMissileLockable = false;
         }
 
+        if (_playerController != null && _playerController.isRolling)
+        {
+            return;
+        }
+        
+        
         if (KeyBindings.IsPrimary())
         {
             
