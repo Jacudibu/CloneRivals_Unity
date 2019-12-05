@@ -83,7 +83,7 @@ public class TargetManager : MonoBehaviour
                 var targetScreenPosition = _camera.WorldToScreenPoint(Target.transform.position);
                 currentTargetIndicator.transform.position = targetScreenPosition;
                 
-                if (_weaponController.SecondaryLockable)
+                if (_weaponController.IsMissileLockable)
                 {
                     lockOnReticle.SetActive(true);
                     lockOnReticle.transform.position = targetScreenPosition;

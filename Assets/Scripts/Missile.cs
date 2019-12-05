@@ -1,26 +1,35 @@
-﻿using Extensions;
+﻿using System;
+using Extensions;
 using UnityEngine;
+
+[Serializable]
+public struct MissileData
+{
+    public float validAngle;
+    public float reloadTime;
+    
+    public int damage;
+    public int speed;
+    public int rotationDegrees;
+}
 
 public class Missile : MonoBehaviour
 {
     [SerializeField] private GameObject explosionEffect;
-
-    [SerializeField] private float rotationDegrees = 110;
-
+    private MissileData _data;
+    
     private Transform _target;
-    private int _damage;
-    private int _speed;
     private int _ownerId;
-
+    
     void Update()
     {
         if (_target != null)
         {
             var targetRotation = Quaternion.LookRotation(_target.position - transform.position);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationDegrees);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _data.rotationDegrees);
         }
         
-        transform.Translate(Time.deltaTime * _speed * Vector3.forward);
+        transform.Translate(Time.deltaTime * _data.speed * Vector3.forward);
     }
     
     public void OnTriggerEnter(Collider other)
@@ -34,7 +43,7 @@ public class Missile : MonoBehaviour
         var targetable = other.GetComponent<TargetableObject>();
         if (targetable != null)
         {
-            targetable.TakeDamage(_damage);
+            targetable.TakeDamage(_data.damage);
         }
         
         Instantiate(explosionEffect, transform.position, transform.rotation);
@@ -58,14 +67,9 @@ public class Missile : MonoBehaviour
         _target = newTarget;
     }
 
-    public void SetDamage(int amount)
+    public void SetData(MissileData data)
     {
-        _damage = amount;
-    }
-
-    public void SetSpeed(int amount)
-    {
-        _speed = amount;
+        _data = data;
     }
 
     public void SetOwnerId(int id)

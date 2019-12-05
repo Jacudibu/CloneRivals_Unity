@@ -19,8 +19,8 @@ namespace InputConfiguration
         public static KeyCode PrimaryWeapon { get; private set; } = KeyCode.Mouse0;
         public static KeyCode PrimaryWeapon2 { get; private set; } = PrimaryWeapon;
 
-        public static KeyCode SecondaryWeapon { get; private set; } = KeyCode.Mouse1;
-        public static KeyCode SecondaryWeapon2 { get; private set; } = SecondaryWeapon;
+        public static KeyCode FireMissile { get; private set; } = KeyCode.Mouse1;
+        public static KeyCode FireMissile2 { get; private set; } = FireMissile;
 
         public static KeyCode NextTarget { get; private set; } = KeyCode.LeftShift;
         public static KeyCode NextTarget2 { get; private set; } = NextTarget;
@@ -45,8 +45,8 @@ namespace InputConfiguration
         public static bool IsPrimary() => Input.GetKey(PrimaryWeapon) || Input.GetKey(PrimaryWeapon2);
         public static bool IsPrimaryDown() => Input.GetKeyDown(PrimaryWeapon) || Input.GetKeyDown(PrimaryWeapon2);
         
-        public static bool IsSecondary() => Input.GetKey(SecondaryWeapon) || Input.GetKey(SecondaryWeapon2);
-        public static bool IsSecondaryDown() => Input.GetKeyDown(SecondaryWeapon) || Input.GetKeyDown(SecondaryWeapon2);
+        public static bool IsFireMissile() => Input.GetKey(FireMissile) || Input.GetKey(FireMissile2);
+        public static bool IsFireMissileDown() => Input.GetKeyDown(FireMissile) || Input.GetKeyDown(FireMissile2);
         
         public static bool IsNextTarget() => Input.GetKey(NextTarget) || Input.GetKey(NextTarget2);
         public static bool IsNextTargetDown() => Input.GetKeyDown(NextTarget) || Input.GetKeyDown(NextTarget2);

@@ -4569,16 +4569,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c7ed547cb7654f7b127d6f7ec41866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondaryReattackTime: 1
   missilePrefab: {fileID: 8281691259311392500, guid: 252454629b35e5c8598e40c15bec0f64,
     type: 3}
   missileSpawnPoints:
   - {fileID: 1763082164}
   - {fileID: 383157884}
-  lockOnAngle: 12
   lockOnRange: 165
-  missileDamage: 50
-  missileSpeed: 10
+  missileData:
+    validAngle: 12
+    reloadTime: 0.1
+    damage: 10
+    speed: 50
+    rotationDegrees: 110
 --- !u!114 &1135748557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6656,7 +6658,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Secondary Weapon
+  m_Text: Fire Missile
 --- !u!222 &1537026371
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7176,7 +7178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1835882404}
   m_Layer: 5
-  m_Name: SecondaryWeapon
+  m_Name: FireMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7876,6 +7878,24 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: '
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
 
     <color="red">Lost Connection to chat server. :(
 

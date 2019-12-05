@@ -4,22 +4,19 @@ using UnityEngine;
 [RequireComponent(typeof(TargetManager))]
 public class WeaponController : MonoBehaviour
 {
-    public float secondaryReattackTime = 1f;
-    public bool SecondaryLockable { get; private set; }
+    public bool IsMissileLockable { get; private set; }
     
-    private float _lastSecondaryAttackTime;
+    private float _lastMissileAttackTime;
     
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private Transform[] missileSpawnPoints;
     
-    [SerializeField] public float lockOnAngle = 12;
     [SerializeField] public float lockOnRange = 165;
     
     private Transform _shipTransform;
     private TargetManager _targetManager;
 
-    [SerializeField] private int missileDamage = 10;
-    [SerializeField] private int missileSpeed = 55;
+    [SerializeField] private MissileData missileData;
     
     void Start()
     {
@@ -33,13 +30,13 @@ public class WeaponController : MonoBehaviour
         {
             var angle = Vector3.Angle(_shipTransform.forward, _targetManager.Target.transform.position - _shipTransform.position);
             var distance = Vector3.Distance(_shipTransform.position, _targetManager.Target.transform.position);
-            SecondaryLockable = angle > -lockOnAngle &&
-                                angle < lockOnAngle && 
+            IsMissileLockable = angle > -missileData.validAngle &&
+                                angle < missileData.validAngle && 
                                 distance <= lockOnRange;
         }
         else
         {
-            SecondaryLockable = false;
+            IsMissileLockable = false;
         }
 
         if (KeyBindings.IsPrimary())
@@ -47,21 +44,20 @@ public class WeaponController : MonoBehaviour
             
         }
 
-        if (KeyBindings.IsSecondary())
+        if (KeyBindings.IsFireMissile())
         {
-            if (Time.time - _lastSecondaryAttackTime > secondaryReattackTime)
+            if (Time.time - _lastMissileAttackTime > missileData.reloadTime)
             {
                 foreach (var missileSpawnPoint in missileSpawnPoints)
                 {
                     var obj = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
                     var missile = obj.GetComponent<Missile>();
-                    missile.SetTarget(SecondaryLockable ? _targetManager.Target.transform : null);
-                    missile.SetDamage(missileDamage);
-                    missile.SetSpeed(missileSpeed);
+                    missile.SetTarget(IsMissileLockable ? _targetManager.Target.transform : null);
+                    missile.SetData(missileData);
                     missile.SetOwnerId(gameObject.GetInstanceID());
                 }
 
-                _lastSecondaryAttackTime = Time.time;
+                _lastMissileAttackTime = Time.time;
             }
         }
     }
