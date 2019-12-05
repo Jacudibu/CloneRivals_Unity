@@ -3362,7 +3362,7 @@ GameObject:
   - component: {fileID: 868061224}
   - component: {fileID: 868061229}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4575,9 +4575,10 @@ MonoBehaviour:
   missileSpawnPoints:
   - {fileID: 1763082164}
   - {fileID: 383157884}
-  target: {fileID: 409246612}
   lockOnAngle: 12
   lockOnRange: 165
+  missileDamage: 50
+  missileSpeed: 10
 --- !u!114 &1135748557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4597,13 +4598,15 @@ MonoBehaviour:
   - {fileID: 2023287213}
   - {fileID: 1147727839}
   - {fileID: 868061223}
-  target: {fileID: 409246610}
   currentTargetIndicator: {fileID: 1121351569}
   lockOnReticle: {fileID: 782585169}
   targetArrow: {fileID: 584095085}
   targetMeArrow: {fileID: 400059801}
   radius: 200
   arrowRotationOffset: -90
+  targetLockRange: 200
+  targetLockAngle: 25
+  coneCollider: {fileID: 0}
 --- !u!114 &1135748558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4633,7 +4636,7 @@ GameObject:
   - component: {fileID: 1147727840}
   - component: {fileID: 1147727845}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5241,7 +5244,7 @@ GameObject:
   - component: {fileID: 1307556849}
   - component: {fileID: 1307556854}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8218,6 +8221,42 @@ MonoBehaviour:
 
     <color="red">Lost Connection to chat server. :(
 
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
     <color="red">Lost Connection to chat server. :('
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8495,7 +8534,7 @@ GameObject:
   - component: {fileID: 2023287214}
   - component: {fileID: 2023287219}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

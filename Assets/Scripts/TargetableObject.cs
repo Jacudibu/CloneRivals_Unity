@@ -41,6 +41,24 @@ public class TargetableObject : MonoBehaviour
     private void Die()
     {
         EventHub.OnTargetableDestroyed.Invoke(gameObject);
-        Destroy(gameObject, 0.1f);
+
+        // TODO: Explosion particles & Sound
+        
+        var rb = GetComponent<Rigidbody>();
+        var pc = GetComponent<PlayerController>();
+        if (rb != null && pc != null)
+        {
+            rb.velocity = pc.currentSpeed * transform.forward;
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            rb.drag = 0;
+            rb.angularDrag = 0.05f;
+            
+            // TODO: Fire particles
+        }
+        else
+        {
+            Destroy(gameObject, 0.1f);
+        }
     }
 }
