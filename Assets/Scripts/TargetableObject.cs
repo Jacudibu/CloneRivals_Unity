@@ -73,10 +73,10 @@ public class TargetableObject : MonoBehaviour
         // TODO: Explosion particles & Sound
         
         var rb = GetComponent<Rigidbody>();
-        var pc = GetComponent<PlayerController>();
-        if (rb != null && pc != null)
+        var engine = GetComponent<Engine>();
+        if (rb != null && engine != null)
         {
-            rb.velocity = pc.currentSpeed * transform.forward;
+            rb.velocity = engine.currentSpeed * transform.forward;
             rb.useGravity = true;
             rb.isKinematic = false;
             rb.drag = 0;

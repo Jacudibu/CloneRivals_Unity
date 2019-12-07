@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Engine))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform shipTransform;
@@ -11,9 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _screenSize;
     private Vector3 _defaultLocalCameraAnchorPosition;
     public bool blockRotationInRearView = false;
-    public float rotationAtMinSpeed = 360;
-    public float rotationAtMaxSpeed = 100;
-    
+ 
     public float shipAlignSpeed = 2;
 
     public bool invertX = false;
@@ -21,19 +20,12 @@ public class PlayerController : MonoBehaviour
 
     public int controlCircleRadius = 200;
     
-    public float acceleration = 100;
-    public float boostSpeed = 500;
-    public float maxSpeed = 300;
-    public float minSpeed = 0;
-    public float currentSpeed = 0;
-    public float boostDuration = 9;
     private float _remainingBoost;
     private bool _isOverheated;
-    public float GetOverheatRatio() => _remainingBoost / boostDuration;
+    public float GetOverheatRatio() => _remainingBoost / _engine.boostDuration;
 
     public float strafeAnimationSpeed = 2;
     public float strafeValue = 0;
-    public float lateralSpeed = 10;
 
     public float boostShakeStrength = 1.5f;
     
@@ -54,6 +46,8 @@ public class PlayerController : MonoBehaviour
     private float _strafeLeftDownTime;
     private float _strafeRightDownTime;
 
+    private Engine _engine;
+    
     [SerializeField] private TextMeshProUGUI uiTextSpeed;
     [SerializeField] private Image uiOverheatGauge;
     
@@ -62,7 +56,8 @@ public class PlayerController : MonoBehaviour
         _screenSize = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
         _defaultLocalCameraAnchorPosition = cameraAnchor.transform.localPosition;
 
-        _remainingBoost = boostDuration;
+        _engine = GetComponent<Engine>();
+        _remainingBoost = _engine.boostDuration;
     }
     
     void Update()
@@ -76,7 +71,7 @@ public class PlayerController : MonoBehaviour
         ShakeShip();
         MoveShip();
 
-        uiTextSpeed.text = (currentSpeed * 10).ToString("F0");
+        uiTextSpeed.text = (_engine.currentSpeed * 10).ToString("F0");
         uiOverheatGauge.fillAmount = GetOverheatRatio();
     }
 
@@ -96,9 +91,9 @@ public class PlayerController : MonoBehaviour
             _isOverheated = true;
         }
 
-        if (_remainingBoost >= boostDuration)
+        if (_remainingBoost >= _engine.boostDuration)
         {
-            _remainingBoost = boostDuration;
+            _remainingBoost = _engine.boostDuration;
             _isOverheated = false;
         }
     }
@@ -206,7 +201,7 @@ public class PlayerController : MonoBehaviour
             0);
         
         // TODO: Actually we rotate from 0 to 100 - where 100 is 360°
-        var rotationSpeed = Mathf.Lerp(rotationAtMinSpeed, rotationAtMaxSpeed, currentSpeed / maxSpeed);
+        var rotationSpeed = Mathf.Lerp(_engine.rotationAtMinSpeed, _engine.rotationAtMaxSpeed, _engine.currentSpeed / _engine.maxSpeed);
         
         transform.Rotate(Time.deltaTime * rotationSpeed * rotation);
 
@@ -263,10 +258,10 @@ public class PlayerController : MonoBehaviour
     {
         if (isRolling)
         {
-            currentSpeed -= acceleration * Time.deltaTime;
-            if (currentSpeed < 0)
+            _engine.currentSpeed -= _engine.deceleration * Time.deltaTime;
+            if (_engine.currentSpeed < 0)
             {
-                currentSpeed = 0;
+                _engine.currentSpeed = 0;
             }
             
             return;
@@ -274,43 +269,43 @@ public class PlayerController : MonoBehaviour
         
         if (_boost && !_isOverheated)
         {
-            if (currentSpeed < boostSpeed)
+            if (_engine.currentSpeed < _engine.boostSpeed)
             {
-                currentSpeed += acceleration * Time.deltaTime;
+                _engine.currentSpeed += _engine.acceleration * Time.deltaTime;
             }
             else
             {
-                currentSpeed = boostSpeed;
+                _engine.currentSpeed = _engine.boostSpeed;
             }
 
             return;
         }
     
-        if (currentSpeed < minSpeed)
+        if (_engine.currentSpeed < _engine.minSpeed)
         {
-            currentSpeed += acceleration * Time.deltaTime;
+            _engine.currentSpeed += _engine.acceleration * Time.deltaTime;
             return;
         }
 
-        if (currentSpeed > maxSpeed)
+        if (_engine.currentSpeed > _engine.maxSpeed)
         {
-            currentSpeed -= acceleration * Time.deltaTime;
+            _engine.currentSpeed -= _engine.deceleration * Time.deltaTime;
             return;
         }
 
-        if (currentSpeed > minSpeed && KeyBindings.IsBrake())
+        if (_engine.currentSpeed > _engine.minSpeed && KeyBindings.IsBrake())
         {
-            currentSpeed -= acceleration * Time.deltaTime;
+            _engine.currentSpeed -= _engine.deceleration * Time.deltaTime;
             return;
         }
 
-        currentSpeed += acceleration * Time.deltaTime;
+        _engine.currentSpeed += _engine.acceleration * Time.deltaTime;
     }
 
     private void MoveShip()
     {
-        var movement = currentSpeed * Vector3.forward;
-        movement.x -= strafeValue * lateralSpeed;
+        var movement = _engine.currentSpeed * Vector3.forward;
+        movement.x -= strafeValue * _engine.lateralSpeed;
         
         transform.Translate(Time.deltaTime * movement);
     }
