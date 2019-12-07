@@ -97,6 +97,9 @@ public class TargetableObject : MonoBehaviour
             }
 
             // TODO: Fire particles
+
+            engine.gameObject.AddComponent<Wreckage>();
+            enabled = false;
         }
         else
         {
