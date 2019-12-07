@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class Engine : MonoBehaviour
@@ -12,8 +13,34 @@ public class Engine : MonoBehaviour
     public float boostDuration = 9;
     public float lateralSpeed = 10;
 
+    public Vector3 requestedRotationAmount = Vector3.zero;
     public float rotationAtMinSpeed = 360;
     public float rotationAtMaxSpeed = 100;
     
     public float currentSpeed = 0;
+
+    public float strafeValue = 0;
+    
+    
+    private void Update()
+    {
+        Rotate();
+        MoveForward();
+    }
+
+    private void Rotate()
+    {
+        // TODO: Actually I think right now we rotate from 0 to 100 - where 100 is 360° ? Easy to adjust, just needs some testing.
+        var rotationSpeed = Mathf.Lerp(rotationAtMinSpeed, rotationAtMaxSpeed, currentSpeed / maxSpeed);
+        
+        transform.Rotate(Time.deltaTime * rotationSpeed * requestedRotationAmount);
+    }
+
+    private void MoveForward()
+    {
+        var movement = currentSpeed * Vector3.forward;
+        movement.x -= strafeValue * lateralSpeed;
+        
+        transform.Translate(Time.deltaTime * movement);
+    }
 }

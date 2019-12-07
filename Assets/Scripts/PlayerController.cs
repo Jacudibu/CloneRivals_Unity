@@ -25,8 +25,6 @@ public class PlayerController : MonoBehaviour
     public float GetOverheatRatio() => _remainingBoost / _engine.boostDuration;
 
     public float strafeAnimationSpeed = 2;
-    public float strafeValue = 0;
-
     public float boostShakeStrength = 1.5f;
     
     private bool _strafeLeft;
@@ -65,11 +63,10 @@ public class PlayerController : MonoBehaviour
         ProcessInput();
         AdjustStrafeValue();
         ProcessRollInput();
-        RotateShip();
+        AdjustRotation();
         AdjustSpeed();
         AdjustOverheat();
         ShakeShip();
-        MoveShip();
 
         uiTextSpeed.text = (_engine.currentSpeed * 10).ToString("F0");
         uiOverheatGauge.fillAmount = GetOverheatRatio();
@@ -167,7 +164,7 @@ public class PlayerController : MonoBehaviour
         _lastRollTime = Time.time;
     }
 
-    private void RotateShip()
+    private void AdjustRotation()
     {
         if (isRolling)
         {
@@ -179,7 +176,6 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
-
 
         Vector2 clampedMovementPercentage;
         if (blockRotationInRearView && KeyBindings.IsRearCamera())
@@ -194,18 +190,12 @@ public class PlayerController : MonoBehaviour
             clampedMovementPercentage = Vector2.ClampMagnitude(clampedPos / controlCircleRadius, 1);
         }
         
-        
-        var rotation = new Vector3(
+        _engine.requestedRotationAmount = new Vector3(
             clampedMovementPercentage.y * (invertX ? 1 : -1),
             clampedMovementPercentage.x * (invertY ? -1 : 1),
             0);
         
-        // TODO: Actually we rotate from 0 to 100 - where 100 is 360°
-        var rotationSpeed = Mathf.Lerp(_engine.rotationAtMinSpeed, _engine.rotationAtMaxSpeed, _engine.currentSpeed / _engine.maxSpeed);
-        
-        transform.Rotate(Time.deltaTime * rotationSpeed * rotation);
-
-        var strafeRotation = Mathf.Lerp(-120, 120, (strafeValue + 1) * 0.5f);
+        var strafeRotation = Mathf.Lerp(-120, 120, (_engine.strafeValue + 1) * 0.5f);
 
         var targetShipRotation = new Vector3(
             clampedMovementPercentage.y * 20 * (invertX ? 1 : -1),
@@ -222,20 +212,20 @@ public class PlayerController : MonoBehaviour
     {
         if ((!_strafeLeft && !_strafeRight) || (_strafeLeft && _strafeRight))
         {
-            if (strafeValue > 0)
+            if (_engine.strafeValue > 0)
             {
-                strafeValue -= strafeAnimationSpeed * Time.deltaTime;
-                if (strafeValue < 0)
+                _engine.strafeValue -= strafeAnimationSpeed * Time.deltaTime;
+                if (_engine.strafeValue < 0)
                 {
-                    strafeValue = 0;
+                    _engine.strafeValue = 0;
                 }
             } 
             else
             {
-                strafeValue += strafeAnimationSpeed * Time.deltaTime;
-                if (strafeValue > 0)
+                _engine.strafeValue += strafeAnimationSpeed * Time.deltaTime;
+                if (_engine.strafeValue > 0)
                 {
-                    strafeValue = 0;
+                    _engine.strafeValue = 0;
                 }
             }
         }
@@ -243,14 +233,14 @@ public class PlayerController : MonoBehaviour
         {
             if (_strafeLeft)
             {
-                strafeValue += strafeAnimationSpeed * Time.deltaTime;
+                _engine.strafeValue += strafeAnimationSpeed * Time.deltaTime;
             } 
             else
             {
-                strafeValue -= strafeAnimationSpeed * Time.deltaTime;
+                _engine.strafeValue -= strafeAnimationSpeed * Time.deltaTime;
             }
 
-            strafeValue = Mathf.Clamp(strafeValue, -1f, 1f);
+            _engine.strafeValue = Mathf.Clamp(_engine.strafeValue, -1f, 1f);
         }
     }
 
@@ -300,13 +290,5 @@ public class PlayerController : MonoBehaviour
         }
 
         _engine.currentSpeed += _engine.acceleration * Time.deltaTime;
-    }
-
-    private void MoveShip()
-    {
-        var movement = _engine.currentSpeed * Vector3.forward;
-        movement.x -= strafeValue * _engine.lateralSpeed;
-        
-        transform.Translate(Time.deltaTime * movement);
     }
 }
