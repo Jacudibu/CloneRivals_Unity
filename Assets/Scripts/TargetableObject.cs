@@ -82,6 +82,20 @@ public class TargetableObject : MonoBehaviour
             rb.drag = 0;
             rb.angularDrag = 0.05f;
             
+            engine.enabled = false;
+
+            var engineParticles = engine.GetComponentsInChildren<ParticleSystem>();
+            foreach (var particles in engineParticles)
+            {
+                particles.Stop();
+            }
+
+            var playerController = engine.GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.enabled = false;
+            }
+
             // TODO: Fire particles
         }
         else

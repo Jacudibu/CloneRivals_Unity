@@ -1659,6 +1659,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStructure: 777
   maxShield: 777
+--- !u!114 &409246614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409246610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5da462e1e442b29352caa7d4cf790c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 10
+  deceleration: 30
+  boostSpeed: 50
+  maxSpeed: 30
+  minSpeed: 0
+  boostDuration: 9
+  lateralSpeed: 10
+  requestedRotationAmount: {x: 0.01, y: 0.05, z: 0.01}
+  rotationAtMinSpeed: 360
+  rotationAtMaxSpeed: 100
+  currentSpeed: 30
+  strafeValue: 0
 --- !u!1 &428559274
 GameObject:
   m_ObjectHideFlags: 0
@@ -4798,7 +4822,6 @@ MonoBehaviour:
   invertY: 0
   controlCircleRadius: 200
   strafeAnimationSpeed: 2
-  strafeValue: 0
   boostShakeStrength: 1.5
   rollRotationCount: 1
   rollCooldown: 3
@@ -4909,9 +4932,11 @@ MonoBehaviour:
   minSpeed: 0
   boostDuration: 9
   lateralSpeed: 10
+  requestedRotationAmount: {x: 0, y: 0, z: 0}
   rotationAtMinSpeed: 360
   rotationAtMaxSpeed: 100
   currentSpeed: 0
+  strafeValue: 0
 --- !u!1 &1147727839
 GameObject:
   m_ObjectHideFlags: 0
