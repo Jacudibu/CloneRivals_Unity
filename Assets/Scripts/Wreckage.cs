@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Effects;
+using UnityEngine;
 
 public class Wreckage : MonoBehaviour
 {
@@ -29,11 +30,19 @@ public class Wreckage : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!enabled)
+        {
+            return;
+        }
+        
         Destroy(_rb);
         _collider.enabled = false;
         
-        // TODO: Spawn explosion particles
-        transform.position = collision.GetContact(0).point;
+        var collisionPoint =  collision.GetContact(0).point;
+        transform.position = collisionPoint;
+
+        Instantiate(EffectCollection.GetShipCrashEffect(), collisionPoint + Vector3.up, Quaternion.identity, transform);
+        Instantiate(EffectCollection.GetSmallFire(), collisionPoint + Vector3.up, Quaternion.identity, transform);
         enabled = false;
     }
 }
