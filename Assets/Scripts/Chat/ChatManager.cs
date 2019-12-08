@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 using WebSocketSharp;
 
 namespace Chat
