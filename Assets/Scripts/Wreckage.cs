@@ -1,6 +1,7 @@
 ﻿using Effects;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Wreckage : MonoBehaviour
 {
     private Rigidbody _rb;

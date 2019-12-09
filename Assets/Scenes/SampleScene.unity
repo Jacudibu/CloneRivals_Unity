@@ -4869,7 +4869,7 @@ MonoBehaviour:
     validAngle: 12
     reloadTime: 0.1
     damage: 10
-    speed: 50
+    speed: 80
     rotationDegrees: 110
     maximumLifetime: 10
 --- !u!114 &1135748557
@@ -8271,7 +8271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipCrashEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
     type: 3}
-  shipKillEffect: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3,
+  shipKillEffect: {fileID: 1828176872806910, guid: 4184d26b78ee6d602bef4a76382e99fb,
     type: 3}
   smallFire: {fileID: 1956197547661106, guid: f293a2dcc753a4a489fefe7f8f312d69, type: 3}
 --- !u!4 &1907623774
@@ -8543,6 +8543,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: '
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost Connection to chat server. :(
 
     <color="red">Lost Connection to chat server. :(
 

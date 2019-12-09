@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Effects;
+using UnityEngine;
 
 public class TargetableObject : MonoBehaviour
 {
@@ -65,11 +66,17 @@ public class TargetableObject : MonoBehaviour
 
     private void Die()
     {
+        if (!IsTargetable)
+        {
+            return;
+        }
+        
         IsTargetable = false;
         
         EventHub.OnTargetableDestroyed.Invoke(this);
 
         // TODO: Explosion particles & Sound
+        Instantiate(EffectCollection.GetShipKillEffect(), transform.position, new Quaternion());
         
         var rb = GetComponent<Rigidbody>();
         var engine = GetComponent<Engine>();
