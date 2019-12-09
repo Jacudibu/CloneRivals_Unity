@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using UnityEngine;
+﻿using UnityEngine;
 
+[DisallowMultipleComponent]
 public class Engine : MonoBehaviour
 {
     public float acceleration = 10;

@@ -1,6 +1,7 @@
 ﻿using Effects;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class TargetableObject : MonoBehaviour
 {
     [SerializeField] private int maxStructure;

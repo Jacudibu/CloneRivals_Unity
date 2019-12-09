@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Engine))]
+[DisallowMultipleComponent]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform shipTransform;

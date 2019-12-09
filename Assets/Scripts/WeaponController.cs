@@ -2,6 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(TargetManager))]
+[DisallowMultipleComponent]
 public class WeaponController : MonoBehaviour
 {
     public bool IsMissileLockable { get; private set; }

@@ -3,6 +3,7 @@ using System.Linq;
 using InputConfiguration;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class TargetManager : MonoBehaviour
 {
     public List<GameObject> thingsTargetingMe;
