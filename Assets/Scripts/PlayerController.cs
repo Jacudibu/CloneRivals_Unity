@@ -81,12 +81,14 @@ public class PlayerController : MonoBehaviour
         // TODO: Check all Skill Keys
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            var skill = skills[1]; // <- alpha 1 => array entry 1
-            // TODO: Execute skill from skill dictionary
-            if (skill == SkillId.UTurn)
+            var skillId = skills[1]; // <- alpha 1 => array entry 1
+            if (skillId == SkillId.None)
             {
-                transform.forward = -transform.forward;
+                return;
             }
+
+            var skill = SkillDictionary.GetSkill(skillId);
+            skill.Execute(this);
         }
     }
 
