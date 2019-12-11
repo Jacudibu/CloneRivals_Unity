@@ -1,4 +1,6 @@
-﻿using InputConfiguration;
+﻿using System.Security.Cryptography;
+using InputConfiguration;
+using Skills;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +52,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI uiTextSpeed;
     [SerializeField] private Image uiOverheatGauge;
     
+    [SerializeField] private SkillId[] skills = new SkillId[10];
+    [SerializeField] private float[] skillTimers = new float[10];
+    
     void Start()
     {
         _screenSize = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
@@ -71,6 +76,18 @@ public class PlayerController : MonoBehaviour
 
         uiTextSpeed.text = (_engine.currentSpeed * 10).ToString("F0");
         uiOverheatGauge.fillAmount = GetOverheatRatio();
+
+        // vvvv Skill test vvvv
+        // TODO: Check all Skill Keys
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            var skill = skills[1]; // <- alpha 1 => array entry 1
+            // TODO: Execute skill from skill dictionary
+            if (skill == SkillId.UTurn)
+            {
+                transform.forward = -transform.forward;
+            }
+        }
     }
 
     private void AdjustOverheat()
