@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image uiOverheatGauge;
     
     [SerializeField] private SkillId[] skills = new SkillId[10];
-    [SerializeField] private float[] skillTimers = new float[10];
+    [SerializeField] private float[] nextSkillAvailabilityTime = new float[10];
     
     void Start()
     {
@@ -81,14 +81,22 @@ public class PlayerController : MonoBehaviour
         // TODO: Check all Skill Keys
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            var skillId = skills[1]; // <- alpha 1 => array entry 1
+            const int index = 1;
+            var skillId = skills[index]; // <- alpha 1 => array entry 1
             if (skillId == SkillId.None)
             {
                 return;
             }
 
+            if (nextSkillAvailabilityTime[index] > Time.time)
+            {
+                return;
+            }
+            
             var skill = SkillDictionary.GetSkill(skillId);
+            
             skill.Execute(this);
+            nextSkillAvailabilityTime[index] = Time.time + skill.Cooldown;
         }
     }
 
