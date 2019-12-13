@@ -35,7 +35,7 @@ namespace UI
         private IEnumerator CooldownCoroutine()
         {
             cooldownFillerImage.fillAmount = 0f;
-            cooldownText.text = _cooldown.ToString("F0");
+            cooldownText.text = FormatCooldownText(_cooldown);
             cooldownText.enabled = true;
             yield return new WaitForEndOfFrame();
             
@@ -45,25 +45,33 @@ namespace UI
                 cooldownFillerImage.fillAmount = 1f - elapsedTime / _cooldown;
                 elapsedTime += Time.deltaTime;
 
-                var remainingTime = _cooldown - elapsedTime;
+                cooldownText.text = FormatCooldownText(_cooldown - elapsedTime);
 
-                if (remainingTime > 60)
-                {
-                    cooldownText.text = $"{remainingTime / 60:F0}:{Mathf.CeilToInt(remainingTime%60):D2}";
-                }
-                else if (remainingTime >= 1f)
-                {
-                    cooldownText.text = Mathf.Ceil(remainingTime).ToString("F0");
-                }
-                else
-                {
-                    cooldownText.text = remainingTime.ToString("F2");
-                }
                 yield return new WaitForEndOfFrame();
             }
 
             cooldownFillerImage.fillAmount = 0f;
             cooldownText.enabled = false;
+        }
+
+        private string FormatCooldownText(float remainingTime)
+        {
+            if (remainingTime > 60f)
+            {
+                return $"{remainingTime / 60:F0}:{Mathf.CeilToInt(remainingTime%60):D2}";
+            }
+
+            if (remainingTime >= 2f)
+            {
+                return Mathf.Ceil(remainingTime).ToString("F0");
+            }
+
+            if (remainingTime >= 1f)
+            {
+                return remainingTime.ToString("F1");
+            }                
+         
+            return remainingTime.ToString("F2");
         }
         
     }
