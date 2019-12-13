@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 [DisallowMultipleComponent]
 public class Engine : MonoBehaviour
@@ -18,12 +19,21 @@ public class Engine : MonoBehaviour
     public float currentSpeed = 0;
 
     public float strafeValue = 0;
-    
+
+    public bool allowRotation = true;
+    public bool allowMovement = true;
     
     private void Update()
     {
-        Rotate();
-        MoveForward();
+        if (allowRotation)
+        {
+            Rotate();
+        }
+
+        if (allowMovement)
+        {
+            MoveForward();
+        }
     }
 
     private void Rotate()

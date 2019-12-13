@@ -195,8 +195,16 @@ public class PlayerController : MonoBehaviour
         rollProgress = 0;
         isRolling = true;
         _lastRollTime = Time.time;
+        
+        _engine.allowRotation = false;
     }
 
+    private void EndRolling()
+    {
+        isRolling = false;
+        _engine.allowRotation = true;
+    }
+    
     private void AdjustRotation()
     {
         if (isRolling)
@@ -205,7 +213,7 @@ public class PlayerController : MonoBehaviour
             rollProgress += Time.deltaTime;
             if (rollProgress > 1)
             {
-                isRolling = false;
+                EndRolling();
             }
             return;
         }
