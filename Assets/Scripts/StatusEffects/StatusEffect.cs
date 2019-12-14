@@ -1,6 +1,6 @@
-namespace Buffs
+namespace StatusEffects
 {
-    public abstract class Buff
+    public abstract class StatusEffect
     {
         public abstract float Duration { get; }
         public float RemainingDuration { get; protected set; }
