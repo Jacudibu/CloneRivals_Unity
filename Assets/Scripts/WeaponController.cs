@@ -42,7 +42,7 @@ public class WeaponController : MonoBehaviour
             IsMissileLockable = false;
         }
 
-        if (_playerController != null && _playerController.isRolling)
+        if (_playerController == null || _playerController.isRolling)
         {
             return;
         }
@@ -50,24 +50,34 @@ public class WeaponController : MonoBehaviour
         
         if (KeyBindings.IsPrimary())
         {
-            
+            FireGun();
         }
 
         if (KeyBindings.IsFireMissile())
         {
-            if (Time.time - _lastMissileAttackTime > missileData.reloadTime)
-            {
-                foreach (var missileSpawnPoint in missileSpawnPoints)
-                {
-                    var obj = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
-                    var missile = obj.GetComponent<Missile>();
-                    missile.SetTarget(IsMissileLockable ? _targetManager.Target.transform : null);
-                    missile.SetData(missileData);
-                    missile.SetOwnerId(gameObject.GetInstanceID());
-                }
+            FireMissile();
+        }
+    }
 
-                _lastMissileAttackTime = Time.time;
+    public void FireGun()
+    {
+        
+    }
+
+    public void FireMissile()
+    {
+        if (Time.time - _lastMissileAttackTime > missileData.reloadTime)
+        {
+            foreach (var missileSpawnPoint in missileSpawnPoints)
+            {
+                var obj = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
+                var missile = obj.GetComponent<Missile>();
+                missile.SetTarget(IsMissileLockable ? _targetManager.Target.transform : null);
+                missile.SetData(missileData);
+                missile.SetOwnerId(gameObject.GetInstanceID());
             }
+
+            _lastMissileAttackTime = Time.time;
         }
     }
 }
