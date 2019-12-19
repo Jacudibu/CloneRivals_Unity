@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Engine))]
+[RequireComponent(typeof(TargetManager))]
 [DisallowMultipleComponent]
 public class PlayerController : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
     private float _strafeRightDownTime;
 
     private Engine _engine;
+    private TargetManager _targetManager;
     
     [SerializeField] private TextMeshProUGUI uiTextSpeed;
     [SerializeField] private Image uiOverheatGauge;
@@ -65,6 +67,8 @@ public class PlayerController : MonoBehaviour
         _defaultLocalCameraAnchorPosition = cameraAnchor.transform.localPosition;
 
         _engine = GetComponent<Engine>();
+        _targetManager = GetComponent<TargetManager>();
+        
         _remainingBoost = _engine.boostDuration;
     }
     
@@ -77,6 +81,11 @@ public class PlayerController : MonoBehaviour
         AdjustSpeed();
         AdjustOverheat();
         ShakeShip();
+        
+        if (KeyBindings.IsNextTargetDown() || _targetManager.Target == null)
+        {
+            _targetManager.SearchForTarget();
+        }
 
         uiTextSpeed.text = (_engine.currentSpeed * 10).ToString("F0");
         uiOverheatGauge.fillAmount = GetOverheatRatio();

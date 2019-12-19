@@ -28,25 +28,8 @@ public class TargetManager : MonoBehaviour
         EventHub.OnTargetableDestroyed.AddListener(OnTargetableDestroyed);
     }
 
-    private void OnTargetableDestroyed(TargetableObject targetable)
+    public void SearchForTarget()
     {
-        if (targetable.gameObject == Target)
-        {
-            OnTargetUnLock.Invoke(targetable);
-            Target = null;
-        }
-        
-        thingsTargetingMe.Remove(targetable.gameObject);
-        OnIncomingTargetUpdate?.Invoke();
-    }
-
-    private void Update()
-    {
-        if (!KeyBindings.IsNextTargetDown() && Target != null)
-        {
-            return;
-        }
-
         var viableTargets = Physics.OverlapSphere(_shipTransform.position, targetLockRange)
             .Select(x => x.GetComponent<TargetableObject>())
             .Where(x => x != null)
@@ -67,5 +50,17 @@ public class TargetManager : MonoBehaviour
         {
             OnTargetLock.Invoke(Target.GetComponent<TargetableObject>());
         }
+    }
+
+    private void OnTargetableDestroyed(TargetableObject targetable)
+    {
+        if (targetable.gameObject == Target)
+        {
+            OnTargetUnLock.Invoke(targetable);
+            Target = null;
+        }
+        
+        thingsTargetingMe.Remove(targetable.gameObject);
+        OnIncomingTargetUpdate?.Invoke();
     }
 }

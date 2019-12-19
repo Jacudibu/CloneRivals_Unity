@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +10,6 @@ public class TargetInfo : MonoBehaviour
     [SerializeField] private Image shieldBar;
     [SerializeField] private Image structureBar;
     [SerializeField] private TextMeshProUGUI namePlate;
-
 
     private GameObject _contentParent;    
     
