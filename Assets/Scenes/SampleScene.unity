@@ -1886,7 +1886,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 719271653}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1819210613620524, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
       propertyPath: m_Name
@@ -1898,11 +1898,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35.7
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 74
+      value: -65
       objectReference: {fileID: 0}
     - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1922,7 +1922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1961,12 +1961,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!4 &409246612 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4633660960354252, guid: 206dc24d514cdd146a07be8e731a56e9,
-    type: 3}
-  m_PrefabInstance: {fileID: 409246609}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &409246613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2007,6 +2001,55 @@ MonoBehaviour:
   strafeValue: 0
   allowRotation: 1
   allowMovement: 1
+--- !u!114 &409246615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409246610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e2002942e07c608a30593d17bd9764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &409246616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409246610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c7ed547cb7654f7b127d6f7ec41866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 0}
+  missileSpawnPoints: []
+  lockOnRange: 165
+  missileData:
+    validAngle: 12
+    reloadTime: 1
+    damage: 1
+    speed: 400
+    rotationDegrees: 120
+    maximumLifetime: 10
+--- !u!114 &409246617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409246610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ddbf70e98bcff2895eb4eddb8f2ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thingsTargetingMe: []
+  targetLockRange: 200
+  targetLockAngle: 100
 --- !u!1 &428559274
 GameObject:
   m_ObjectHideFlags: 0
@@ -2395,7 +2438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &572870725
 Transform:
   m_ObjectHideFlags: 0
@@ -3000,7 +3043,7 @@ MonoBehaviour:
   lockOnReticle: {fileID: 782585169}
   targetArrow: {fileID: 584095085}
   targetMeArrow: {fileID: 400059801}
-  radius: 100
+  radius: 200
   arrowRotationOffset: -90
 --- !u!1 &719271652
 GameObject:
@@ -3017,7 +3060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &719271653
 Transform:
   m_ObjectHideFlags: 0
@@ -3034,7 +3077,6 @@ Transform:
   - {fileID: 2023287218}
   - {fileID: 1147727844}
   - {fileID: 868061228}
-  - {fileID: 409246612}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5248,6 +5290,7 @@ GameObject:
   - component: {fileID: 1135748558}
   - component: {fileID: 1135748559}
   - component: {fileID: 1135748555}
+  - component: {fileID: 1135748560}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5373,8 +5416,6 @@ MonoBehaviour:
   - {fileID: 2023287213}
   - {fileID: 1147727839}
   - {fileID: 868061223}
-  radius: 200
-  arrowRotationOffset: -90
   targetLockRange: 200
   targetLockAngle: 25
 --- !u!114 &1135748558
@@ -5389,8 +5430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cc3ba8ba5c997b69b0e746770aa0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStructure: 0
-  maxShield: 0
+  maxStructure: 500
+  maxShield: 500
 --- !u!114 &1135748559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5417,6 +5458,19 @@ MonoBehaviour:
   strafeValue: 0
   allowRotation: 1
   allowMovement: 1
+--- !u!135 &1135748560
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135748552}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.01
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1147727839
 GameObject:
   m_ObjectHideFlags: 0
