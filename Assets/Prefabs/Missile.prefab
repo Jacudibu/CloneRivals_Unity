@@ -4705,6 +4705,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9458,6 +9459,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9555,9 +9557,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 5040118190643232962, guid: 486c29e5806d2a3819bf5b2d3645511e,
     type: 3}
-  target: {fileID: 0}
-  speed: 60
-  rotationDegrees: 110
 --- !u!96 &8292641675565652847
 TrailRenderer:
   serializedVersion: 2
@@ -9573,6 +9572,7 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9673,7 +9673,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 0.75
+  m_Radius: 1
+  m_Height: 3
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}

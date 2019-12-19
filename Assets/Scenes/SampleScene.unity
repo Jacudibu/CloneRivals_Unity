@@ -386,6 +386,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6054716286164412779, guid: 206dc24d514cdd146a07be8e731a56e9,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
 --- !u!4 &90734944 stripped
@@ -1989,15 +1994,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 10
   deceleration: 30
-  boostSpeed: 50
-  maxSpeed: 30
+  boostSpeed: 20
+  maxSpeed: 10
   minSpeed: 0
   boostDuration: 9
   lateralSpeed: 10
   requestedRotationAmount: {x: 0.01, y: 0.05, z: 0.01}
   rotationAtMinSpeed: 360
   rotationAtMaxSpeed: 100
-  currentSpeed: 30
+  currentSpeed: 10
   strafeValue: 0
   allowRotation: 1
   allowMovement: 1
@@ -2025,8 +2030,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c7ed547cb7654f7b127d6f7ec41866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missilePrefab: {fileID: 0}
-  missileSpawnPoints: []
+  missilePrefab: {fileID: 8281691259311392500, guid: 252454629b35e5c8598e40c15bec0f64,
+    type: 3}
+  missileSpawnPoints:
+  - {fileID: 1056640916}
+  - {fileID: 1023831219}
   lockOnRange: 165
   missileData:
     validAngle: 12
@@ -4839,6 +4847,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011003992}
   m_CullTransparentMesh: 0
+--- !u!4 &1023831219 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 383157884, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 409246609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1037117943
 GameObject:
   m_ObjectHideFlags: 0
@@ -4876,6 +4890,12 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000030517578, y: -120.000015}
   m_SizeDelta: {x: 250, y: 80}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &1056640916 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1763082164, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 409246609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1069999412
 GameObject:
   m_ObjectHideFlags: 0
@@ -5371,7 +5391,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1135748556
 MonoBehaviour:
   m_ObjectHideFlags: 0

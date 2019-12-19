@@ -42,20 +42,17 @@ public class Missile : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
-        var playerController = other.GetComponent<PlayerController>() ?? other.FindInAllParents<PlayerController>();
-        if (playerController != null && (_ownerId == playerController.gameObject.GetInstanceID() || playerController.isRolling))
+        var targetable = other.GetComponent<TargetableObject>() ?? other.FindInAllParents<TargetableObject>();
+        if (targetable != null && (_ownerId == targetable.gameObject.GetInstanceID()))
         {
             return;
         }
         
-        TargetableObject targetable;
-        if (playerController == null)
+        var playerController = targetable.GetComponent<PlayerController>() ?? other.FindInAllParents<PlayerController>();
+        if (playerController != null && playerController.isRolling)
         {
-            targetable = other.GetComponent<TargetableObject>() ?? other.FindInAllParents<TargetableObject>();
-        }
-        else
-        {
-            targetable = playerController.GetComponent<TargetableObject>();
+            _target = null;
+            return;
         }
         
         if (targetable != null)
