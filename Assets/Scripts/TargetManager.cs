@@ -35,9 +35,9 @@ public class TargetManager : MonoBehaviour
             .Where(x => x != null)
             .Where(x => x.IsTargetable)
             .Where(x => Mathf.Abs(Vector3.Angle(_shipTransform.forward, x.transform.position - _shipTransform.position)) < targetLockAngle)
+            .Where(x => x.gameObject != gameObject)
             .Where(x => x.gameObject != Target)
             .Select(x => x.gameObject);
-
 
         if (Target != null)
         {
