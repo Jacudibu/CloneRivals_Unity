@@ -24,8 +24,22 @@ namespace AI
             if (_targetManager.Target == null || _targetManager.Target.GetComponent<PlayerController>() == null)
             {
                 _targetManager.SearchForTarget();
+
+                if (_targetManager.Target == null)
+                {
+                    return;
+                }
             }
 
+            var oldRot = transform.rotation;
+            transform.LookAt(_targetManager.Target.transform);
+            var targetRot = transform.rotation.eulerAngles;
+            transform.rotation = oldRot;
+            
+            var diff = targetRot - oldRot.eulerAngles;
+            _engine.requestedRotationAmount = diff.normalized;
+            
+            
             if (_weaponController.IsMissileLockable)
             {
                 _weaponController.FireMissile();
