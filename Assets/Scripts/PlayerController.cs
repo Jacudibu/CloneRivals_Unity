@@ -1,10 +1,7 @@
 ﻿using System.Linq;
-using System.Security.Cryptography;
 using InputConfiguration;
 using Skills;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Engine))]
 [RequireComponent(typeof(TargetManager))]
@@ -58,9 +55,6 @@ public class PlayerController : MonoBehaviour
     private TargetManager _targetManager;
     private TargetableObject _targetableObject;
     
-    [SerializeField] private TextMeshProUGUI uiTextSpeed;
-    [SerializeField] private Image uiOverheatGauge;
-    
     [SerializeField] private SkillId[] skills = new SkillId[10];
     [SerializeField] private float[] nextSkillAvailabilityTime = new float[10];
     
@@ -90,9 +84,6 @@ public class PlayerController : MonoBehaviour
         {
             _targetManager.SearchForTarget();
         }
-
-        uiTextSpeed.text = (_engine.currentSpeed * 10).ToString("F0");
-        uiOverheatGauge.fillAmount = GetOverheatRatio();
 
         // vvvv Skill test vvvv
         // TODO: Check all Skill Keys
