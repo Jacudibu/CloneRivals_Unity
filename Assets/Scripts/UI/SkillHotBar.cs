@@ -13,6 +13,10 @@ namespace Assets.Scripts.UI
             playerController.OnSkillUsed += OnSkillUsed;
 
             _hotbarElements = GetComponentsInChildren<SkillHotbarElement>();
+            
+            _hotbarElements[0].SetAssignedKey(KeyCode.Alpha1);
+            _hotbarElements[1].SetAssignedKey(KeyCode.Alpha2);
+            _hotbarElements[2].SetAssignedKey(KeyCode.Alpha3);
         }
 
         private void OnSkillUsed(int index, float cooldown)

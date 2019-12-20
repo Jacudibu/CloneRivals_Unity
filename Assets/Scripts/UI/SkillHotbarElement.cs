@@ -11,6 +11,7 @@ namespace UI
         [SerializeField] private Image cooldownFillerImage;
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI cooldownText;
+        [SerializeField] private TextMeshProUGUI assignedKeyText;
         
         private float _cooldown = 0f;
 
@@ -73,6 +74,10 @@ namespace UI
          
             return remainingTime.ToString("F2");
         }
-        
+
+        public void SetAssignedKey(KeyCode keyCode)
+        {
+            assignedKeyText.text = keyCode.ToString().Replace("Alpha", "");
+        }
     }
 }
