@@ -16,6 +16,22 @@ namespace StatusEffects
         public virtual bool BlockAcceleration => false;
 
         public virtual bool OverrideCurrentSpeed => false;
+
+        protected StatusEffect()
+        {
+            // ReSharper disable once VirtualMemberCallInConstructor
+            RemainingDuration = Duration;
+        }
+        
+        public virtual void Tick()
+        {
+            RemainingDuration -= Time.deltaTime;
+        }
+
+        public bool HasRunOutOfTime()
+        {
+            return Duration > 0f && RemainingDuration <= 0f;
+        }
         
         public virtual float ApplyCurrentSpeedOverride(float original)
         {
@@ -35,6 +51,16 @@ namespace StatusEffects
         public virtual float ModifyBoostSpeed(float original)
         {
             return original;
+        }
+
+        public virtual void Initialize(TargetableObject targetableObject)
+        {
+            
+        }
+
+        public virtual void OnEffectEnd()
+        {
+            
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Effects;
 using StatusEffects;
 using UnityEngine;
@@ -24,7 +26,21 @@ public class TargetableObject : MonoBehaviour
         Structure = maxStructure;
         Shield = maxShield;
     }
-    
+
+    private void Update()
+    {
+        foreach (var statusEffect in StatusEffects)
+        {
+            statusEffect.Tick();
+        }
+        
+        foreach (var statusEffect in StatusEffects.Where(x => x.HasRunOutOfTime()))
+        {
+            statusEffect.OnEffectEnd();
+        }
+        StatusEffects.RemoveAll(x => x.HasRunOutOfTime());
+    }
+
     public void RestoreStructure(int amount)
     {
         Structure += amount;

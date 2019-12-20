@@ -13,8 +13,12 @@ namespace Skills.Implementations
 
         public override void Execute(PlayerController playerController)
         {
-            var statusEffects = playerController.GetComponent<TargetableObject>().StatusEffects;
-            statusEffects.Add(new BackThrustStatusEffect());
+            var targetable = playerController.GetComponent<TargetableObject>();
+            var statusEffects = targetable.StatusEffects;
+            
+            var effect = new BackThrustStatusEffect();
+            effect.Initialize(targetable);
+            statusEffects.Add(effect);
         }
     }
 }
