@@ -12,6 +12,8 @@ namespace StatusEffects.Implementations
         private Engine _engine;
         
         public override bool OverrideCurrentSpeed => true;
+        public override bool BlockRolling => true;
+        public override bool BlockTurning => true;
 
         public override void Initialize(TargetableObject targetableObject)
         {

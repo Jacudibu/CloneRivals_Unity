@@ -246,7 +246,8 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector2 clampedMovementPercentage;
-        if (blockRotationInRearView && KeyBindings.IsRearCamera())
+        if (blockRotationInRearView && KeyBindings.IsRearCamera()
+            || _targetableObject.StatusEffects.Any(x => x.BlockTurning))
         {
             clampedMovementPercentage = Vector2.zero;
         }
