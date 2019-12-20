@@ -17,12 +17,10 @@ namespace Skills.Implementations
 
             if (statusEffects.Any(x => x.StatusEffectId == StatusEffectId.ReverseEngine))
             {
-                Debug.Log("Cancelling RE");
                 statusEffects.RemoveAll(x => x.StatusEffectId == StatusEffectId.ReverseEngine);
             }
             else
             {
-                Debug.Log("Activating RE");
                 statusEffects.Add(new ReverseEngineStatusEffect());
             }
         }
