@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Engine))]
 [RequireComponent(typeof(TargetManager))]
+[RequireComponent(typeof(TargetableObject))]
 [DisallowMultipleComponent]
 public class PlayerController : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private Engine _engine;
     private TargetManager _targetManager;
+    private TargetableObject _targetableObject;
     
     [SerializeField] private TextMeshProUGUI uiTextSpeed;
     [SerializeField] private Image uiOverheatGauge;
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
         _engine = GetComponent<Engine>();
         _targetManager = GetComponent<TargetManager>();
+        _targetableObject = GetComponent<TargetableObject>();
         
         _remainingBoost = _engine.boostDuration;
     }
@@ -94,26 +97,35 @@ public class PlayerController : MonoBehaviour
         // TODO: Check all Skill Keys
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            const int index = 1;
-            var skillId = skills[index]; // <- alpha 1 => array entry 1
-            if (skillId == SkillId.None)
-            {
-                return;
-            }
+            InvokeSkill(1);
+        }
 
-            if (nextSkillAvailabilityTime[index] > Time.time)
-            {
-                return;
-            }
-            
-            var skill = SkillDictionary.GetSkill(skillId);
-            
-            skill.Execute(this);
-            nextSkillAvailabilityTime[index] = Time.time + skill.Cooldown;
-            OnSkillUsed?.Invoke(index, skill.Cooldown);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            InvokeSkill(2);
         }
     }
 
+    private void InvokeSkill(int index)
+    {
+        var skillId = skills[index]; // <- alpha 1 => array entry 1
+        if (skillId == SkillId.None)
+        {
+            return;
+        }
+
+        if (nextSkillAvailabilityTime[index] > Time.time)
+        {
+            return;
+        }
+            
+        var skill = SkillDictionary.GetSkill(skillId);
+            
+        skill.Execute(this);
+        nextSkillAvailabilityTime[index] = Time.time + skill.Cooldown;
+        OnSkillUsed?.Invoke(index, skill.Cooldown);
+    }
+    
     private void AdjustOverheat()
     {
         if (_boost && !isRolling && !_isOverheated)
@@ -296,12 +308,22 @@ public class PlayerController : MonoBehaviour
 
     private void AdjustSpeed()
     {
+        var minSpeed = _engine.minSpeed;
+        var maxSpeed = _engine.maxSpeed;
+        var boostSpeed = _engine.boostSpeed;
+        foreach (var statusEffect in _targetableObject.StatusEffects)
+        {
+            minSpeed = statusEffect.ModifyMinSpeed(minSpeed);
+            maxSpeed = statusEffect.ModifyMaxSpeed(maxSpeed);
+            boostSpeed = statusEffect.ModifyBoostSpeed(boostSpeed);
+        }
+        
         if (isRolling)
         {
             _engine.currentSpeed -= _engine.deceleration * Time.deltaTime;
-            if (_engine.currentSpeed < 0)
+            if (_engine.currentSpeed < minSpeed)
             {
-                _engine.currentSpeed = 0;
+                _engine.currentSpeed = minSpeed;
             }
             
             return;
@@ -309,31 +331,31 @@ public class PlayerController : MonoBehaviour
         
         if (_boost && !_isOverheated)
         {
-            if (_engine.currentSpeed < _engine.boostSpeed)
+            if (_engine.currentSpeed < boostSpeed)
             {
                 _engine.currentSpeed += _engine.acceleration * Time.deltaTime;
             }
             else
             {
-                _engine.currentSpeed = _engine.boostSpeed;
+                _engine.currentSpeed = boostSpeed;
             }
 
             return;
         }
     
-        if (_engine.currentSpeed < _engine.minSpeed)
+        if (_engine.currentSpeed < minSpeed)
         {
-            _engine.currentSpeed += _engine.acceleration * Time.deltaTime;
+            _engine.currentSpeed += _engine.acceleration * 3 * Time.deltaTime;
             return;
         }
 
-        if (_engine.currentSpeed > _engine.maxSpeed)
+        if (_engine.currentSpeed > maxSpeed)
         {
             _engine.currentSpeed -= _engine.deceleration * Time.deltaTime;
             return;
         }
 
-        if (_engine.currentSpeed > _engine.minSpeed && KeyBindings.IsBrake())
+        if (_engine.currentSpeed > minSpeed && KeyBindings.IsBrake())
         {
             _engine.currentSpeed -= _engine.deceleration * Time.deltaTime;
             return;

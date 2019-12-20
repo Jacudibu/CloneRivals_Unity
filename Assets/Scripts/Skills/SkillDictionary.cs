@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Skills.Implementations;
 
 namespace Skills
 {
@@ -6,7 +7,9 @@ namespace Skills
     {
         private static readonly Dictionary<SkillId, Skill> Skills = new Dictionary<SkillId, Skill>
         {
-            { SkillId.UTurn, new UTurn() } 
+            { SkillId.UTurn, new UTurn() } ,
+            { SkillId.ReverseEngine, new ReverseEngine() },
+            
         };
 
         public static Skill GetSkill(SkillId skillId)

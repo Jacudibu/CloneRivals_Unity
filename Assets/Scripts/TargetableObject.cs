@@ -1,4 +1,6 @@
-﻿using Effects;
+﻿using System.Collections.Generic;
+using Effects;
+using StatusEffects;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -12,7 +14,8 @@ public class TargetableObject : MonoBehaviour
     public bool IsTargetable { get; private set; } = true;
 
     public readonly EventHub.TargetableObjectEvent OnHealthChanged = new EventHub.TargetableObjectEvent();
-
+    public readonly List<StatusEffect> StatusEffects = new List<StatusEffect>();
+    
     public float GetStructurePercentage() => Structure / maxStructure;
     public float GetShieldPercentage() => Shield / maxShield;
     

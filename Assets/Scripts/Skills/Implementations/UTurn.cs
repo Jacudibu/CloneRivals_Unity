@@ -1,4 +1,4 @@
-namespace Skills
+namespace Skills.Implementations
 {
     public class UTurn : Skill
     {

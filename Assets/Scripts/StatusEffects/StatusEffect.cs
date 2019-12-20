@@ -2,7 +2,9 @@ namespace StatusEffects
 {
     public abstract class StatusEffect
     {
-        public abstract float Duration { get; }
+        public abstract StatusEffectId StatusEffectId { get; }
+        
+        public virtual float Duration => 0;
         public float RemainingDuration { get; protected set; }
         
         public bool BlockAccelerating { get; } = false;
@@ -11,8 +13,24 @@ namespace StatusEffects
         public bool BlockMovement { get; } = false;
         public bool BlockAcceleration { get; } = false;
 
-        public abstract void Tick(PlayerController playerController);
+        public virtual void Tick(PlayerController playerController)
+        {
+            
+        }
         
+        public virtual float ModifyMinSpeed(float original)
+        {
+            return original;
+        }
         
+        public virtual float ModifyMaxSpeed(float original)
+        {
+            return original;
+        }    
+        
+        public virtual float ModifyBoostSpeed(float original)
+        {
+            return original;
+        }
     }
 }
