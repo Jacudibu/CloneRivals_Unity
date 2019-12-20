@@ -2,6 +2,7 @@ namespace StatusEffects
 {
     public enum StatusEffectId
     {
-        ReverseEngine = 1
+        ReverseEngine,
+        BackThrust
     }
 }

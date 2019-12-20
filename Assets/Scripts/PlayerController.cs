@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq;
+using System.Security.Cryptography;
 using InputConfiguration;
 using Skills;
 using TMPro;
@@ -104,6 +105,11 @@ public class PlayerController : MonoBehaviour
         {
             InvokeSkill(2);
         }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            InvokeSkill(3);
+        }
     }
 
     private void InvokeSkill(int index)
@@ -178,7 +184,7 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessRollInput()
     {
-        if (isRolling)
+        if (isRolling || _targetableObject.StatusEffects.Any(x => x.BlockRolling))
         {
             return;
         }
@@ -308,6 +314,16 @@ public class PlayerController : MonoBehaviour
 
     private void AdjustSpeed()
     {
+        if (_targetableObject.StatusEffects.Any(x => x.OverrideCurrentSpeed))
+        {
+            foreach (var statusEffect in _targetableObject.StatusEffects)
+            {
+                _engine.currentSpeed = statusEffect.ApplyCurrentSpeedOverride(_engine.currentSpeed);
+            }
+
+            return;
+        }
+        
         var minSpeed = _engine.minSpeed;
         var maxSpeed = _engine.maxSpeed;
         var boostSpeed = _engine.boostSpeed;

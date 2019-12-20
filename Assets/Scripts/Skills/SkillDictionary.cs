@@ -9,6 +9,7 @@ namespace Skills
         {
             { SkillId.UTurn, new UTurn() } ,
             { SkillId.ReverseEngine, new ReverseEngine() },
+            { SkillId.BackThrust, new BackThrust() },
             
         };
 

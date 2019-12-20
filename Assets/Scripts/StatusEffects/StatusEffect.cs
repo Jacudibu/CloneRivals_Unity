@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace StatusEffects
 {
     public abstract class StatusEffect
@@ -7,15 +9,17 @@ namespace StatusEffects
         public virtual float Duration => 0;
         public float RemainingDuration { get; protected set; }
         
-        public bool BlockAccelerating { get; } = false;
-        public bool BlockTurning { get; } = false;
-        public bool BlockRolling { get; } = false;
-        public bool BlockMovement { get; } = false;
-        public bool BlockAcceleration { get; } = false;
+        public virtual bool BlockAccelerating => false;
+        public virtual bool BlockTurning => false;
+        public virtual bool BlockRolling => false;
+        public virtual bool BlockMovement => false;
+        public virtual bool BlockAcceleration => false;
 
-        public virtual void Tick(PlayerController playerController)
+        public virtual bool OverrideCurrentSpeed => false;
+        
+        public virtual float ApplyCurrentSpeedOverride(float original)
         {
-            
+            return original;
         }
         
         public virtual float ModifyMinSpeed(float original)
