@@ -84,28 +84,11 @@ public class PlayerController : MonoBehaviour
         {
             _targetManager.SearchForTarget();
         }
-
-        // vvvv Skill test vvvv
-        // TODO: Check all Skill Keys
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            InvokeSkill(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            InvokeSkill(2);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            InvokeSkill(3);
-        }
     }
 
     private void InvokeSkill(int index)
     {
-        var skillId = skills[index]; // <- alpha 1 => array entry 1
+        var skillId = skills[index]; // <- alpha 1 => array entry 0 // 0 is skill 10
         if (skillId == SkillId.None)
         {
             return;
@@ -170,7 +153,15 @@ public class PlayerController : MonoBehaviour
         _strafeLeftDown = KeyBindings.IsStrafeLeftDown();
         _strafeRightDown = KeyBindings.IsStrafeRightDown();
 
-        _boost = KeyBindings.IsBoost();;
+        _boost = KeyBindings.IsBoost();
+        
+        for (var i = 0; i < KeyBindings.IsHotbarKeyDown.Length; i++)
+        {
+            if (KeyBindings.IsHotbarKeyDown[i].Invoke())
+            {
+                InvokeSkill(i);
+            }
+        }
     }
 
     private void ProcessRollInput()

@@ -1,7 +1,7 @@
-using UI;
+using InputConfiguration;
 using UnityEngine;
 
-namespace Assets.Scripts.UI
+namespace UI
 {
     public class SkillHotBar : MonoBehaviour
     {
@@ -13,20 +13,14 @@ namespace Assets.Scripts.UI
             playerController.OnSkillUsed += OnSkillUsed;
 
             _hotbarElements = GetComponentsInChildren<SkillHotbarElement>();
-            
-            _hotbarElements[0].SetAssignedKey(KeyCode.Alpha1);
-            _hotbarElements[1].SetAssignedKey(KeyCode.Alpha2);
-            _hotbarElements[2].SetAssignedKey(KeyCode.Alpha3);
+
+            _hotbarElements[0].SetAssignedKey(KeyBindings.Hotbar1);
+            _hotbarElements[1].SetAssignedKey(KeyBindings.Hotbar2);
+            _hotbarElements[2].SetAssignedKey(KeyBindings.Hotbar3);
         }
 
         private void OnSkillUsed(int index, float cooldown)
         {
-            index -= 1;
-            if (index < 0)
-            {
-                index = 10;
-            }
-            
             var hotbarElement = _hotbarElements[index];
             hotbarElement.OnSkillUsed(cooldown);
         }
