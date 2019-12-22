@@ -16,6 +16,7 @@ namespace StatusEffects
         public virtual bool BlockAcceleration => false;
 
         public virtual bool OverrideCurrentSpeed => false;
+        public virtual bool CancelOnCollision => false;
 
         protected StatusEffect()
         {

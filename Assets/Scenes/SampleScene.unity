@@ -5478,7 +5478,7 @@ MonoBehaviour:
   isRolling: 0
   rollDirection: 0
   rollProgress: 0
-  skills: 01000000010000000200000003000000000000000000000000000000000000000000000000000000
+  skills: 01000000020000000300000000000000000000000000000000000000000000000000000000000000
   nextSkillAvailabilityTime:
   - 0
   - 0
@@ -9943,7 +9943,10 @@ MonoBehaviour:
     <color="red">Lost Connection to chat server.
     :(
 
-    <color="red">Lost Connection to chat server. :('
+    <color="red">Lost Connection to chat server. :(
+
+    <color="red">Lost
+    Connection to chat server. :('
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

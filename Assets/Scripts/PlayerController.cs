@@ -86,15 +86,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void InvokeSkill(int index)
+    private void InvokeSkill(int hotbarIndex)
     {
-        var skillId = skills[index]; // <- alpha 1 => array entry 0 // 0 is skill 10
+        var skillId = skills[hotbarIndex]; // <- alpha 1 => array entry 0 // 0 is skill 10
         if (skillId == SkillId.None)
         {
             return;
         }
 
-        if (nextSkillAvailabilityTime[index] > Time.time)
+        if (nextSkillAvailabilityTime[hotbarIndex] > Time.time)
         {
             return;
         }
@@ -102,8 +102,8 @@ public class PlayerController : MonoBehaviour
         var skill = SkillDictionary.GetSkill(skillId);
             
         skill.Execute(this);
-        nextSkillAvailabilityTime[index] = Time.time + skill.Cooldown;
-        OnSkillUsed?.Invoke(skillId, index, skill.Cooldown);
+        nextSkillAvailabilityTime[hotbarIndex] = Time.time + skill.Cooldown;
+        OnSkillUsed?.Invoke(skillId, hotbarIndex, skill.Cooldown);
     }
     
     private void AdjustOverheat()

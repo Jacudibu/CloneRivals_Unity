@@ -41,6 +41,15 @@ public class TargetableObject : MonoBehaviour
         StatusEffects.RemoveAll(x => x.HasRunOutOfTime());
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        foreach (var statusEffect in StatusEffects.Where(x => x.CancelOnCollision))
+        {
+            statusEffect.OnEffectEnd();
+        }
+        StatusEffects.RemoveAll(x => x.CancelOnCollision);
+    }
+
     public void RestoreStructure(int amount)
     {
         Structure += amount;

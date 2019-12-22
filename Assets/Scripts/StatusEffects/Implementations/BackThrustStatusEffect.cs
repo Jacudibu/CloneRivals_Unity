@@ -14,6 +14,7 @@ namespace StatusEffects.Implementations
         public override bool OverrideCurrentSpeed => true;
         public override bool BlockRolling => true;
         public override bool BlockTurning => true;
+        public override bool CancelOnCollision => true;
 
         public override void Initialize(TargetableObject targetableObject)
         {
