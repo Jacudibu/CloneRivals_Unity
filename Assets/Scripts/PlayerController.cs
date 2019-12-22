@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float _remainingBoost;
     private bool _isOverheated;
     
-    public delegate void OnSkillUsedDelegate(int skillId, float cooldown);
+    public delegate void OnSkillUsedDelegate(SkillId skillId, int hotbarIndex, float cooldown);
     public event OnSkillUsedDelegate OnSkillUsed;
     
     public float GetOverheatRatio() => _remainingBoost / _engine.boostDuration;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             
         skill.Execute(this);
         nextSkillAvailabilityTime[index] = Time.time + skill.Cooldown;
-        OnSkillUsed?.Invoke(index, skill.Cooldown);
+        OnSkillUsed?.Invoke(skillId, index, skill.Cooldown);
     }
     
     private void AdjustOverheat()

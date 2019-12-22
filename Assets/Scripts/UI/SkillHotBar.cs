@@ -1,4 +1,5 @@
 using InputConfiguration;
+using Skills;
 using UnityEngine;
 
 namespace UI
@@ -19,9 +20,9 @@ namespace UI
             _hotbarElements[2].SetAssignedKey(KeyBindings.Hotbar3);
         }
 
-        private void OnSkillUsed(int index, float cooldown)
+        private void OnSkillUsed(SkillId skillId, int hotbarIndex, float cooldown)
         {
-            var hotbarElement = _hotbarElements[index];
+            var hotbarElement = _hotbarElements[hotbarIndex];
             hotbarElement.OnSkillUsed(cooldown);
         }
     }
