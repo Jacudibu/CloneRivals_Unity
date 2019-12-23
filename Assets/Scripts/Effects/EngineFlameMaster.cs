@@ -64,6 +64,7 @@ public class EngineFlameMaster : MonoBehaviour
         }
     }
 
+    #if UNITY_EDITOR
     private void OnValidate()
     {
         if (EditorApplication.isPlaying || EditorApplication.isPaused)
@@ -71,6 +72,7 @@ public class EngineFlameMaster : MonoBehaviour
             Start();
         }
     }
+    #endif
 
     void Start()
     {
