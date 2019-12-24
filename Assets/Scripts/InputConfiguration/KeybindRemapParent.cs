@@ -9,7 +9,7 @@ using Utility;
 
 namespace InputConfiguration
 {
-    public class InputConfigurator : SingletonBehaviour<InputConfigurator>
+    public class KeybindRemapParent : SingletonBehaviour<KeybindRemapParent>
     {
         [SerializeField] private GameObject remapPopup;
         [SerializeField] private GameObject keybindListElement;
