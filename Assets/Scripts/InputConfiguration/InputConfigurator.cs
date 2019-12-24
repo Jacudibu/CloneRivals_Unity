@@ -12,10 +12,11 @@ namespace InputConfiguration
     public class InputConfigurator : SingletonBehaviour<InputConfigurator>
     {
         [SerializeField] private GameObject remapPopup;
-
+        [SerializeField] private GameObject keybindListElement;
+        
         public static bool IsRemapping { get; private set; }
         
-        private TextMeshProUGUI _remapText;
+        private TextMeshProUGUI _remapPopupText;
         private InputRemapItem[] _remapItems;
 
         private static readonly KeyCode[] IgnoredKeys =
@@ -30,9 +31,17 @@ namespace InputConfiguration
 
         private void Start()
         {
-            _remapText = remapPopup.GetComponentInChildren<TextMeshProUGUI>();
+            _remapPopupText = remapPopup.GetComponentInChildren<TextMeshProUGUI>();
             remapPopup.SetActive(false);
         
+            var keybinds = typeof(KeyBindings).GetFields().Where(x => x.FieldType == typeof(Keybind));
+            foreach (var fieldInfo in keybinds)
+            {
+                var elementObject = Instantiate(keybindListElement, transform);
+                var elementScript = elementObject.GetComponent<KeybindRemapListElement>();
+                elementScript.Initialize(fieldInfo);
+            }
+            
             var childButtons = GetComponentsInChildren<Button>();
             _remapItems = childButtons.Select(x => new InputRemapItem(x.transform.parent.gameObject)).ToArray();
         }
@@ -51,7 +60,7 @@ namespace InputConfiguration
             SetButtonInteractivity(false);
 
             remapPopup.SetActive(true);
-            _remapText.text = $"Press new key for\n{inputRemapItem.ActionName}\n(or ESC to cancel)";
+            _remapPopupText.text = $"Press new key for\n{inputRemapItem.ActionName}\n(or ESC to cancel)";
 
             KeyCode? newKey = null;
             while(true)
