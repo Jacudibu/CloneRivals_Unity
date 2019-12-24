@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         AdjustOverheat();
         ShakeShip();
         
-        if (KeyBindings.IsNextTargetDown() || _targetManager.Target == null)
+        if (KeyBindings.NextTarget.IsDown() || _targetManager.Target == null)
         {
             _targetManager.SearchForTarget();
         }
@@ -147,13 +147,13 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessInput()
     {
-        _strafeLeft = KeyBindings.IsStrafeLeft();
-        _strafeRight = KeyBindings.IsStrafeRight();
+        _strafeLeft = KeyBindings.StrafeLeft.IsPressed();
+        _strafeRight = KeyBindings.StrafeRight.IsPressed();
 
-        _strafeLeftDown = KeyBindings.IsStrafeLeftDown();
-        _strafeRightDown = KeyBindings.IsStrafeRightDown();
+        _strafeLeftDown = KeyBindings.StrafeLeft.IsDown();
+        _strafeRightDown = KeyBindings.StrafeRight.IsDown();
 
-        _boost = KeyBindings.IsBoost();
+        _boost = KeyBindings.Boost.IsPressed();
         
         for (var i = 0; i < KeyBindings.IsHotbarKeyDown.Length; i++)
         {
@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector2 clampedMovementPercentage;
-        if (blockRotationInRearView && KeyBindings.IsRearCamera()
+        if (blockRotationInRearView && KeyBindings.RearCamera.IsPressed()
             || _targetableObject.StatusEffects.Any(x => x.BlockTurning))
         {
             clampedMovementPercentage = Vector2.zero;
@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (_engine.currentSpeed > minSpeed && KeyBindings.IsBrake())
+        if (_engine.currentSpeed > minSpeed && KeyBindings.Brake.IsPressed())
         {
             _engine.currentSpeed -= _engine.deceleration * Time.deltaTime;
             return;

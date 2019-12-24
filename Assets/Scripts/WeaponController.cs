@@ -48,12 +48,12 @@ public class WeaponController : MonoBehaviour
         }
         
         
-        if (KeyBindings.IsPrimary())
+        if (KeyBindings.PrimaryWeapon.IsPressed())
         {
             FireGun();
         }
 
-        if (KeyBindings.IsFireMissile())
+        if (KeyBindings.FireMissile.IsPressed())
         {
             FireMissile();
         }

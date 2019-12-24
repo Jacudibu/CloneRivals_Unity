@@ -83,14 +83,14 @@ public class EngineFlameMaster : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyBindings.Boost))
+        if (KeyBindings.Boost.IsPressed())
         {
             foreach (var engineFlameParticleSystem in _engineFlameParticleSystems)
             {
                 engineFlameParticleSystem.SetBoost();
             }
         } 
-        else if (Input.GetKey(KeyBindings.Brake))
+        else if (KeyBindings.Brake.IsPressed())
         {
             foreach (var engineFlameParticleSystem in _engineFlameParticleSystems)
             {

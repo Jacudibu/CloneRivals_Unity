@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
     
     private void LateUpdate()
     {
-        mainCamera.enabled = !KeyBindings.IsRearCamera();
+        mainCamera.enabled = !KeyBindings.RearCamera.IsPressed();
         rearCamera.enabled = !mainCamera.enabled;
         
         _mainCameraTransform.rotation = targetTransform.rotation;
