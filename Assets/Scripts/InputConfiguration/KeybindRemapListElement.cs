@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,9 +19,15 @@ namespace InputConfiguration
         
         public void Initialize(FieldInfo fieldInfo)
         {
-            name = fieldInfo.Name;
-            text.text = fieldInfo.Name;
+            var keyBindAttribute = fieldInfo.GetCustomAttribute<KeyBindAttribute>();
+            if (keyBindAttribute == null)
+            {
+                throw new Exception("Unable to find a keyBindAttribute on keyBind for " + fieldInfo.Name);
+            }
 
+            name = keyBindAttribute.name;
+            text.text = keyBindAttribute.name;
+            
             _primaryText = primary.GetComponentInChildren<Text>();
             _secondaryText = secondary.GetComponentInChildren<Text>();
             
