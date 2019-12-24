@@ -17,7 +17,6 @@ namespace InputConfiguration
         public static bool IsRemapping { get; private set; }
         
         private TextMeshProUGUI _remapPopupText;
-        private InputRemapItem[] _remapItems;
 
         private static readonly KeyCode[] IgnoredKeys =
         {
@@ -29,6 +28,8 @@ namespace InputConfiguration
             .Except(IgnoredKeys.AsEnumerable())
             .ToArray();
 
+        private Button[] _childButtons;
+        
         private void Start()
         {
             _remapPopupText = remapPopup.GetComponentInChildren<TextMeshProUGUI>();
@@ -42,17 +43,10 @@ namespace InputConfiguration
                 elementScript.Initialize(fieldInfo);
             }
             
-            var childButtons = GetComponentsInChildren<Button>();
-            _remapItems = childButtons.Select(x => new InputRemapItem(x.transform.parent.gameObject)).ToArray();
+            _childButtons = GetComponentsInChildren<Button>();
         }
 
-        public void InitiateKeyRemap(InputRemapItem inputRemapItem)
-        {
-            StartCoroutine( RemappingCoroutine(inputRemapItem,
-                x => inputRemapItem.KeyCodeProperty.SetValue(instance, x)));
-        }
-
-        private IEnumerator RemappingCoroutine(InputRemapItem inputRemapItem, Action<KeyCode> action)
+        private IEnumerator RemappingCoroutine(Action<KeyCode> action)
         {
             IsRemapping = true;
             var eventSystem = EventSystem.current.gameObject;
@@ -60,7 +54,6 @@ namespace InputConfiguration
             SetButtonInteractivity(false);
 
             remapPopup.SetActive(true);
-            _remapPopupText.text = $"Press new key for\n{inputRemapItem.ActionName}\n(or ESC to cancel)";
 
             KeyCode? newKey = null;
             while(true)
@@ -82,7 +75,6 @@ namespace InputConfiguration
             if (newKey != null)
             {
                 action.Invoke((KeyCode) newKey);
-                inputRemapItem.SetButtonText();
             }
             
             remapPopup.SetActive(false);
@@ -111,10 +103,24 @@ namespace InputConfiguration
 
         private void SetButtonInteractivity(bool state)
         {
-            foreach (var remapItem in _remapItems)
+            foreach (var button in _childButtons)
             {
-                remapItem.Button.interactable = state;
+                button.interactable = state;
             }
+        }
+
+        public void InitiatePrimaryKeyRemap(KeybindRemapListElement remapItemProxy)
+        {
+            Debug.Log("Primary remap invoked for " + remapItemProxy.name);
+            _remapPopupText.text = $"Press new key for\n{remapItemProxy.name}\n(or ESC to cancel)";
+            StartCoroutine( RemappingCoroutine(remapItemProxy.SetPrimaryKey));
+        }
+
+        public void InitiateSecondaryKeyRemap(KeybindRemapListElement remapItemProxy)
+        {
+            Debug.Log("Secondary remap invoked for " + remapItemProxy.name);
+            _remapPopupText.text = $"Press new key for\n{remapItemProxy.name}\n(or ESC to cancel)";
+            StartCoroutine( RemappingCoroutine(remapItemProxy.SetSecondaryKey));
         }
     }
 }
