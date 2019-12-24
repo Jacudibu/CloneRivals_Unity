@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace InputConfiguration
 {
-    public class KeybindRemapListElement : MonoBehaviour
+    public class KeyBindRemapListElement : MonoBehaviour
     {
         [SerializeField] private Text text;
         [SerializeField] private Button primary;
@@ -15,7 +15,7 @@ namespace InputConfiguration
         private Text _primaryText;
         private Text _secondaryText;
 
-        private Keybind _keybind;
+        private KeyBind _keyBind;
         
         public void Initialize(FieldInfo fieldInfo)
         {
@@ -32,35 +32,35 @@ namespace InputConfiguration
             _secondaryText = secondary.GetComponentInChildren<Text>();
             
             var remapItemProxy = this;
-            _keybind = fieldInfo.GetValue(0) as Keybind;
+            _keyBind = fieldInfo.GetValue(0) as KeyBind;
             
-            primary.onClick.AddListener(delegate { KeybindRemapParent.instance.InitiatePrimaryKeyRemap(remapItemProxy); });
-            secondary.onClick.AddListener(delegate { KeybindRemapParent.instance.InitiateSecondaryKeyRemap(remapItemProxy); });
+            primary.onClick.AddListener(delegate { KeyBindRemapParent.instance.InitiatePrimaryKeyRemap(remapItemProxy); });
+            secondary.onClick.AddListener(delegate { KeyBindRemapParent.instance.InitiateSecondaryKeyRemap(remapItemProxy); });
             
             SetButtonText();
         }
 
         private void SetButtonText()
         {
-            _primaryText.text = _keybind.primary == null 
+            _primaryText.text = _keyBind.primary == null 
                 ? "---"
-                : _keybind.primary.ToString();
+                : _keyBind.primary.ToString();
 
 
-            _secondaryText.text = _keybind.secondary == null 
+            _secondaryText.text = _keyBind.secondary == null 
                 ? "---" 
-                : _keybind.secondary.ToString();
+                : _keyBind.secondary.ToString();
         }
 
         public void SetPrimaryKey(KeyCode keyCode)
         {
-            _keybind.primary = keyCode;
+            _keyBind.primary = keyCode;
             SetButtonText();
         }
 
         public void SetSecondaryKey(KeyCode keyCode)
         {
-            _keybind.secondary = keyCode;
+            _keyBind.secondary = keyCode;
             SetButtonText();
         }
     }

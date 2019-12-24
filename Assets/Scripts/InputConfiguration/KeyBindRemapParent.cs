@@ -9,7 +9,7 @@ using Utility;
 
 namespace InputConfiguration
 {
-    public class KeybindRemapParent : SingletonBehaviour<KeybindRemapParent>
+    public class KeyBindRemapParent : SingletonBehaviour<KeyBindRemapParent>
     {
         [SerializeField] private GameObject remapPopup;
         [SerializeField] private GameObject keybindListElement;
@@ -35,11 +35,11 @@ namespace InputConfiguration
             _remapPopupText = remapPopup.GetComponentInChildren<TextMeshProUGUI>();
             remapPopup.SetActive(false);
         
-            var keybinds = typeof(KeyBindings).GetFields().Where(x => x.FieldType == typeof(Keybind));
-            foreach (var fieldInfo in keybinds)
+            var keyBinds = typeof(KeyBindings).GetFields().Where(x => x.FieldType == typeof(KeyBind));
+            foreach (var fieldInfo in keyBinds)
             {
                 var elementObject = Instantiate(keybindListElement, transform);
-                var elementScript = elementObject.GetComponent<KeybindRemapListElement>();
+                var elementScript = elementObject.GetComponent<KeyBindRemapListElement>();
                 elementScript.Initialize(fieldInfo);
             }
             
@@ -109,14 +109,14 @@ namespace InputConfiguration
             }
         }
 
-        public void InitiatePrimaryKeyRemap(KeybindRemapListElement remapItemProxy)
+        public void InitiatePrimaryKeyRemap(KeyBindRemapListElement remapItemProxy)
         {
             Debug.Log("Primary remap invoked for " + remapItemProxy.name);
             _remapPopupText.text = $"Press new key for\n{remapItemProxy.name}\n(or ESC to cancel)";
             StartCoroutine( RemappingCoroutine(remapItemProxy.SetPrimaryKey));
         }
 
-        public void InitiateSecondaryKeyRemap(KeybindRemapListElement remapItemProxy)
+        public void InitiateSecondaryKeyRemap(KeyBindRemapListElement remapItemProxy)
         {
             Debug.Log("Secondary remap invoked for " + remapItemProxy.name);
             _remapPopupText.text = $"Press new key for\n{remapItemProxy.name}\n(or ESC to cancel)";

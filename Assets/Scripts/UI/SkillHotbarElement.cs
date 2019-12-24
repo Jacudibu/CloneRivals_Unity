@@ -76,9 +76,9 @@ namespace UI
             return remainingTime.ToString("F2");
         }
 
-        public void SetAssignedKey(Keybind keybind)
+        public void SetAssignedKey(KeyBind keyBind)
         {
-            assignedKeyText.text = keybind.primary.ToString().Replace("Alpha", "");
+            assignedKeyText.text = keyBind.primary.ToString().Replace("Alpha", "");
         }
     }
 }

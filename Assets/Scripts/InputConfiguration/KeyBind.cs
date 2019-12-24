@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace InputConfiguration
 {
-    public class Keybind
+    public class KeyBind
     {
         public KeyCode? primary;
         public KeyCode? secondary;
 
-        public Keybind(KeyCode? primary = null, KeyCode? secondary = null)
+        public KeyBind(KeyCode? primary = null, KeyCode? secondary = null)
         {
             this.primary = primary;
             this.secondary = secondary;
