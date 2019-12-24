@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using InputConfiguration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -75,9 +76,9 @@ namespace UI
             return remainingTime.ToString("F2");
         }
 
-        public void SetAssignedKey(KeyCode keyCode)
+        public void SetAssignedKey(Keybind keybind)
         {
-            assignedKeyText.text = keyCode.ToString().Replace("Alpha", "");
+            assignedKeyText.text = keybind.primary.ToString().Replace("Alpha", "");
         }
     }
 }
