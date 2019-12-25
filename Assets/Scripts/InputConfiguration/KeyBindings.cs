@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace InputConfiguration
@@ -38,5 +41,79 @@ namespace InputConfiguration
             () => Hotbar9.IsDown(),
             () => Hotbar0.IsDown(),
         };
+
+
+        private const string KeyBindingFileName = "keybindings.txt";
+        private static readonly string KeyBindingsFilePath = Application.persistentDataPath + KeyBindingFileName;
+        private const string AttributeNameDelimiter = ": ";
+        private const string KeyCodeDelimiter = ", ";
+        private const string NullKeyCodeIdentifier = "none";
+        public static void LoadFromDisk()
+        {
+            if (!File.Exists(KeyBindingsFilePath))
+            {
+                SaveToDisk();
+                return;
+            }
+            
+            var lines = File.ReadAllLines(KeyBindingsFilePath);
+            var nameDelimiter = new[]{AttributeNameDelimiter};
+            var keyBindDelimiter = new[]{KeyCodeDelimiter};
+            
+            var fields = typeof(KeyBindings).GetFields().Where(x => x.FieldType == typeof(KeyBind)).ToArray();
+            foreach (var line in lines)
+            {
+                if (line.Length == 0)
+                {
+                    continue;
+                }
+                
+                var split = line.Split(nameDelimiter, StringSplitOptions.None);
+                var attributeName = split[0];
+                var keyBindSplit = split[1].Split(keyBindDelimiter, StringSplitOptions.None);
+                var key1 = keyBindSplit[0];
+                var key2 = keyBindSplit[1];
+
+                var field = fields.Single(x => x.GetCustomAttribute<KeyBindAttribute>().name == attributeName);
+                var keyBind = field.GetValue(0) as KeyBind;
+                System.Diagnostics.Debug.Assert(keyBind != null, nameof(keyBind) + " != null");
+
+                if (!key1.Equals(NullKeyCodeIdentifier))
+                {
+                    keyBind.primary = (KeyCode) Enum.Parse(typeof(KeyCode), key1);
+                }
+                
+                if (!key2.Equals(NullKeyCodeIdentifier))
+                {
+                    keyBind.secondary = (KeyCode) Enum.Parse(typeof(KeyCode), key1);
+                }
+            }
+        }
+
+        public static void SaveToDisk()
+        {
+            var fileContent = "";
+            var fields = typeof(KeyBindings).GetFields().Where(x => x.FieldType == typeof(KeyBind));
+            foreach (var fieldInfo in fields)
+            {
+                var keyBindAttribute = fieldInfo.GetCustomAttribute<KeyBindAttribute>();
+                if (keyBindAttribute == null)
+                {
+                    throw new Exception("Unable to find a keyBindAttribute on keyBind for " + fieldInfo.Name);
+                }
+
+                if (fieldInfo.GetValue(0) is KeyBind keyBind)
+                {
+                    fileContent += 
+                        keyBindAttribute.name + AttributeNameDelimiter + 
+                        (keyBind.primary != null ? keyBind.primary.ToString() : NullKeyCodeIdentifier) +
+                        KeyCodeDelimiter +
+                        (keyBind.secondary != null ? keyBind.secondary.ToString() : NullKeyCodeIdentifier) + 
+                        "\n";
+                }
+            }
+            
+            File.WriteAllText(KeyBindingsFilePath, fileContent);
+        }
     }
 }

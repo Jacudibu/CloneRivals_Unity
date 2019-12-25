@@ -1,5 +1,4 @@
-using System;
-using System.Linq;
+using InputConfiguration;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +10,7 @@ namespace UI
 
         public void SaveAndExit()
         {
+            KeyBindings.SaveToDisk();
             SceneManager.LoadScene("MainMenu");
         }
 
