@@ -14,6 +14,12 @@ namespace UI
             SceneManager.LoadScene("MainMenu");
         }
 
+        public void RevertAndExit()
+        {
+            KeyBindings.LoadFromDisk();
+            SceneManager.LoadScene("MainMenu");
+        }
+
         public void OpenTab(string tabName)
         {
             foreach (Transform child in tabParent.transform)
