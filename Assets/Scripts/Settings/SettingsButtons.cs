@@ -8,6 +8,11 @@ namespace Settings
     {
         [SerializeField] private GameObject tabParent;
 
+        public void Start()
+        {
+            OpenTab("Gameplay");
+        }
+        
         public void SaveAndExit()
         {
             KeyBindings.SaveToDisk();
