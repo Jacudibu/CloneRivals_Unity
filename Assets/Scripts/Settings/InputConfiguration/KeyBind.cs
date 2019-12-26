@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InputConfiguration
+namespace Settings.InputConfiguration
 {
     public class KeyBind
     {

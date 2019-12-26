@@ -1,4 +1,4 @@
-﻿using InputConfiguration;
+﻿using Settings.InputConfiguration;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]

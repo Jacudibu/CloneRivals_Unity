@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using InputConfiguration;
+using Settings.InputConfiguration;
 using Skills;
 using UnityEngine;
 

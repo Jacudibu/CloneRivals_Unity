@@ -1,6 +1,6 @@
 using System;
 
-namespace InputConfiguration
+namespace Settings.InputConfiguration
 {
     public class KeyBindAttribute : Attribute
     {

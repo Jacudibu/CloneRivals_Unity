@@ -1,36 +1,39 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class FpsCounter : MonoBehaviour
+namespace UI
 {
-    private Text _text;
-
-    private int _frameCount = 0;
-    private float _elapsedTime = 0;
-    private const float UpdateRate = 0.25f;
-
-    public static float FPS { get; private set; }
-
-    private void Start() 
+    [RequireComponent(typeof(Text))]
+    public class FpsCounter : MonoBehaviour
     {
-        _text = GetComponent<Text>();
-    }
+        private Text _text;
 
-    private void Update()
-    {
-        _frameCount++;
-        _elapsedTime += Time.unscaledDeltaTime;
+        private int _frameCount = 0;
+        private float _elapsedTime = 0;
+        private const float UpdateRate = 0.25f;
 
-        if (!(_elapsedTime > UpdateRate))
+        public static float FPS { get; private set; }
+
+        private void Start() 
         {
-            return;
+            _text = GetComponent<Text>();
         }
+
+        private void Update()
+        {
+            _frameCount++;
+            _elapsedTime += Time.unscaledDeltaTime;
+
+            if (!(_elapsedTime > UpdateRate))
+            {
+                return;
+            }
         
-        FPS = _frameCount / _elapsedTime;
-        _frameCount = 0;
-        _elapsedTime -= UpdateRate;
+            FPS = _frameCount / _elapsedTime;
+            _frameCount = 0;
+            _elapsedTime -= UpdateRate;
             
-        _text.text = Mathf.Round(FPS) + " FPS";
+            _text.text = Mathf.Round(FPS) + " FPS";
+        }
     }
 }

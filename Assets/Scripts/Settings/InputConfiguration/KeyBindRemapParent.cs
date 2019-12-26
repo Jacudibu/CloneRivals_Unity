@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utility;
 
-namespace InputConfiguration
+namespace Settings.InputConfiguration
 {
     public class KeyBindRemapParent : SingletonBehaviour<KeyBindRemapParent>
     {

@@ -1,10 +1,9 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace InputConfiguration
+namespace Settings.InputConfiguration
 {
     public class KeyBindRemapListElement : MonoBehaviour
     {

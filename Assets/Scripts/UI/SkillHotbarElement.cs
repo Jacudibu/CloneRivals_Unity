@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using InputConfiguration;
+using Settings.InputConfiguration;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

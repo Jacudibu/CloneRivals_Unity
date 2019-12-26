@@ -1,8 +1,8 @@
-using InputConfiguration;
+using Settings.InputConfiguration;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace UI
+namespace Settings
 {
     public class SettingsButtons : MonoBehaviour
     {
