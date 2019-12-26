@@ -82,10 +82,18 @@ namespace InputConfiguration
                 {
                     keyBind.primary = (KeyCode) Enum.Parse(typeof(KeyCode), key1);
                 }
+                else
+                {
+                    keyBind.primary = null;
+                }
                 
                 if (!key2.Equals(NullKeyCodeIdentifier))
                 {
                     keyBind.secondary = (KeyCode) Enum.Parse(typeof(KeyCode), key2);
+                }
+                else
+                {
+                    keyBind.secondary = null;
                 }
             }
         }
