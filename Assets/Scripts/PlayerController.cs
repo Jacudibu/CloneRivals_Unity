@@ -241,10 +241,10 @@ public class PlayerController : MonoBehaviour
             clampedMovementPercentage = Vector2.ClampMagnitude(clampedPos / controlCircleRadius, 1);
         }
         
-        _engine.requestedRotationAmount = new Vector3(
+        _engine.requestedRotationAmount = Vector3.Lerp(_engine.requestedRotationAmount, new Vector3(
             clampedMovementPercentage.y * (invertX ? 1 : -1),
             clampedMovementPercentage.x * (invertY ? -1 : 1),
-            0);
+            0), Time.deltaTime * 10);
         
         var strafeRotation = Mathf.Lerp(-120, 120, (_engine.strafeValue + 1) * 0.5f);
 
