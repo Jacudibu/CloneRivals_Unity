@@ -387,11 +387,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6054716286164412779, guid: 206dc24d514cdd146a07be8e731a56e9,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 206dc24d514cdd146a07be8e731a56e9, type: 3}
 --- !u!4 &90734944 stripped
@@ -1719,19 +1714,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c7ed547cb7654f7b127d6f7ec41866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunPrefab: {fileID: 0}
   missilePrefab: {fileID: 8281691259311392500, guid: 252454629b35e5c8598e40c15bec0f64,
     type: 3}
+  gunSpawnPoints: []
   missileSpawnPoints:
   - {fileID: 1056640916}
   - {fileID: 1023831219}
   lockOnRange: 165
+  gunData:
+    validAngle: 0
+    reloadTime: 0
+    damage: 0
+    speed: 0
+    rotationDegrees: 0
+    maximumLifetime: 0
   missileData:
-    validAngle: 12
-    reloadTime: 1
-    damage: 1
-    speed: 400
-    rotationDegrees: 120
-    maximumLifetime: 10
+    validAngle: 0
+    reloadTime: 0
+    damage: 0
+    speed: 0
+    rotationDegrees: 0
+    maximumLifetime: 0
 --- !u!114 &409246617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2479,7 +2483,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 67722d098de486acda015026c9072b01, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 824617ec21a2de0408060c25b219a265, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5598,18 +5602,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c7ed547cb7654f7b127d6f7ec41866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunPrefab: {fileID: 8281691259311392500, guid: 0416b1ae4083149fd9d48ca3e523982e,
+    type: 3}
   missilePrefab: {fileID: 8281691259311392500, guid: 252454629b35e5c8598e40c15bec0f64,
     type: 3}
+  gunSpawnPoints:
+  - {fileID: 2109354931}
+  - {fileID: 1375585900}
   missileSpawnPoints:
   - {fileID: 1763082164}
   - {fileID: 383157884}
   lockOnRange: 165
+  gunData:
+    validAngle: 0
+    reloadTime: 0.3
+    damage: 1
+    speed: 200
+    rotationDegrees: 0
+    maximumLifetime: 10
   missileData:
-    validAngle: 12
-    reloadTime: 0.1
+    validAngle: 10
+    reloadTime: 1
     damage: 10
-    speed: 80
-    rotationDegrees: 110
+    speed: 45
+    rotationDegrees: 120
     maximumLifetime: 10
 --- !u!114 &1135748557
 MonoBehaviour:
@@ -6236,7 +6252,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 67722d098de486acda015026c9072b01, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 824617ec21a2de0408060c25b219a265, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6761,6 +6777,12 @@ Transform:
   m_Father: {fileID: 572870725}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1375585900 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1375585900, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 90734943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1397955352
 GameObject:
   m_ObjectHideFlags: 0
@@ -11211,6 +11233,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079065096}
   m_CullTransparentMesh: 0
+--- !u!4 &2109354931 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2109354931, guid: 206dc24d514cdd146a07be8e731a56e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 90734943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2114547792
 GameObject:
   m_ObjectHideFlags: 0

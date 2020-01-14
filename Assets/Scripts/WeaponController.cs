@@ -1,15 +1,19 @@
 ﻿using Settings.InputConfiguration;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(TargetManager))]
 [DisallowMultipleComponent]
 public class WeaponController : MonoBehaviour
 {
     public bool IsMissileLockable { get; private set; }
-    
+
+    private float _lastGunAttackTime;
     private float _lastMissileAttackTime;
-    
+
+    [SerializeField] private GameObject gunPrefab;
     [SerializeField] private GameObject missilePrefab;
+    [SerializeField] private Transform[] gunSpawnPoints;
     [SerializeField] private Transform[] missileSpawnPoints;
     
     [SerializeField] public float lockOnRange = 165;
@@ -18,8 +22,9 @@ public class WeaponController : MonoBehaviour
     private TargetManager _targetManager;
     private PlayerController _playerController;
 
+    [SerializeField] private MissileData gunData;
     [SerializeField] private MissileData missileData;
-    
+
     void Start()
     {
         _shipTransform = GetComponentInChildren<MeshRenderer>().transform;
@@ -61,7 +66,18 @@ public class WeaponController : MonoBehaviour
 
     public void FireGun()
     {
-        
+        if (Time.time - _lastGunAttackTime > gunData.reloadTime)
+        {
+            foreach (var gunSpawnPoint in gunSpawnPoints)
+            {
+                var obj = Instantiate(gunPrefab, gunSpawnPoint.position, gunSpawnPoint.rotation);
+                var projectile = obj.GetComponent<Missile>();
+                projectile.SetData(gunData);
+                projectile.SetOwnerId(gameObject.GetInstanceID());
+            }
+
+            _lastGunAttackTime = Time.time;
+        }
     }
 
     public void FireMissile()
