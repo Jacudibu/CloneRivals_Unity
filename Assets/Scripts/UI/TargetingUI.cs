@@ -10,7 +10,12 @@ namespace UI
     
         public GameObject currentTargetIndicator;
         public GameObject lockOnReticle;
-    
+
+        public GameObject directionalReticle1;
+        public GameObject directionalReticle2;
+        public float directionalReticleDistance1 = 50;
+        public float directionalReticleDistance2 = 150;
+        
         public GameObject targetArrow;
         public GameObject targetMeArrow;
         private List<GameObject> _thingsTargetingMeArrows;
@@ -57,6 +62,12 @@ namespace UI
             }
         }
 
+        private void Update()
+        {
+            directionalReticle1.transform.position = _camera.WorldToScreenPoint(_weaponController.transform.position + _weaponController.transform.forward * directionalReticleDistance1);
+            directionalReticle2.transform.position = _camera.WorldToScreenPoint(_weaponController.transform.position + _weaponController.transform.forward * directionalReticleDistance2);
+        }
+        
         private void LateUpdate()
         {
             _cameraFrustumPlanes = GeometryUtility.CalculateFrustumPlanes(_camera);
