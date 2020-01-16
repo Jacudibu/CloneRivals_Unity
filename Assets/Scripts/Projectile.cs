@@ -7,6 +7,9 @@ public struct ProjectileData
 {
     public float validAngle;
     public float reloadTime;
+
+    [Range(1, 5)] public int salvos;
+    public float timeBetweenSalvos;
     
     public int damage;
     public int speed;

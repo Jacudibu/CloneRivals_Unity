@@ -1,6 +1,6 @@
-﻿using Settings.InputConfiguration;
+﻿using System.Collections;
+using Settings.InputConfiguration;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(TargetManager))]
 [DisallowMultipleComponent]
@@ -21,7 +21,7 @@ public class WeaponController : MonoBehaviour
     private Transform _shipTransform;
     private TargetManager _targetManager;
     private PlayerController _playerController;
-
+    
     [SerializeField] private ProjectileData gunData;
     [SerializeField] private ProjectileData missileData;
 
@@ -66,34 +66,62 @@ public class WeaponController : MonoBehaviour
 
     public void FireGun()
     {
-        if (Time.time - _lastGunAttackTime > gunData.reloadTime)
+        if (Time.time - _lastGunAttackTime < gunData.reloadTime)
         {
-            foreach (var gunSpawnPoint in gunSpawnPoints)
-            {
-                var obj = Instantiate(gunPrefab, gunSpawnPoint.position, gunSpawnPoint.rotation);
-                var projectile = obj.GetComponent<Projectile>();
-                projectile.SetData(gunData);
-                projectile.SetOwnerId(gameObject.GetInstanceID());
-            }
-
-            _lastGunAttackTime = Time.time;
+            return;
         }
+        
+        if (gunData.salvos == 1)
+        {
+            FireProjectile(gunData, gunPrefab, gunSpawnPoints, null);
+        }
+        else
+        {
+            StartCoroutine(FireProjectileCoroutine(gunData, gunPrefab, gunSpawnPoints, null));
+        }
+
+        _lastGunAttackTime = Time.time;
     }
 
     public void FireMissile()
     {
-        if (Time.time - _lastMissileAttackTime > missileData.reloadTime)
+        if (Time.time - _lastMissileAttackTime < missileData.reloadTime)
         {
-            foreach (var missileSpawnPoint in missileSpawnPoints)
-            {
-                var obj = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
-                var missile = obj.GetComponent<Projectile>();
-                missile.SetTarget(IsMissileLockable ? _targetManager.Target.transform : null);
-                missile.SetData(missileData);
-                missile.SetOwnerId(gameObject.GetInstanceID());
-            }
+            return;
+        }
+        
+        var target = IsMissileLockable ? _targetManager.Target.transform : null;
 
-            _lastMissileAttackTime = Time.time;
+        if (missileData.salvos == 1)
+        {
+            FireProjectile(missileData, missilePrefab, missileSpawnPoints, target);
+        }
+        else
+        {
+            StartCoroutine(FireProjectileCoroutine(missileData, missilePrefab, missileSpawnPoints, target));
+        }
+
+        _lastMissileAttackTime = Time.time;
+    }
+
+    private IEnumerator FireProjectileCoroutine(ProjectileData data, GameObject prefab, Transform[] spawnPoints, Transform target)
+    {
+        for (var i = 0; i < data.salvos; i++)
+        {
+            FireProjectile(data, prefab, spawnPoints, target);
+            yield return new WaitForSeconds(data.timeBetweenSalvos);
+        }
+    }
+
+    private void FireProjectile(ProjectileData data, GameObject prefab, Transform[] spawnPoints, Transform target)
+    {
+        foreach (var spawnPoint in spawnPoints)
+        {
+            var obj = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+            var projectile = obj.GetComponent<Projectile>();
+            projectile.SetTarget(target);
+            projectile.SetData(data);
+            projectile.SetOwnerId(gameObject.GetInstanceID());
         }
     }
 }
