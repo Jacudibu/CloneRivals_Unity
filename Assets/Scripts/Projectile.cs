@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
 
         if (_totalLifetime > _data.maximumLifetime)
         {
-            DestroyMissile();
+            DestroyProjectile();
         }
     }
     
@@ -61,10 +61,10 @@ public class Projectile : MonoBehaviour
             targetable.TakeDamage(_data.damage);
         }
         
-        DestroyMissile();
+        DestroyProjectile();
     }
 
-    private void DestroyMissile()
+    private void DestroyProjectile()
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject, 1f);
