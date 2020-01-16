@@ -3,7 +3,7 @@ using Extensions;
 using UnityEngine;
 
 [Serializable]
-public struct MissileData
+public struct ProjectileData
 {
     public float validAngle;
     public float reloadTime;
@@ -14,10 +14,10 @@ public struct MissileData
     public float maximumLifetime;
 }
 
-public class Missile : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     [SerializeField] private GameObject explosionEffect;
-    private MissileData _data;
+    private ProjectileData _data;
     
     private Transform _target;
     private int _ownerId;
@@ -87,7 +87,7 @@ public class Missile : MonoBehaviour
         _target = newTarget;
     }
 
-    public void SetData(MissileData data)
+    public void SetData(ProjectileData data)
     {
         _data = data;
     }

@@ -22,8 +22,8 @@ public class WeaponController : MonoBehaviour
     private TargetManager _targetManager;
     private PlayerController _playerController;
 
-    [SerializeField] private MissileData gunData;
-    [SerializeField] private MissileData missileData;
+    [SerializeField] private ProjectileData gunData;
+    [SerializeField] private ProjectileData missileData;
 
     void Start()
     {
@@ -71,7 +71,7 @@ public class WeaponController : MonoBehaviour
             foreach (var gunSpawnPoint in gunSpawnPoints)
             {
                 var obj = Instantiate(gunPrefab, gunSpawnPoint.position, gunSpawnPoint.rotation);
-                var projectile = obj.GetComponent<Missile>();
+                var projectile = obj.GetComponent<Projectile>();
                 projectile.SetData(gunData);
                 projectile.SetOwnerId(gameObject.GetInstanceID());
             }
@@ -87,7 +87,7 @@ public class WeaponController : MonoBehaviour
             foreach (var missileSpawnPoint in missileSpawnPoints)
             {
                 var obj = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
-                var missile = obj.GetComponent<Missile>();
+                var missile = obj.GetComponent<Projectile>();
                 missile.SetTarget(IsMissileLockable ? _targetManager.Target.transform : null);
                 missile.SetData(missileData);
                 missile.SetOwnerId(gameObject.GetInstanceID());
