@@ -1726,6 +1726,7 @@ MonoBehaviour:
     validAngle: 0
     reloadTime: 0
     salvos: 0
+    timeBetweenSalvos: 0
     damage: 0
     speed: 0
     rotationDegrees: 0
@@ -1734,6 +1735,7 @@ MonoBehaviour:
     validAngle: 0
     reloadTime: 0
     salvos: 0
+    timeBetweenSalvos: 0
     damage: 0
     speed: 0
     rotationDegrees: 0
@@ -5619,6 +5621,7 @@ MonoBehaviour:
     validAngle: 0
     reloadTime: 0.3
     salvos: 1
+    timeBetweenSalvos: 0
     damage: 1
     speed: 200
     rotationDegrees: 0
@@ -5627,6 +5630,7 @@ MonoBehaviour:
     validAngle: 10
     reloadTime: 1
     salvos: 2
+    timeBetweenSalvos: 0.3
     damage: 10
     speed: 45
     rotationDegrees: 120
