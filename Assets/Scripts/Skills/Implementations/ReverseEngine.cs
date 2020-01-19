@@ -7,6 +7,7 @@ namespace Skills.Implementations
 {
     public class ReverseEngine : Skill
     {
+        public override string Name => "Reverse Engine";
         public override SkillId SkillId => SkillId.ReverseEngine;
         public override float Cooldown => 0;
         public override float SkillPointCost => 0;
