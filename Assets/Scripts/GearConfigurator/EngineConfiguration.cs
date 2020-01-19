@@ -35,22 +35,22 @@ namespace GearConfigurator
 
             if (minSpeedModifier != 0)
             {
-                lines.Add("Minimum Speed " + minSpeedModifier.ToString("+#:-#;0"));
+                lines.Add("Minimum Speed " + minSpeedModifier.ToString("+#;-#;0"));
             }            
             
             if (maxSpeedModifier != 0)
             {
-                lines.Add("Maximum Speed " + maxSpeedModifier.ToString("+#:-#;0"));
+                lines.Add("Maximum Speed " + maxSpeedModifier.ToString("+#;-#;0"));
             }            
             
             if (boostSpeedModifier != 0)
             {
-                lines.Add("Boost Speed " + boostSpeedModifier.ToString("+#:-#;0"));
+                lines.Add("Boost Speed " + boostSpeedModifier.ToString("+#;-#;0"));
             }            
             
             if (boostTimeModifier != 0)
             {
-                lines.Add("Boost Time " + boostTimeModifier.ToString("+#:-#;0"));
+                lines.Add("Boost Time " + boostTimeModifier.ToString("+#;-#;0"));
             }            
             
             return string.Join("\n", lines);

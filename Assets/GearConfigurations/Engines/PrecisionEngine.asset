@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineName: Precision
   skills: 02000000
-  engineMinSpeedModifier: 0
-  engineMaxSpeedModifier: -50
-  engineBoostSpeedModifier: -50
-  engineBoostTimeModifier: -50
+  minSpeedModifier: -50
+  maxSpeedModifier: -50
+  boostSpeedModifier: -50
+  boostTimeModifier: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineName: Jet
   skills: 0100000003000000
-  engineMinSpeedModifier: 50
-  engineMaxSpeedModifier: 50
-  engineBoostSpeedModifier: 50
-  engineBoostTimeModifier: 50
+  minSpeedModifier: 50
+  maxSpeedModifier: 50
+  boostSpeedModifier: 50
+  boostTimeModifier: 2

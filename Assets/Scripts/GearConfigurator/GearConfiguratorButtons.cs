@@ -35,6 +35,7 @@ namespace GearConfigurator
                 var currentIndex = i;
                 button.GetComponent<Button>().onClick.AddListener(() => SelectEngine(currentIndex));
                 button.GetComponentInChildren<Text>().text = config.engineName;
+                button.GetComponent<MouseOverData>().SetData(config.GenerateDescription());
             }
 
             SelectEngine(currentEngine);
@@ -57,6 +58,7 @@ namespace GearConfigurator
         {
             engineSelectionPopup.SetActive(false);
             SetEngineButtonOnClick(OpenEngineDialogue);
+            MouseOverDrawer.ClearMouseOver();
         }
 
         private void SetEngineButtonOnClick(UnityAction action)
