@@ -6,6 +6,7 @@ namespace GearConfigurator
     [CreateAssetMenu(fileName = "engine", menuName = "GearConfigurations/EngineConfiguration")]
     public class EngineConfiguration : ScriptableObject
     {
+        public string engineName;
         public SkillId[] skills;
         public float engineMinSpeedModifier;
         public float engineMaxSpeedModifier;
