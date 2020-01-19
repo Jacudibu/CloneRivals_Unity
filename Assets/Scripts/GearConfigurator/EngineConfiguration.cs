@@ -13,7 +13,8 @@ namespace GearConfigurator
         public int maxSpeedModifier;
         public int boostSpeedModifier;
         public int boostTimeModifier;
-
+        [Multiline] public string description;
+        
         public string GenerateDescription()
         {
             var lines = new List<string>
@@ -52,6 +53,9 @@ namespace GearConfigurator
             {
                 lines.Add("Boost Time " + boostTimeModifier.ToString("+#;-#;0"));
             }            
+            
+            lines.Add("");
+            lines.Add(description);
             
             return string.Join("\n", lines);
         }

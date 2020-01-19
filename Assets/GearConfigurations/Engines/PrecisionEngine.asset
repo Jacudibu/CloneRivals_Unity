@@ -15,6 +15,8 @@ MonoBehaviour:
   engineName: Precision
   skills: 02000000
   minSpeedModifier: -50
-  maxSpeedModifier: -50
-  boostSpeedModifier: -50
+  maxSpeedModifier: -75
+  boostSpeedModifier: -75
   boostTimeModifier: 0
+  description: Precision engines are best known for their ability to fly backwards
+    whilst maintaining full control over the gear.
