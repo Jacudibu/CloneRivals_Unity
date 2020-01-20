@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
 
 namespace GearConfigurator
 {
     public class HotbarConfigurator : MonoBehaviour
     {
-        private int hotbarElementWidth;
-        private Vector3 firstElementPosition;
+        private int _hotbarElementWidth;
+        private Vector3 _firstElementPosition;
         
         public HotbarConfiguratorElement[] elements;
 
@@ -19,8 +18,8 @@ namespace GearConfigurator
                 elements[i].slot = i;
             }
 
-            hotbarElementWidth = (int) ((RectTransform) elements[0].transform).rect.width;
-            firstElementPosition = elements[0].transform.position;
+            _hotbarElementWidth = (int) ((RectTransform) elements[0].transform).rect.width;
+            _firstElementPosition = elements[0].transform.position;
         }
 
 
@@ -33,11 +32,11 @@ namespace GearConfigurator
                 return HotbarDragResult.Failed;
             }
 
-            var slot = (int) (Input.mousePosition.x - firstElementPosition.x) / hotbarElementWidth;
+            var slot = (int) (Input.mousePosition.x - _firstElementPosition.x) / _hotbarElementWidth;
             var result = new HotbarDragResult
             {
                 resultType = HotbarDragResult.ResultType.Success,
-                targetPosition = new Vector3(firstElementPosition.x + hotbarElementWidth * slot, firstElementPosition.y, 0)
+                targetPosition = GetHotbarPosition(slot)
             };
 
             var other = elements[slot];
@@ -52,9 +51,14 @@ namespace GearConfigurator
             other.slot = element.slot;
             element.slot = slot;
 
-            other.LerpToPosition(new Vector3(firstElementPosition.x + hotbarElementWidth * other.slot, firstElementPosition.y, 0));
+            other.LerpToPosition(GetHotbarPosition(other.slot));
             
             return result;
+        }
+
+        private Vector3 GetHotbarPosition(int slot)
+        {
+            return new Vector3(_firstElementPosition.x + _hotbarElementWidth * slot, _firstElementPosition.y, 0);
         }
     }
 }
