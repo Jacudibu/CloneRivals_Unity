@@ -6,12 +6,17 @@ namespace GearConfigurator
 {
     public class MouseOverDrawer : MonoBehaviour
     {
+        private static TextMeshProUGUI _title;
         private static TextMeshProUGUI _text;
         private static GameObject _background;
         
-        private void Start()
+        private void Awake()
         {
-            _text = GetComponentInChildren<TextMeshProUGUI>();
+            var textChildren = GetComponentsInChildren<TextMeshProUGUI>();
+
+            _title = textChildren[0];
+            _text = textChildren[1];
+            
             _background = GetComponentInChildren<Image>().gameObject;
             ClearMouseOver();
         }
@@ -23,13 +28,15 @@ namespace GearConfigurator
 
         public static void ClearMouseOver()
         {
+            _title.text = "";
             _text.text = "";
             _background.SetActive(false);
         }
         
-        public static void SetMouseOver(string text)
+        public static void SetMouseOver(MouseOverData data)
         {
-            _text.text = text;
+            _title.text = data.title;
+            _text.text = data.text;
             _background.SetActive(true);
         }
     }

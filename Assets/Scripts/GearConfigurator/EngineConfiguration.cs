@@ -14,15 +14,16 @@ namespace GearConfigurator
         public int boostSpeedModifier;
         public int boostTimeModifier;
         [Multiline] public string description;
-        
-        public string GenerateDescription()
-        {
-            var lines = new List<string>
-            {
-                engineName,
-                ""
-            };
 
+        public MouseOverData GetData()
+        {
+            return new MouseOverData(engineName, GenerateDescription());
+        }
+        
+        private string GenerateDescription()
+        {
+            var lines = new List<string>();
+            
             if (skills.Length > 0)
             {
                 lines.Add("Skills:");

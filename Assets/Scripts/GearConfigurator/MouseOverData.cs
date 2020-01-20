@@ -1,25 +1,14 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-
 namespace GearConfigurator
 {
-    public class MouseOverData : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class MouseOverData
     {
-        private string _data;
+        public readonly string title;
+        public readonly string text;
 
-        public void SetData(string data)
+        public MouseOverData(string title, string text)
         {
-            _data = data;
-        }
-    
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            MouseOverDrawer.SetMouseOver(_data);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            MouseOverDrawer.ClearMouseOver();
+            this.title = title;
+            this.text = text;
         }
     }
 }
