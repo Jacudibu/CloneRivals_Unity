@@ -11,6 +11,7 @@ namespace GearConfigurator
         
         private Vector3 _mouseDownPosition;
         private Vector3 _initialPosition;
+        public int slot;
 
         private const float lerpSpeed = 10;
 
@@ -38,15 +39,20 @@ namespace GearConfigurator
             var result = _hotbarConfigurator.ProcessEndDrag(this);
             if (result.resultType == HotbarDragResult.ResultType.Failed)
             {
-                StartCoroutine(LerpToPosition(_initialPosition));
+                StartCoroutine(LerpToPositionCoroutine(_initialPosition));
             }
             else
             {
-                StartCoroutine(LerpToPosition(result.targetPosition));
+                StartCoroutine(LerpToPositionCoroutine(result.targetPosition));
             }
         }
 
-        private IEnumerator LerpToPosition(Vector3 targetPosition)
+        public void LerpToPosition(Vector3 targetPosition)
+        {
+            StartCoroutine(LerpToPositionCoroutine(targetPosition));
+        }
+        
+        private IEnumerator LerpToPositionCoroutine(Vector3 targetPosition)
         {
             var startPos = transform.position;
             

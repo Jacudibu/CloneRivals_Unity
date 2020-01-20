@@ -14,30 +14,45 @@ namespace GearConfigurator
         {
             elements = GetComponentsInChildren<HotbarConfiguratorElement>();
 
+            for (var i = 0; i < elements.Length; i++)
+            {
+                elements[i].slot = i;
+            }
+
             hotbarElementWidth = (int) ((RectTransform) elements[0].transform).rect.width;
             firstElementPosition = elements[0].transform.position;
         }
 
 
-        public HotbarDragResult ProcessEndDrag(HotbarConfiguratorElement hotbarConfiguratorElement)
+        public HotbarDragResult ProcessEndDrag(HotbarConfiguratorElement element)
         {
             var rectTransform = (RectTransform) transform;
 
             if (!RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition))
             {
-                Debug.Log("nope!");
                 return HotbarDragResult.Failed;
             }
 
             var slot = (int) (Input.mousePosition.x - firstElementPosition.x) / hotbarElementWidth;
-            Debug.Log("yup!" + slot);
             var result = new HotbarDragResult
             {
                 resultType = HotbarDragResult.ResultType.Success,
                 targetPosition = new Vector3(firstElementPosition.x + hotbarElementWidth * slot, firstElementPosition.y, 0)
             };
 
-            // Todo: tell other thing to move
+            var other = elements[slot];
+            if (other == element)
+            {
+                return result;
+            }
+
+            elements[element.slot] = other;
+            elements[slot] = element;
+
+            other.slot = element.slot;
+            element.slot = slot;
+
+            other.LerpToPosition(new Vector3(firstElementPosition.x + hotbarElementWidth * other.slot, firstElementPosition.y, 0));
             
             return result;
         }
