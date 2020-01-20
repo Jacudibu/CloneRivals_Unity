@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PrecisionEngine
   m_EditorClassIdentifier: 
   engineName: Precision
+  sprite: {fileID: 21300000, guid: 7f7d4d91b939ef4ee9446b4c4f241404, type: 3}
   skills: 02000000
   minSpeedModifier: -50
   maxSpeedModifier: -75

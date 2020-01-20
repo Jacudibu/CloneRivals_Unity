@@ -9,6 +9,7 @@ namespace GearConfigurator
     public class EngineConfiguration : ScriptableObject
     {
         public string engineName;
+        public Sprite sprite;
         public SkillId[] skills;
         public int minSpeedModifier;
         public int maxSpeedModifier;

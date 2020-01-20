@@ -35,17 +35,20 @@ namespace GearConfigurator
                 
                 var currentIndex = i;
                 button.GetComponent<Button>().onClick.AddListener(() => SelectEngine(currentIndex));
+                button.GetComponent<Image>().sprite = config.sprite;
                 button.GetComponentInChildren<Text>().text = config.engineName;
                 button.GetComponent<MouseOverObject>().SetData(config.GetData());
             }
 
             SelectEngine(currentEngine);
         }
-        
+
         private void SelectEngine(int index)
         {
             currentEngine = index;
             engineButton.GetComponentInChildren<Text>().text = engineConfigurations[index].engineName;
+            engineButton.GetComponent<Image>().sprite = engineConfigurations[index].sprite;
+            
             CloseEngineDialogue();
         }
 
