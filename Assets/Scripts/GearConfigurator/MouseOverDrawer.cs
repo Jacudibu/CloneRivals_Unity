@@ -19,6 +19,7 @@ namespace GearConfigurator
         [SerializeField] private GameObject imagePrefab;
         [SerializeField] private GameObject background;
 
+        private RectTransform _rectTransform;
 
         private void Awake()
         {
@@ -29,6 +30,8 @@ namespace GearConfigurator
             imagePrefab.SetActive(false);
             
             _background = background;
+
+            _rectTransform = (RectTransform) transform;
             
             ClearMouseOver();
         }
@@ -36,12 +39,11 @@ namespace GearConfigurator
         private void Update()
         {
             var mousePos = Input.mousePosition;
-            transform.position = mousePos;
+            _rectTransform.position = mousePos;
 
-            var rectTransform = ((RectTransform) transform);
-            var rect = rectTransform.rect;
+            var rect = _rectTransform.rect;
 
-            rectTransform.pivot = new Vector2(
+            _rectTransform.pivot = new Vector2(
                 CalculatePivot(mousePos.x, rect.width, Screen.width),
                 CalculatePivot(mousePos.y, rect.height, Screen.height)
             );
