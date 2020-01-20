@@ -18,4 +18,6 @@ MonoBehaviour:
   maxSpeedModifier: 50
   boostSpeedModifier: 75
   boostTimeModifier: 2
-  description: Jet engines are super fast and able to simply outrun most missiles.
+  description: 'Jet engines are super fast and
+
+    able to simply outrun most missiles.'

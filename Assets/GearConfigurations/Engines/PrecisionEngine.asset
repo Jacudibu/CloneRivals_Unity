@@ -18,5 +18,9 @@ MonoBehaviour:
   maxSpeedModifier: -75
   boostSpeedModifier: -75
   boostTimeModifier: 0
-  description: Precision engines are best known for their ability to fly backwards
-    whilst maintaining full control over the gear.
+  description: 'Precision engines are best known for
+
+    their ability to fly backwards
+    whilst
+
+    maintaining full control over the gear.'

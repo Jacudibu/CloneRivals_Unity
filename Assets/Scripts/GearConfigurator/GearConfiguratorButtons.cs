@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GearConfigurator
@@ -58,6 +59,7 @@ namespace GearConfigurator
         {
             engineSelectionPopup.SetActive(false);
             SetEngineButtonOnClick(OpenEngineDialogue);
+            EventSystem.current.SetSelectedGameObject(engineButton.gameObject);
             MouseOverDrawer.ClearMouseOver();
         }
 
