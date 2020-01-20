@@ -53,11 +53,6 @@ namespace GearConfigurator
 
         private void SelectEngine(int index)
         {
-            if (currentEngine == index)
-            {
-                return;
-            }
-            
             _hotbarConfigurator.SwapSkills(engineConfigurations[currentEngine].skills, engineConfigurations[index].skills);
             
             currentEngine = index;
