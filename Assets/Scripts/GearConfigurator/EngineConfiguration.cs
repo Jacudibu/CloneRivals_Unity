@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Skills;
 using UnityEngine;
 
@@ -17,23 +18,16 @@ namespace GearConfigurator
 
         public MouseOverData GetData()
         {
-            return new MouseOverData(engineName, GenerateDescription());
+            var skillIcons = skills
+                .Select(x => SkillDictionary.GetSkill(x).Icon)
+                .ToArray();
+            
+            return new MouseOverData(engineName, skillIcons, GenerateDescription());
         }
         
         private string GenerateDescription()
         {
             var lines = new List<string>();
-            
-            if (skills.Length > 0)
-            {
-                lines.Add("Skills:");
-                foreach (var skillId in skills)
-                {
-                    var skill = SkillDictionary.GetSkill(skillId);
-                    lines.Add(skill.Name);
-                }
-                lines.Add("");
-            }
 
             if (minSpeedModifier != 0)
             {
