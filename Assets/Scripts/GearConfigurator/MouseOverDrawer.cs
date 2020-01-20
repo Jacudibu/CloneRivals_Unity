@@ -35,7 +35,27 @@ namespace GearConfigurator
         
         private void Update()
         {
-            transform.position = Input.mousePosition;
+            var mousePos = Input.mousePosition;
+            transform.position = mousePos;
+
+            var rectTransform = ((RectTransform) transform);
+            var rect = rectTransform.rect;
+
+            rectTransform.pivot = new Vector2(
+                CalculatePivot(mousePos.x, rect.width, Screen.width),
+                CalculatePivot(mousePos.y, rect.height, Screen.height)
+            );
+        }
+
+        private static float CalculatePivot(float mousePos, float rectSize, float screenSize)
+        {
+            if (mousePos + rectSize < screenSize)
+            {
+                return 0;
+            }
+            
+            var diff = mousePos + rectSize - screenSize;
+            return diff / rectSize;
         }
 
         public static void ClearMouseOver()
