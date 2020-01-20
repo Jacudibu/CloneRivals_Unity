@@ -63,9 +63,30 @@ namespace GearConfigurator
             return new Vector3(_firstElementPosition.x + _hotbarElementWidth * slot, _firstElementPosition.y, 0);
         }
 
+        public void SwapSkills(SkillId[] oldSkills, SkillId[] newSkills)
+        {
+            var skillsToRemove = oldSkills.Except(newSkills);
+            var skillsToAdd = newSkills.Except(oldSkills);
+            
+            foreach (var skillId in skillsToRemove)
+            {
+                RemoveSkill(skillId);
+            }
+            
+            foreach (var skillId in skillsToAdd)
+            {
+                AddSkill(skillId);
+            }
+        }
+        
         public void RemoveSkill(SkillId skillId)
         {
-            var element = elements.Single(x => x.SkillId == skillId);
+            var element = elements.SingleOrDefault(x => x.SkillId == skillId);
+            if (element == null)
+            {
+                return;
+            }
+            
             element.SetSkill(SkillId.None);
         }
 

@@ -15,6 +15,8 @@ namespace GearConfigurator
         public GameObject engineSelectionPopup;
         public GameObject engineSelectionButtonPrefab;
 
+        private HotbarConfigurator _hotbarConfigurator;
+        
         [Serializable]
         public class IntUnityEvent : UnityEvent<int>
         {
@@ -28,6 +30,8 @@ namespace GearConfigurator
         
         private void Start()
         {
+            _hotbarConfigurator = FindObjectOfType<HotbarConfigurator>();
+            
             for (var i = 0; i < engineConfigurations.Length; i++)
             {
                 var config = engineConfigurations[i];
@@ -41,13 +45,24 @@ namespace GearConfigurator
             }
 
             SelectEngine(currentEngine);
+            foreach (var skillId in engineConfigurations[currentEngine].skills)
+            {
+                _hotbarConfigurator.AddSkill(skillId);
+            }
         }
 
         private void SelectEngine(int index)
         {
+            if (currentEngine == index)
+            {
+                return;
+            }
+            
+            _hotbarConfigurator.SwapSkills(engineConfigurations[currentEngine].skills, engineConfigurations[index].skills);
+            
             currentEngine = index;
-            engineButton.GetComponentInChildren<Text>().text = engineConfigurations[index].engineName;
-            engineButton.GetComponent<Image>().sprite = engineConfigurations[index].sprite;
+            engineButton.GetComponentInChildren<Text>().text = engineConfigurations[currentEngine].engineName;
+            engineButton.GetComponent<Image>().sprite = engineConfigurations[currentEngine].sprite;
             
             CloseEngineDialogue();
         }
