@@ -1,3 +1,5 @@
+using System.Linq;
+using Skills;
 using UnityEngine;
 
 namespace GearConfigurator
@@ -59,6 +61,23 @@ namespace GearConfigurator
         private Vector3 GetHotbarPosition(int slot)
         {
             return new Vector3(_firstElementPosition.x + _hotbarElementWidth * slot, _firstElementPosition.y, 0);
+        }
+
+        public void RemoveSkill(SkillId skillId)
+        {
+            var element = elements.Single(x => x.SkillId == skillId);
+            element.SetSkill(SkillId.None);
+        }
+
+        public void AddSkill(SkillId skillId)
+        {
+            var i = 0;
+            while (elements[i].SkillId != SkillId.None)
+            {
+                i++;
+            }
+
+            elements[i].SetSkill(skillId);
         }
     }
 }

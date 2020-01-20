@@ -1,23 +1,28 @@
-using System;
 using System.Collections;
+using Skills;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace GearConfigurator
 {
     public class HotbarConfiguratorElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private HotbarConfigurator _hotbarConfigurator;
+        public int slot;
+        public SkillId SkillId { get; private set; } = SkillId.None;
         
+        private HotbarConfigurator _hotbarConfigurator;
+
         private Vector3 _mouseDownPosition;
         private Vector3 _initialPosition;
-        public int slot;
 
         private const float lerpSpeed = 10;
+        private static Sprite defaultIcon;
 
         private void Start()
         {
             _hotbarConfigurator = transform.parent.GetComponent<HotbarConfigurator>();
+            defaultIcon = GetComponent<Image>().sprite;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -59,7 +64,7 @@ namespace GearConfigurator
             float i = 0;
             while (i < 1)
             {
-                yield return null;
+                yield return new WaitForEndOfFrame();
 
                 i += Time.deltaTime * lerpSpeed;
 
@@ -67,6 +72,22 @@ namespace GearConfigurator
             }
 
             transform.position = targetPosition;
+        }
+
+        public void SetSkill(SkillId skillId)
+        {
+            SkillId = skillId;
+            var image = GetComponent<Image>();
+
+            if (skillId != SkillId.None)
+            {
+                var skill = SkillDictionary.GetSkill(skillId);
+                image.sprite = skill.Icon;
+            }
+            else
+            {
+                image.sprite = defaultIcon;
+            }
         }
     }
 }
