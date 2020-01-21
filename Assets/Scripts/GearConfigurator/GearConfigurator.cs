@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace GearConfigurator
 {
-    public class GearConfiguratorButtons : MonoBehaviour
+    public class GearConfigurator : MonoBehaviour
     {
         public Button engineButton;
         public EngineConfiguration[] engineConfigurations;
