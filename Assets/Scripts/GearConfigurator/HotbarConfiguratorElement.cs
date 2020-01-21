@@ -1,5 +1,7 @@
 using System.Collections;
+using Settings.InputConfiguration;
 using Skills;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +10,7 @@ namespace GearConfigurator
 {
     public class HotbarConfiguratorElement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        public int slot;
+        public int Slot { get; private set; }
         public SkillId SkillId { get; private set; } = SkillId.None;
         
         private HotbarConfigurator _hotbarConfigurator;
@@ -17,12 +19,13 @@ namespace GearConfigurator
         private Vector3 _initialPosition;
 
         private const float lerpSpeed = 10;
-        private static Sprite defaultIcon;
+
+        [SerializeField] private Image skillIcon;
+        [SerializeField] private TextMeshProUGUI hotkey;
 
         private void Start()
         {
             _hotbarConfigurator = transform.parent.GetComponent<HotbarConfigurator>();
-            defaultIcon = GetComponent<Image>().sprite;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -77,17 +80,23 @@ namespace GearConfigurator
         public void SetSkill(SkillId skillId)
         {
             SkillId = skillId;
-            var image = GetComponent<Image>();
 
             if (skillId != SkillId.None)
             {
                 var skill = SkillDictionary.GetSkill(skillId);
-                image.sprite = skill.Icon;
+                skillIcon.sprite = skill.Icon;
+                skillIcon.gameObject.SetActive(true);
             }
             else
             {
-                image.sprite = defaultIcon;
+                skillIcon.gameObject.SetActive(false);
             }
+        }
+
+        public void SetSlot(int slot)
+        {
+            Slot = slot;
+            hotkey.text = KeyBindings.Hotbar[Slot].primary.ToString().Replace("Alpha", "");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace GearConfigurator
 
             for (var i = 0; i < elements.Length; i++)
             {
-                elements[i].slot = i;
+                elements[i].SetSlot(i);
             }
 
             _hotbarElementWidth = (int) ((RectTransform) elements[0].transform).rect.width;
@@ -47,13 +47,13 @@ namespace GearConfigurator
                 return result;
             }
 
-            elements[element.slot] = other;
+            elements[element.Slot] = other;
             elements[slot] = element;
 
-            other.slot = element.slot;
-            element.slot = slot;
+            other.SetSlot(element.Slot);
+            element.SetSlot(slot);
 
-            other.LerpToPosition(GetHotbarPosition(other.slot));
+            other.LerpToPosition(GetHotbarPosition(other.Slot));
             
             return result;
         }

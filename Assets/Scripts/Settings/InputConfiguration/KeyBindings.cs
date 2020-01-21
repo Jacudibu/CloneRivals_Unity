@@ -42,6 +42,10 @@ namespace Settings.InputConfiguration
             () => Hotbar0.IsDown(),
         };
 
+        public static readonly KeyBind[] Hotbar =
+        {
+            Hotbar1, Hotbar2, Hotbar3, Hotbar4, Hotbar5, Hotbar6, Hotbar7, Hotbar8, Hotbar9, Hotbar0
+        };
 
         private const string KeyBindingFileName = "keybindings.txt";
         private static readonly string KeyBindingsFilePath = Application.persistentDataPath + KeyBindingFileName;
