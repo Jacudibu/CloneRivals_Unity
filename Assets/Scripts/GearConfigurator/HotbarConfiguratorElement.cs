@@ -22,16 +22,18 @@ namespace GearConfigurator
 
         [SerializeField] private Image skillIcon;
         [SerializeField] private TextMeshProUGUI hotkey;
-
-        private void Start()
+        private MouseOverObject _mouseOver;
+        
+        private void Awake()
         {
             _hotbarConfigurator = transform.parent.GetComponent<HotbarConfigurator>();
+            _mouseOver = GetComponentInChildren<MouseOverObject>();
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             _initialPosition = transform.position;
-            _mouseDownPosition = Input.mousePosition;  
+            _mouseDownPosition = Input.mousePosition;
             
             transform.SetAsLastSibling();
         }
@@ -40,6 +42,7 @@ namespace GearConfigurator
         {
             var delta = Input.mousePosition - _mouseDownPosition;
             transform.position = _initialPosition + delta;
+            MouseOverDrawer.ClearMouseOver();
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -86,10 +89,12 @@ namespace GearConfigurator
                 var skill = SkillDictionary.GetSkill(skillId);
                 skillIcon.sprite = skill.Icon;
                 skillIcon.gameObject.SetActive(true);
+                _mouseOver.SetData(skill.GenerateMouserOverData());
             }
             else
             {
                 skillIcon.gameObject.SetActive(false);
+                _mouseOver.SetData(null);
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using GearConfigurator;
+using UnityEngine;
 
 namespace Skills
 {
@@ -16,6 +18,28 @@ namespace Skills
         public void SetIcon(Sprite icon)
         {
             Icon = icon;
+        }
+
+        public MouseOverData GenerateMouserOverData()
+        {
+            var lines = new List<string>();
+
+            if (SkillPointCost > 0)
+            {
+                lines.Add(SkillPointCost + " SP");
+            }
+            
+            if (Cooldown > 0)
+            {
+                lines.Add(Cooldown + "s cooldown");
+            }
+
+            if (lines.Count == 0)
+            {
+                lines.Add("");
+            }
+            
+            return new MouseOverData(Name, new []{Icon}, string.Join("\n", lines));
         }
     }
 }

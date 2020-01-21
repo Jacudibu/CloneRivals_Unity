@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 2774357372912829801}
   - component: {fileID: 2774357372912829815}
   - component: {fileID: 2774357372912829814}
+  - component: {fileID: 3581824331687316058}
   m_Layer: 5
   m_Name: HotbarConfiguratorElement
   m_TagString: Untagged
@@ -292,6 +293,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 2774357373067100355}
   hotkey: {fileID: 2774357371628697088}
+--- !u!114 &3581824331687316058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2774357372912829802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e392be3a12b313bc9779a9758982a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2774357373067100357
 GameObject:
   m_ObjectHideFlags: 0

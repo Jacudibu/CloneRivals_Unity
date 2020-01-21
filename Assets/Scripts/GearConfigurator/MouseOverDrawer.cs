@@ -75,6 +75,12 @@ namespace GearConfigurator
         
         public static void SetMouseOver(MouseOverData data)
         {
+            if (data == null)
+            {
+                ClearMouseOver();
+                return;
+            }
+            
             _background.SetActive(true);
             
             _title.text = data.title;
