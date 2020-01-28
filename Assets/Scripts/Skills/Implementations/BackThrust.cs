@@ -8,6 +8,7 @@ namespace Skills.Implementations
     public class BackThrust : Skill
     {
         public override string Name => "Back Thrust";
+        public override string Description => "Instantly propels you backwards.";
         public override SkillId SkillId => SkillId.BackThrust;
         public override float Cooldown => 8;
         public override float SkillPointCost => 0;

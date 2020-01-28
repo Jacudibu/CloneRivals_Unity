@@ -7,6 +7,8 @@ namespace Skills
     public abstract class Skill
     {
         public abstract string Name { get; }
+        public abstract string Description { get; }
+        
         public abstract SkillId SkillId { get; }
         public abstract float Cooldown { get; }
         public abstract float SkillPointCost { get; }
@@ -38,6 +40,8 @@ namespace Skills
             {
                 lines.Add("");
             }
+
+            lines.Add(Description);
             
             return new MouseOverData(Name, new []{Icon}, string.Join("\n", lines));
         }
