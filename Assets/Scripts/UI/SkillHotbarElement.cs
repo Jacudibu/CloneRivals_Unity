@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Settings.InputConfiguration;
+using Skills;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -79,6 +80,19 @@ namespace UI
         public void SetAssignedKey(KeyBind keyBind)
         {
             assignedKeyText.text = keyBind.primary.ToString().Replace("Alpha", "");
+        }
+
+        public void LoadConfiguration(SkillId skillId)
+        {
+            if (skillId == SkillId.None)
+            {
+                icon.enabled = false;
+                return;
+            }
+
+            icon.enabled = true;
+            var skill = SkillDictionary.GetSkill(skillId);
+            icon.sprite = skill.Icon;
         }
     }
 }

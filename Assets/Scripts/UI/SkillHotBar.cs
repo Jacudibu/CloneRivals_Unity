@@ -1,4 +1,3 @@
-using GearConfigurator;
 using Settings.InputConfiguration;
 using Skills;
 using UnityEngine;
@@ -19,6 +18,18 @@ namespace UI
             for (var i = 0; i < _hotbarElements.Length; i++)
             {
                 _hotbarElements[i].SetAssignedKey(KeyBindings.Hotbar[i]);
+            }
+            
+            LoadConfiguration();
+        }
+
+        private void LoadConfiguration()
+        {
+            var config = GearConfigurator.GearConfigurator.configuration;
+            
+            for (var i = 0; i < _hotbarElements.Length; i++)
+            {
+                _hotbarElements[i].LoadConfiguration(config.hotbar[i]);
             }
         }
 
