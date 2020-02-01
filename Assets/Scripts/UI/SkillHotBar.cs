@@ -1,3 +1,4 @@
+using GearConfigurator;
 using Settings.InputConfiguration;
 using Skills;
 using UnityEngine;
@@ -15,9 +16,10 @@ namespace UI
 
             _hotbarElements = GetComponentsInChildren<SkillHotbarElement>();
 
-            _hotbarElements[0].SetAssignedKey(KeyBindings.Hotbar1);
-            _hotbarElements[1].SetAssignedKey(KeyBindings.Hotbar2);
-            _hotbarElements[2].SetAssignedKey(KeyBindings.Hotbar3);
+            for (var i = 0; i < _hotbarElements.Length; i++)
+            {
+                _hotbarElements[i].SetAssignedKey(KeyBindings.Hotbar[i]);
+            }
         }
 
         private void OnSkillUsed(SkillId skillId, int hotbarIndex, float cooldown)
