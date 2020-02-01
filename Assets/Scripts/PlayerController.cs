@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SkillId[] skills = new SkillId[10];
     [SerializeField] private float[] nextSkillAvailabilityTime = new float[10];
     
-    void Start()
+    private void Start()
     {
         _screenSize = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
         _defaultLocalCameraAnchorPosition = cameraAnchor.transform.localPosition;
@@ -67,10 +67,12 @@ public class PlayerController : MonoBehaviour
         _targetManager = GetComponent<TargetManager>();
         _targetableObject = GetComponent<TargetableObject>();
         
+        LoadConfiguration();
+        
         _remainingBoost = _engine.boostDuration;
     }
     
-    void Update()
+    private void Update()
     {
         ProcessInput();
         AdjustStrafeValue();
@@ -84,6 +86,19 @@ public class PlayerController : MonoBehaviour
         {
             _targetManager.SearchForTarget();
         }
+    }
+
+    private void LoadConfiguration()
+    {
+        var config = GearConfigurator.GearConfigurator.configuration;
+        if (config == null)
+        {
+            Debug.LogWarning("No Gear Configuration was found. Using Editor values.");
+            return;
+        }
+
+        _engine.ApplyConfiguration(config.engineConfiguration);
+        skills = config.hotbar;
     }
 
     private void InvokeSkill(int hotbarIndex)

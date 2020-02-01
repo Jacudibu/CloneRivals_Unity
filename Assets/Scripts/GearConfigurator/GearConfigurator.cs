@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -15,6 +16,8 @@ namespace GearConfigurator
         public GameObject engineSelectionPopup;
         public GameObject engineSelectionButtonPrefab;
 
+        public static GearConfiguration configuration;
+        
         private HotbarConfigurator _hotbarConfigurator;
         
         [Serializable]
@@ -30,6 +33,8 @@ namespace GearConfigurator
         
         private void Start()
         {
+            configuration = new GearConfiguration();
+            
             _hotbarConfigurator = FindObjectOfType<HotbarConfigurator>();
             
             for (var i = 0; i < engineConfigurations.Length; i++)
@@ -74,6 +79,15 @@ namespace GearConfigurator
             SetEngineButtonOnClick(OpenEngineDialogue);
             EventSystem.current.SetSelectedGameObject(engineButton.gameObject);
             MouseOverDrawer.ClearMouseOver();
+        }
+
+        public void SaveConfiguration()
+        {
+            configuration = new GearConfiguration
+            {
+                engineConfiguration = engineConfigurations[currentEngine],
+                hotbar = _hotbarConfigurator.elements.Select(x => x.SkillId).ToArray()
+            };
         }
 
         private void SetEngineButtonOnClick(UnityAction action)

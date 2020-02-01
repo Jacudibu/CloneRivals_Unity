@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GearConfigurator;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 [DisallowMultipleComponent]
@@ -50,5 +51,13 @@ public class Engine : MonoBehaviour
         movement.x -= strafeValue * lateralSpeed;
         
         transform.Translate(Time.deltaTime * movement);
+    }
+
+    public void ApplyConfiguration(EngineConfiguration config)
+    {
+        minSpeed += config.minSpeedModifier / 10f;
+        maxSpeed += config.maxSpeedModifier / 10f;
+        boostSpeed += config.boostSpeedModifier / 10f;
+        boostDuration += config.boostTimeModifier / 10f;
     }
 }

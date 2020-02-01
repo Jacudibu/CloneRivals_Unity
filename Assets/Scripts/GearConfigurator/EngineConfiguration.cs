@@ -11,10 +11,10 @@ namespace GearConfigurator
         public string engineName;
         public Sprite sprite;
         public SkillId[] skills;
-        public int minSpeedModifier;
-        public int maxSpeedModifier;
-        public int boostSpeedModifier;
-        public int boostTimeModifier;
+        public float minSpeedModifier;
+        public float maxSpeedModifier;
+        public float boostSpeedModifier;
+        public float boostTimeModifier;
         [Multiline] public string description;
 
         public MouseOverData GetData()

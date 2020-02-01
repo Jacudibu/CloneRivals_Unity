@@ -15,7 +15,7 @@ MonoBehaviour:
   engineName: Jet
   sprite: {fileID: 21300000, guid: d2d16f1f553aeaf1b962b028bed715b5, type: 3}
   skills: 0100000003000000
-  minSpeedModifier: 100
+  minSpeedModifier: 75
   maxSpeedModifier: 50
   boostSpeedModifier: 75
   boostTimeModifier: 2
