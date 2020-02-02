@@ -15,10 +15,9 @@ namespace GearConfigurator
 
         public GameObject engineSelectionPopup;
         public GameObject engineSelectionButtonPrefab;
-
-        public static GearConfiguration configuration;
         
         private HotbarConfigurator _hotbarConfigurator;
+        private BoostSlider _boostSlider;
         
         [Serializable]
         public class IntUnityEvent : UnityEvent<int>
@@ -33,9 +32,8 @@ namespace GearConfigurator
         
         private void Start()
         {
-            configuration = new GearConfiguration();
-            
             _hotbarConfigurator = FindObjectOfType<HotbarConfigurator>();
+            _boostSlider = FindObjectOfType<BoostSlider>();
             
             for (var i = 0; i < engineConfigurations.Length; i++)
             {
@@ -83,11 +81,12 @@ namespace GearConfigurator
 
         public void SaveConfiguration()
         {
-            configuration = new GearConfiguration
-            {
-                engineConfiguration = engineConfigurations[currentEngine],
-                hotbar = _hotbarConfigurator.elements.Select(x => x.SkillId).ToArray()
-            };
+            GearConfiguration.Current.engineConfiguration = engineConfigurations[currentEngine];
+            
+            GearConfiguration.Current.hotbar = _hotbarConfigurator.elements.Select(x => x.SkillId).ToArray();
+            
+            GearConfiguration.Current.boostConfiguration.boostSpeedModifier = _boostSlider.BoostSpeed;
+            GearConfiguration.Current.boostConfiguration.boostTimeModifier = _boostSlider.BoostTime;
         }
 
         private void SetEngineButtonOnClick(UnityAction action)

@@ -25,7 +25,7 @@ namespace UI
 
         private void LoadConfiguration()
         {
-            var config = GearConfigurator.GearConfigurator.configuration;
+            var config = GearConfigurator.GearConfiguration.Current;
             
             for (var i = 0; i < _hotbarElements.Length; i++)
             {

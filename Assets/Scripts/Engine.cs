@@ -53,11 +53,14 @@ public class Engine : MonoBehaviour
         transform.Translate(Time.deltaTime * movement);
     }
 
-    public void ApplyConfiguration(EngineConfiguration config)
+    public void ApplyConfiguration(GearConfiguration config)
     {
-        minSpeed += config.minSpeedModifier / 10f;
-        maxSpeed += config.maxSpeedModifier / 10f;
-        boostSpeed += config.boostSpeedModifier / 10f;
-        boostDuration += config.boostTimeModifier / 10f;
+        var engineConfig = config.engineConfiguration;
+        var boostConfig = config.boostConfiguration;
+        
+        minSpeed += engineConfig.minSpeedModifier / 10f;
+        maxSpeed += engineConfig.maxSpeedModifier / 10f;
+        boostSpeed += engineConfig.boostSpeedModifier / 10f + boostConfig.boostSpeedModifier / 10f;
+        boostDuration += engineConfig.boostTimeModifier + boostConfig.boostTimeModifier;
     }
 }

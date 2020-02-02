@@ -90,14 +90,14 @@ public class PlayerController : MonoBehaviour
 
     private void LoadConfiguration()
     {
-        var config = GearConfigurator.GearConfigurator.configuration;
+        var config = GearConfigurator.GearConfiguration.Current;
         if (config == null)
         {
             Debug.LogWarning("No Gear Configuration was found. Using Editor values.");
             return;
         }
 
-        _engine.ApplyConfiguration(config.engineConfiguration);
+        _engine.ApplyConfiguration(config);
         skills = config.hotbar;
     }
 
