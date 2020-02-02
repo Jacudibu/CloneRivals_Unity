@@ -17,7 +17,7 @@ namespace UI
     
         public void PlayOffline()
         {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("GearConfigurator");
         }
 
         public void Settings()
