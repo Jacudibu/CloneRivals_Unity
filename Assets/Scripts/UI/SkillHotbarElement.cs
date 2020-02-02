@@ -87,10 +87,13 @@ namespace UI
             if (skillId == SkillId.None)
             {
                 icon.enabled = false;
+                assignedKeyText.enabled = false;
                 return;
             }
 
             icon.enabled = true;
+            assignedKeyText.enabled = true;
+            
             var skill = SkillDictionary.GetSkill(skillId);
             icon.sprite = skill.Icon;
         }
