@@ -27,9 +27,7 @@ namespace GearConfigurator
 
         public HotbarDragResult ProcessEndDrag(HotbarConfiguratorElement element)
         {
-            var rectTransform = (RectTransform) transform;
-
-            if (!RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition))
+            if (!IsDragEndPositionValid((RectTransform) transform))
             {
                 return HotbarDragResult.Failed;
             }
@@ -56,6 +54,11 @@ namespace GearConfigurator
             other.LerpToPosition(GetHotbarPosition(other.Slot));
             
             return result;
+        }
+
+        private static bool IsDragEndPositionValid(RectTransform rectTransform)
+        {
+            return RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition);
         }
 
         private Vector3 GetHotbarPosition(int slot)
