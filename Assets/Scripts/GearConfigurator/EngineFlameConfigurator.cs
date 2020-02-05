@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace GearConfigurator
 {
@@ -9,9 +9,33 @@ namespace GearConfigurator
         [SerializeField] private Button outerFlameButton;
 
         [SerializeField] private GameObject colorPickerParent;
-        
-        public void OpenColorPicker()
+        private CUIColorPicker.CUIColorPicker _colorPicker;
+
+        private enum Flame
         {
+            Inner,
+            Outer,
+        }
+        private Flame _currentFlame;
+        
+        private void Awake()
+        {
+            _colorPicker = colorPickerParent.GetComponent<CUIColorPicker.CUIColorPicker>();
+            _colorPicker.SetOnValueChangeCallback(OnColorSelected);
+            CloseColorPicker();
+        }
+        
+        public void OpenColorPickerInnerFlame()
+        {
+            _currentFlame = Flame.Inner;
+            _colorPicker.Color = GearConfiguration.Current.engineFlameConfiguration.innerFlameColor;
+            colorPickerParent.SetActive(true);
+        }
+        
+        public void OpenColorPickerOuterFlame()
+        {
+            _currentFlame = Flame.Outer;
+            _colorPicker.Color = GearConfiguration.Current.engineFlameConfiguration.outerFlameColor;
             colorPickerParent.SetActive(true);
         }
 
@@ -20,9 +44,9 @@ namespace GearConfigurator
             colorPickerParent.SetActive(false);
         }
 
-        public void OnColorSelection()
+        public void OnColorSelected(Color color)
         {
-            CloseColorPicker();
+            innerFlameButton.GetComponent<Image>().color = color;
         }
     }
 }

@@ -1,5 +1,5 @@
-using System.Drawing;
 using Skills;
+using UnityEngine;
 
 namespace GearConfigurator
 {
@@ -11,7 +11,7 @@ namespace GearConfigurator
         public BoostConfiguration boostConfiguration = new BoostConfiguration();
         public SkillId[] hotbar;
 
-        public EngineFlameConfiguration engineFlameConfiguration;
+        public EngineFlameConfiguration engineFlameConfiguration = new EngineFlameConfiguration();
     }
 
     public struct BoostConfiguration
@@ -22,7 +22,7 @@ namespace GearConfigurator
 
     public struct EngineFlameConfiguration
     {
-        public Color innerFlame;
-        public Color outerColor;
+        public Color innerFlameColor;
+        public Color outerFlameColor;
     }
 }
