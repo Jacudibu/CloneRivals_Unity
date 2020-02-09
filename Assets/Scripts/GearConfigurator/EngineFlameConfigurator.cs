@@ -46,7 +46,16 @@ namespace GearConfigurator
 
         public void OnColorSelected(Color color)
         {
-            innerFlameButton.GetComponent<Image>().color = color;
+            if (_currentFlame == Flame.Inner)
+            {
+                innerFlameButton.GetComponent<Image>().color = color;
+                GearConfiguration.Current.engineFlameConfiguration.innerFlameColor = color;
+            }
+            else
+            {
+                outerFlameButton.GetComponent<Image>().color = color;
+                GearConfiguration.Current.engineFlameConfiguration.outerFlameColor = color;
+            }
         }
     }
 }

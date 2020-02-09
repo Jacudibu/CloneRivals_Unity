@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Skills;
 using UnityEngine;
 
@@ -20,9 +21,9 @@ namespace GearConfigurator
         public int boostTimeModifier;
     }
 
-    public struct EngineFlameConfiguration
+    public class EngineFlameConfiguration
     {
-        public Color innerFlameColor;
-        public Color outerFlameColor;
+        public Color innerFlameColor = Color.white;
+        public Color outerFlameColor = Color.blue;
     }
 }
