@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Effects;
 using Settings.InputConfiguration;
 using Skills;
 using UnityEngine;
@@ -99,6 +100,8 @@ public class PlayerController : MonoBehaviour
 
         _engine.ApplyConfiguration(config);
         skills = config.hotbar;
+
+        GetComponentInChildren<EngineFlameMaster>().ApplyEngineFlameConfiguration(config.engineFlameConfiguration);
     }
 
     private void InvokeSkill(int hotbarIndex)

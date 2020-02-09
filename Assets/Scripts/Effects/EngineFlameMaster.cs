@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using GearConfigurator;
 using Settings.InputConfiguration;
 using UnityEditor;
 using UnityEngine;
+using WebSocketSharp;
 
 namespace Effects
 {
@@ -14,8 +16,9 @@ namespace Effects
     
         private struct EngineFlameParticleSystem
         {
+            private readonly ParticleSystem _particleSystem;
             private ParticleSystem.MainModule _particleSystemMainModule;
-        
+
             private readonly ParticleSystem.MinMaxCurve _defaultLifeTime;
             private readonly ParticleSystem.MinMaxCurve _defaultSize;
             private readonly ParticleSystem.MinMaxCurve _defaultSpeed;
@@ -30,6 +33,7 @@ namespace Effects
 
             public EngineFlameParticleSystem(ParticleSystem particleSystem, float boostFactor, float slowFactor)
             {
+                _particleSystem = particleSystem;
                 _particleSystemMainModule = particleSystem.main;
                 _defaultLifeTime = _particleSystemMainModule.startLifetime;
                 _boostLifeTime = new ParticleSystem.MinMaxCurve(_defaultLifeTime.constantMin * boostFactor, _defaultLifeTime.constantMax * boostFactor);
@@ -63,6 +67,22 @@ namespace Effects
                 _particleSystemMainModule.startLifetime = _slowLifeTime;
                 _particleSystemMainModule.startSize = _slowSize;
                 _particleSystemMainModule.startSpeed = _defaultSpeed; //slowspeed just doesn't look great.
+            }
+
+            public void SetColors(Color innerFlame, Color outerFlame)
+            {
+                var colorOverLifetime = _particleSystem.colorOverLifetime;
+                var gradient = new Gradient();
+                var usedColor = _particleSystem.name.ToLower().Contains("inner") ? innerFlame : outerFlame;
+                
+                gradient.SetKeys(new GradientColorKey[]
+                    {
+                        new GradientColorKey(usedColor, 0f), 
+                        new GradientColorKey(usedColor * 0.8f, 0.35f), 
+                    },
+                    colorOverLifetime.color.gradient.alphaKeys
+                );
+                colorOverLifetime.color = gradient;
             }
         }
 
@@ -105,6 +125,14 @@ namespace Effects
                 {
                     engineFlameParticleSystem.SetDefault();
                 }
+            }
+        }
+
+        public void ApplyEngineFlameConfiguration(EngineFlameConfiguration configuration)
+        {
+            foreach (var flameParticles in _engineFlameParticleSystems)
+            {
+                flameParticles.SetColors(configuration.innerFlameColor, configuration.outerFlameColor);
             }
         }
     }
